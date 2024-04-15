@@ -2,7 +2,7 @@
 
 Addon for [TurtleWoW](https://turtle-wow.org) that shows Onyxia/Nefarian head cooldown timers.
 
-<img src="https://raw.githubusercontent.com/Pizzahawaiii/PizzaWorldBuffs/main/img/frame.png">
+<img src="img/frame.png">
 
 ## ⚠️ Disclaimer
 
