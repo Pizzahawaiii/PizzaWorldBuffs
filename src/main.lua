@@ -22,12 +22,12 @@ function PWB:Print(msg)
   DEFAULT_CHAT_FRAME:AddMessage(PWB.Colors.pizzaPurple .. 'Pizza' .. PWB.Colors.darkgrey .. 'WorldBuffs:|r ' .. msg)
 end
 
+PWB:RegisterEvent('ADDON_LOADED')
 PWB:RegisterEvent('CHAT_MSG_ADDON')
 PWB:RegisterEvent('CHAT_MSG_CHANNEL')
-PWB:RegisterEvent('PLAYER_ENTERING_WORLD')
 PWB:RegisterEvent('CHAT_MSG_MONSTER_YELL')
 PWB:SetScript('OnEvent', function ()
-  if event == 'PLAYER_ENTERING_WORLD' then
+  if event == 'ADDON_LOADED' then
     -- Store player's name & faction ('A' or 'H') for future use
     PWB.me = UnitName('player')
     PWB.myFaction = string.sub(UnitFactionGroup('player'), 1, 1)
