@@ -32,7 +32,7 @@ PWB:SetScript('OnEvent', function ()
 
     if not PWB.core.hasTimers() then
       -- If we don't have any timers, initialize them
-      PWB.core.clearTimers()
+      PWB.core.clearAllTimers()
     end
 
     PWB.core.resetPublishDelay()
@@ -42,17 +42,15 @@ PWB:SetScript('OnEvent', function ()
   end
 
   if event == 'CHAT_MSG_MONSTER_YELL' then
-    PWB:Print('Received monster yell message: ' .. arg1)
     local boss, faction = PWB.core.parseMonsterYell(arg1)
     if boss and faction then
-      PWB:Print('--> BUFF DROPPING: ' .. boss .. ' (' .. faction .. ')')
-      PWB_timers[PWB.playerFaction][boss] = {
+      PWB.core.setTimer({
         faction = faction,
         boss = boss,
         deadline = PWB.utils.hoursFromNow(2),
         fromWitness = false,
         witnessedMyself = true,
-      }
+      })
     end
   end
 
@@ -73,16 +71,9 @@ PWB:SetScript('OnEvent', function ()
         for _, timerStr in next, timerStrs do
           local timer = PWB.core.decode(timerStr)
           if not timer or not timer.faction or not timer.boss or not timer.deadline or timer.fromWitness == nil then return end
-          timer.witnessedMyself = false
 
           if PWB.core.shouldUpdateTimer(timer) then
-            PWB_timers[timer.faction][timer.boss] = {
-              faction = timer.faction,
-              boss = timer.boss,
-              deadline = timer.deadline,
-              fromWitness = timer.fromWitness,
-              witnessedMyself = false,
-            }
+            PWB.core.setTimer(timer)
           end
         end
       end

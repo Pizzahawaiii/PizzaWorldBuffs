@@ -20,9 +20,19 @@ function PWB.utils.toString (time, format)
 end
 
 function PWB.utils.hoursFromNow (hours)
-  local h, m = GetGameTime()
+  local serverTime = PWB.utils.getServerTime()
   return {
-    h = math.mod(h + hours, 24),
+    h = math.mod(serverTime.h + hours, 24),
+    m = serverTime.m,
+  }
+end
+
+function PWB.utils.getServerTime ()
+  local h, m = GetGameTime()
+  local isOnKalimdor = GetCurrentMapContinent() == 1
+  return {
+    -- TurtleWoW has continent timezones, so we need to normalize the server time if player is on Kalimdor
+    h = (isOnKalimdor and math.mod(h + 12, 24)) or h,
     m = m,
   }
 end

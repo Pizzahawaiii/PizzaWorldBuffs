@@ -10,7 +10,7 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   end
 
   if command == 'clear' then
-    PWB.core.clearTimers()
+    PWB.core.clearAllTimers()
   end
 
   if command == 'fontsize' then

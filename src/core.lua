@@ -35,29 +35,27 @@ function PWB.core.decode (timerStr, myOwn)
   }
 end
 
-function PWB.core.timeLeft (deadlineRaw)
-  local deadline = { h = deadlineRaw.h, m = deadlineRaw.m }
-  local now = {}
-  now.h, now.m = GetGameTime()
+function PWB.core.getTimeLeft (timer)
+  local deadline = { h = timer.deadline.h, m = timer.deadline.m }
+  local now = PWB.utils.getServerTime()
 
-  if now.h > deadline.h then
-    if deadline.h < BUFF_CD_HOURS then
-      -- now is before and deadline is after midnight. Let's just fix the diff
-      -- calculation by adding 24 hours to the deadline time.
-      deadline.h = deadline.h + 24
-    else
-      return
-    end
-  elseif now.h == deadline.h and now.m > deadline.m then
-    return
+  if now.h > deadline.h and deadline.h < BUFF_CD_HOURS then
+    -- now is before and deadline is after midnight. Let's just fix the diff
+    -- calculation by adding 24 hours to the deadline time.
+    deadline.h = deadline.h + 24
   end
 
-  local diffMin = PWB.utils.toMinutes(deadline) - PWB.utils.toMinutes(now)
+  local diff = PWB.utils.toMinutes(deadline) - PWB.utils.toMinutes(now)
 
-  -- Deadline has passed
-  if diffMin > BUFF_CD_HOURS * 60 then return end
+  local isExpired = diff < 0
+  local isInvalid = diff > BUFF_CD_HOURS * 60
+  if isExpired or isInvalid then return end
 
-  return PWB.utils.toTime(diffMin)
+  return PWB.utils.toTime(diff)
+end
+
+function PWB.core.isValid (timer)
+  return PWB.core.getTimeLeft(timer) ~= nil
 end
 
 local yellTriggers = {
@@ -67,7 +65,7 @@ local yellTriggers = {
   },
   H = {
     ONY = 'The brood mother, Onyxia, has been slain!',
-    NEF = 'NEFARIAN BE SLAIN! People of Orgrimmar, bow down before da might of',
+    NEF = 'NEFARIAN IS SLAIN! People of Orgrimmar, bow down before the might of',
   },
 }
 function PWB.core.parseMonsterYell (yellMsg)
@@ -81,7 +79,31 @@ function PWB.core.parseMonsterYell (yellMsg)
   end
 end
 
-function PWB.core.clearTimers ()
+function PWB.core.getTimer (faction, boss)
+  return PWB_timers[faction][boss]
+end
+
+function PWB.core.setTimer (timer)
+  PWB_timers[timer.faction][timer.boss] = timer
+end
+
+function PWB.core.clearTimer (faction, boss)
+  PWB_timers[faction][boss] = nil
+end
+
+function PWB.core.clearExpiredTimers ()
+  if not PWB_timers then return end
+
+  for faction, timers in pairs(PWB_timers) do
+    for boss, timer in pairs(timers) do
+      if not PWB.core.isValid(timer) then
+        PWB.core.clearTimer(faction, boss)
+      end
+    end
+  end
+end
+
+function PWB.core.clearAllTimers ()
   PWB_timers = {
     A = {
       ONY = nil,
@@ -95,7 +117,7 @@ function PWB.core.clearTimers ()
 end
 
 function PWB.core.shouldUpdateTimer (newTimer)
-  local currentTimer = PWB_timers[newTimer.faction][newTimer.boss]
+  local currentTimer = PWB.core.getTimer(newTimer.faction, newTimer.boss)
 
   -- Always update if we currently don't have a timer for this buff
   if not currentTimer then return true end
