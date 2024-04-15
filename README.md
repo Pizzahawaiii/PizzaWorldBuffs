@@ -9,8 +9,7 @@ Addon for [TurtleWoW](https://turtle-wow.org) that shows Onyxia/Nefarian head co
 **The addon does not track the time until the next buff will be triggered!** It only tracks the time
 until the **window** for the buff to be triggered will open up again, i.e. when the Ony/Nef heads
 will disappear from the Stormwind/Orgrimmar city gates again. The actual buff is only triggered when 
-a player turns in the head of Onyxia/Nefarian and the addon can't possibly know when that's going to 
-happen.
+a player turns in the head of Ony/Nef and the addon can't possibly know when that's going to happen.
 
 ## Install
 
