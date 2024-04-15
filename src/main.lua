@@ -85,6 +85,7 @@ PWB:SetScript('OnEvent', function ()
 end)
 
 PWB:SetScript('OnUpdate', function ()
+  PWB.core.clearExpiredTimers()
   if PWB.core.shouldPublishTimers() then
     PWB.core.publishTimers()
   end
