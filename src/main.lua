@@ -27,8 +27,9 @@ PWB:RegisterEvent('PLAYER_ENTERING_WORLD')
 PWB:RegisterEvent('CHAT_MSG_MONSTER_YELL')
 PWB:SetScript('OnEvent', function ()
   if event == 'PLAYER_ENTERING_WORLD' then
-    -- Store player's faction for future use ('A' or 'H')
-    PWB.playerFaction = string.sub(UnitFactionGroup("player"), 1, 1)
+    -- Store player's name & faction ('A' or 'H') for future use
+    PWB.me = UnitName('player')
+    PWB.myFaction = string.sub(UnitFactionGroup('player'), 1, 1)
 
     if not PWB.core.hasTimers() then
       -- If we don't have any timers, initialize them
@@ -48,8 +49,8 @@ PWB:SetScript('OnEvent', function ()
         faction = faction,
         boss = boss,
         deadline = PWB.utils.hoursFromNow(2),
-        fromWitness = false,
-        witnessedMyself = true,
+        witness = PWB.me,
+        receivedFrom = PWB.me,
       })
     end
   end
@@ -70,8 +71,9 @@ PWB:SetScript('OnEvent', function ()
         local timerStrs = { PWB.utils.strSplit(msg, ';') }
         for _, timerStr in next, timerStrs do
           local timer = PWB.core.decode(timerStr)
-          if not timer or not timer.faction or not timer.boss or not timer.deadline or timer.fromWitness == nil then return end
+          if not timer or not timer.faction or not timer.boss or not timer.deadline or not timer.witness then return end
 
+          timer.receivedFrom = arg2
           if PWB.core.shouldUpdateTimer(timer) then
             PWB.core.setTimer(timer)
           end

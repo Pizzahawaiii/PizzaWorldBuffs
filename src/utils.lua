@@ -37,6 +37,14 @@ function PWB.utils.getServerTime ()
   }
 end
 
+function PWB.utils.witnessedByMe (timer)
+  return timer.witness and timer.witness == PWB.me
+end
+
+function PWB.utils.receivedFromWitness (timer)
+  return timer.receivedFrom and timer.witness and timer.receivedFrom == timer.witness
+end
+
 function PWB.utils.strSplit (str, delimiter)
   if not str then return nil end
   local delimiter, fields = delimiter or ':', {}
@@ -46,7 +54,7 @@ function PWB.utils.strSplit (str, delimiter)
 end
 
 function PWB.utils.getTimerColor (timer)
-  if timer.witnessedMyself then return PWB.Colors.green end
-  if timer.fromWitness then return PWB.Colors.orange end
+  if PWB.utils.witnessedByMe(timer) then return PWB.Colors.green end
+  if PWB.utils.receivedFromWitness(timer) then return PWB.Colors.orange end
   return PWB.Colors.red
 end

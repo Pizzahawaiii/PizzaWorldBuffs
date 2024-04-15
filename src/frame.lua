@@ -46,7 +46,7 @@ end)
 PWB.frame:SetScript('OnUpdate', function ()
   local newText
   for faction, bossTimers in pairs(PWB_timers) do
-    if PWB_config.allFactions or faction == PWB.playerFaction then
+    if PWB_config.allFactions or faction == PWB.myFaction then
       for boss, timer in pairs(bossTimers) do
         if timer and timer.deadline then
           local timeLeft = PWB.core.getTimeLeft(timer)
