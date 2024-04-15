@@ -129,6 +129,9 @@ function PWB.core.shouldUpdateTimer (newTimer)
   -- Always update if we currently don't have a timer for this buff
   if not currentTimer then return true end
 
+  -- Always update if current timer is expired or invalid
+  if not PWB.core.isValid(currentTimer) then return true end
+
   -- Always accept new timers that we witnessed ourselves
   if newTimer.witness == PWB.me then return true end
 
