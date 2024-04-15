@@ -37,31 +37,4 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
     local message = PWB_config.allFactions and 'Showing both factions\' world buff timers' or 'Only showing your faction\'s world buff timers'
     PWB:Print(PWB.Colors.grey .. message)
   end
-
-  -- Message format:
-  --
-  --   PizzaWorldBuffs:FACTION-BOSS-HH-MM-WITNESS;FACTION-BOSS-HH-MM-WITNESS;...
-  --
-  --   FACTION    'A' or 'H'
-  --   BOSS       'ONY' or 'NEF'
-  --   TIME       The server time at which the head will go down again, in HH-MM format
-  --   WITNESS    0 if the sender got the time from someone else, 1 if they witnessed the buff themselves
-  --
-  -- Example:
-  --   PizzaWorldBuffs:A-ONY-16-37-1;H-NEF-17-03-0
-  if command == 'test' then
-    local timerStrs = { PWB.utils.strSplit(msg, ';') }
-    for _, timerStr in next, timerStrs do
-      local timer = PWB.core.decode(timerStr, true)
-      if PWB.core.shouldUpdateTimer(timer) then
-        PWB_timers[timer.faction][timer.boss] = {
-          faction = timer.faction,
-          boss = timer.boss,
-          deadline = timer.deadline,
-          fromWitness = timer.fromWitness,
-          witnessedMyself = timer.witnessedMyself,
-        }
-      end
-    end
-  end
 end
