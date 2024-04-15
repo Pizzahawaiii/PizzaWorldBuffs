@@ -1,5 +1,6 @@
 PWB = CreateFrame('Frame', nil, UIParent)
 PWB.name = 'PizzaWorldBuffs'
+PWB.abbrev = 'PWB'
 
 PWB.Colors = {
   pizzaPurple = '|cffa050ff',
@@ -13,8 +14,8 @@ PWB.Colors = {
 }
 
 PWB.Bosses = {
-  ONY = 'Onyxia',
-  NEF = 'Nefarian',
+  O = 'Onyxia',
+  N = 'Nefarian',
 }
 
 function PWB:Print(msg)
@@ -64,8 +65,8 @@ PWB:SetScript('OnEvent', function ()
 		end
 
     if channelName == PWB.name then
-			local addonName, msg = PWB.utils.strSplit(arg1, ':')
-			if addonName == PWB.name then
+			local addonName, version, msg = PWB.utils.strSplit(arg1, ':')
+			if addonName == PWB.abbrev then
         PWB.core.resetPublishDelay()
 
         local timerStrs = { PWB.utils.strSplit(msg, ';') }

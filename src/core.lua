@@ -6,13 +6,13 @@ local BUFF_CD_HOURS = 2
 --
 --   FACTION-BOSS-HH-MM-WITNESS
 --
---   FACTION    'A' or 'H'
---   BOSS       'ONY' or 'NEF'
+--   FACTION    'A' for Alliance or 'H' for Horde
+--   BOSS       'O' for Onyxia or 'N' for Nefarian
 --   TIME       The server time at which the head will go down again, in HH-MM format
 --   WITNESS    Name of the player who originally witnessed the buff
 --
 -- Example:
---   A-ONY-16-37-Pizzahawaii
+--   A-O-16-37-Pizzahawaii
 function PWB.core.encode (timer)
   if not timer or not timer.faction or not timer.boss or not timer.deadline or not timer.witness then return end
   return string.format('%s-%s-%.2d-%.2d-%s', timer.faction, timer.boss, timer.deadline.h, timer.deadline.m, timer.witness)
@@ -67,12 +67,12 @@ end
 
 local yellTriggers = {
   A = {
-    ONY = 'The dread lady, Onyxia, hangs from the arches!',
-    NEF = 'Citizens of the Alliance, the Lord of Blackrock is slain! Nefarian has been subdued',
+    O = 'The dread lady, Onyxia, hangs from the arches!',
+    N = 'Citizens of the Alliance, the Lord of Blackrock is slain! Nefarian has been subdued',
   },
   H = {
-    ONY = 'The brood mother, Onyxia, has been slain!',
-    NEF = 'NEFARIAN IS SLAIN! People of Orgrimmar, bow down before the might of',
+    O = 'The brood mother, Onyxia, has been slain!',
+    N = 'NEFARIAN IS SLAIN! People of Orgrimmar, bow down before the might of',
   },
 }
 function PWB.core.parseMonsterYell (yellMsg)
@@ -113,12 +113,12 @@ end
 function PWB.core.clearAllTimers ()
   PWB_timers = {
     A = {
-      ONY = nil,
-      NEF = nil,
+      O = nil,
+      N = nil,
     },
     H = {
-      ONY = nil,
-      NEF = nil,
+      O = nil,
+      N = nil,
     },
   }
 end
@@ -171,6 +171,6 @@ function PWB.core.publishTimers ()
 
   local pwbChannel = GetChannelName(PWB.name)
   if pwbChannel ~= 0 then
-    SendChatMessage(PWB.name .. ':' .. PWB.core.encodeAll(), 'CHANNEL', nil, pwbChannel)
+    SendChatMessage(PWB.abbrev .. ':' .. PWB.utils.getVersion() .. ':' .. PWB.core.encodeAll(), 'CHANNEL', nil, pwbChannel)
   end
 end

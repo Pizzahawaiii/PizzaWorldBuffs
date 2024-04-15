@@ -37,6 +37,15 @@ function PWB.utils.getServerTime ()
   }
 end
 
+function PWB.utils.getVersion ()
+  local major, minor, patch = PWB.utils.strSplit(tostring(GetAddOnMetadata(PWB.name, "Version")), '.')
+  major = tonumber(major) or 0
+  minor = tonumber(minor) or 0
+  patch = tonumber(patch) or 0
+
+  return major*10000 + minor*100 + patch
+end
+
 function PWB.utils.witnessedByMe (timer)
   return timer.witness and timer.witness == PWB.me
 end
