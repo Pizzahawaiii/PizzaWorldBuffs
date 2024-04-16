@@ -16,7 +16,10 @@ end)
 PWB.frame:SetScript('OnDragStop', function ()
   PWB.frame:StopMovingOrSizing()
 end)
-PWB.frame:Show()
+
+if PWB_config.show then
+  PWB.frame:Show()
+end
 
 -- Mouse Over
 PWB.frame:SetScript('OnEnter', function ()

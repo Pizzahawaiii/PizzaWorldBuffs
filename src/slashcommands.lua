@@ -4,9 +4,21 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   local command = cmd and string.lower(cmd)
 
   if not command then
+    PWB:Print('/wb show ' .. PWB.Colors.grey .. '- Show the addon')
+    PWB:Print('/wb hide ' .. PWB.Colors.grey .. '- Hide the addon')
     PWB:Print('/wb clear ' .. PWB.Colors.grey .. '- Clear all world buff timers')
     PWB:Print('/wb fontSize ' .. PWB_config.fontSize .. PWB.Colors.grey .. ' - Set font size')
     PWB:Print('/wb all ' .. (PWB_config.allFactions and 1 or 0) .. PWB.Colors.grey .. ' - Show both factions\' world buff timers')
+  end
+
+  if command == 'show' then
+    PWB_config.show = true
+    PWB.frame:Show()
+  end
+
+  if command == 'hide' then
+    PWB_config.show = false
+    PWB.frame:Hide()
   end
 
   if command == 'clear' then
