@@ -1,15 +1,26 @@
-# 🍕 PizzaWorldBuffs
+# 🍕 PizzaWorldBuffs (BETA)
+
+> [!WARNING]  
+>
+> This addon is currently in the beta phase and still in early development. It seems to be working
+> fine, but there might still be breaking changes before the first full release (although I'm trying
+> to avoid it).
+>
+> **Use at your own risk!**
+>
+> If you encounter any problems, please read the [FAQ](#faq) or 
+> [create an issue](https://github.com/Pizzahawaiii/PizzaWorldBuffs/issues/new).
 
 Addon for [TurtleWoW](https://turtle-wow.org) that shows Onyxia/Nefarian head cooldown timers.
 
 <img src="img/frame.png">
 
-## ⚠️ Disclaimer
-
-**The addon does not track the time until the next buff will be triggered!** It only tracks the time
-until the **window** for the buff to be triggered will open up again, i.e. when the Ony/Nef heads
-will disappear from the Stormwind/Orgrimmar city gates again. The actual buff is only triggered when 
-a player turns in the head of Ony/Nef and the addon can't possibly know when that's going to happen.
+> [!IMPORTANT]
+>
+> **The addon does not track the time until the next buff will be triggered!** It only tracks the time
+> until the **window** for the buff to be triggered will open up again, i.e. when the Ony/Nef heads
+> will disappear from the Stormwind/Orgrimmar city gates again. The actual buff is only triggered when 
+> a player turns in the head of Ony/Nef and the addon can't possibly know when that's going to happen.
 
 ## Install
 
