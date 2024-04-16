@@ -32,6 +32,8 @@ Addon for [TurtleWoW](https://turtle-wow.org) that shows Onyxia/Nefarian head co
 
 ```
 /wb                 - Show all commands
+/wb show            - Show the addon
+/wb hide            - Hide the addon
 /wb clear           - Delete all timers
 /wb all <0 or 1>    - 0 to only show timers for your faction, 1 to show timers for both factions
 /wb fontSize <size> - Change the font size of the PizzaWorldBuff frame (Default: 14)
