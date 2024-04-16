@@ -126,6 +126,9 @@ end
 function PWB.core.shouldAcceptNewTimer (newTimer)
   local currentTimer = PWB.core.getTimer(newTimer.faction, newTimer.boss)
 
+  -- Never accept invalid or expired timers
+  if not PWB.core.isValid(newTimer) then return false end
+
   -- Always accept if we currently don't have a timer for this buff
   if not currentTimer then return true end
 
