@@ -75,7 +75,7 @@ PWB:SetScript('OnEvent', function ()
           if not timer or not timer.faction or not timer.boss or not timer.deadline or not timer.witness then return end
 
           timer.receivedFrom = arg2
-          if PWB.core.shouldUpdateTimer(timer) then
+          if PWB.core.shouldAcceptNewTimer(timer) then
             PWB.core.setTimer(timer)
           end
         end

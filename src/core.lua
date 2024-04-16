@@ -123,13 +123,13 @@ function PWB.core.clearAllTimers ()
   }
 end
 
-function PWB.core.shouldUpdateTimer (newTimer)
+function PWB.core.shouldAcceptNewTimer (newTimer)
   local currentTimer = PWB.core.getTimer(newTimer.faction, newTimer.boss)
 
-  -- Always update if we currently don't have a timer for this buff
+  -- Always accept if we currently don't have a timer for this buff
   if not currentTimer then return true end
 
-  -- Always update if current timer is expired or invalid
+  -- Always accept if current timer is expired or invalid
   if not PWB.core.isValid(currentTimer) then return true end
 
   -- Always accept new timers that we witnessed ourselves
@@ -138,7 +138,7 @@ function PWB.core.shouldUpdateTimer (newTimer)
   -- Never accept other peoples' timers if we currently have a timer that we witnessed ourselves
   if currentTimer.witness == PWB.me then return false end
 
-  -- Otherwise, only update if the new timer came from a direct witness and our current one didn't
+  -- Otherwise, only accept if the new timer came from a direct witness and our current one didn't
   return PWB.utils.receivedFromWitness(newTimer) and not PWB.utils.receivedFromWitness(currentTimer)
 end
 
