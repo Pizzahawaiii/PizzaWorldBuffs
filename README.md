@@ -1,5 +1,9 @@
 # 🍕 PizzaWorldBuffs (BETA)
 
+Addon for [TurtleWoW](https://turtle-wow.org) that shows Onyxia/Nefarian head cooldown timers.
+
+<img src="img/frame.png">
+
 > [!WARNING]  
 >
 > This addon is currently in the beta phase and still in early development. It seems to be working
@@ -10,10 +14,6 @@
 >
 > If you encounter any problems, please read the [FAQ](#faq) or 
 > [create an issue](https://github.com/Pizzahawaiii/PizzaWorldBuffs/issues/new).
-
-Addon for [TurtleWoW](https://turtle-wow.org) that shows Onyxia/Nefarian head cooldown timers.
-
-<img src="img/frame.png">
 
 > [!IMPORTANT]
 >
