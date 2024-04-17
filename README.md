@@ -1,6 +1,9 @@
 # 🍕 PizzaWorldBuffs (BETA)
 
-Addon for [TurtleWoW](https://turtle-wow.org) that shows Onyxia/Nefarian head cooldown timers.
+Addon for [TurtleWoW](https://turtle-wow.org) that shows Onyxia/Nefarian head cooldown timers. Timers
+are constantly shared between all players, so you will still get them if you're not in the city and
+even if you weren't online when the buff popped. See [below](#how-it-works) for more details on how
+it works.
 
 <img src="img/frame.png">
 
