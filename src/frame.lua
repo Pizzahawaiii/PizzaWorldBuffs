@@ -2,7 +2,7 @@
 PWB.frame = CreateFrame("Frame", "PizzaWorldBuffFrame", UIParent)
 PWB.frame:ClearAllPoints()
 PWB.frame:SetPoint("TOP", 0, -50)
-PWB.frame:SetFrameStrata('TOOLTIP')
+PWB.frame:SetFrameStrata('LOW')
 PWB.frame:SetWidth(200)
 PWB.frame:SetHeight(1)
 
