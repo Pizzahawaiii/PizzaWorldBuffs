@@ -8,6 +8,7 @@ PWB.Colors = {
 
   alliance = '|cff0070dd',
   horde = '|cffc41e3a',
+  white = '|cffffffff',
   grey = '|cffaaaaaa',
   green = '|cff00ff98',
   orange = '|cffff7c0a',

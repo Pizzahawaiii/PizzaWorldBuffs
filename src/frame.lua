@@ -44,9 +44,14 @@ PWB.frame:SetScript('OnUpdate', function ()
         if timer and timer.deadline then
           local timeLeft = PWB.core.getTimeLeft(timer)
           if timeLeft then
-            local bossColor = faction == 'A' and PWB.Colors.alliance or PWB.Colors.horde
-            local timerText = bossColor .. PWB.Bosses[boss] .. ':|r ' .. PWB.utils.getTimerColor(timer) .. PWB.utils.toString(timeLeft, 'hm') .. '|r'
-            newText = newText and newText .. '\n' .. timerText or timerText
+            if PWB_config.colorblind then
+              local timerText = faction .. ' - ' .. PWB.Bosses[boss] .. ': ' .. PWB.utils.toString(timeLeft, 'hm')
+              newText = newText and newText .. '\n' .. timerText or timerText
+            else
+              local bossColor = faction == 'A' and PWB.Colors.alliance or PWB.Colors.horde
+              local timerText = bossColor .. PWB.Bosses[boss] .. ':|r ' .. PWB.utils.getTimerColor(timer) .. PWB.utils.toString(timeLeft, 'hm') .. '|r'
+              newText = newText and newText .. '\n' .. timerText or timerText
+            end
           else
             PWB_timers[faction][boss] = nil
           end

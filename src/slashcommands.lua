@@ -30,7 +30,7 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
     local fontName, _, fontStyle = PWB.frame.text:GetFont()
     PWB.frame.text:SetFont(fontName, fontSize, fontStyle)
     PWB_config.fontSize = fontSize
-    PWB:Print(PWB.Colors.grey .. 'Changed font size to ' .. PWB_config.fontSize)
+    PWB:Print('Changed font size to ' .. PWB_config.fontSize)
     return
   end
 
@@ -42,8 +42,21 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
     end
 
     PWB_config.allFactions = number == 1
-    local message = PWB_config.allFactions and 'Showing both factions\' world buff timers' or 'Only showing your faction\'s world buff timers'
-    PWB:Print(PWB.Colors.grey .. message)
+    local message = 'Showing ' .. (PWB_config.allFactions and 'both' or 'only your') .. ' factions\' world buff timers'
+    PWB:Print(message)
+    return
+  end
+
+  if command == 'cb' then
+    local number = tonumber(msg)
+    if not number or (number ~= 0 and number ~= 1) then
+      PWB:Print('Valid options are 0 and 1')
+      return
+    end
+
+    PWB_config.colorblind = number == 1
+    local message = 'Colorblind mode ' .. (PWB_config.colorblind and 'enabled' or  'disabled')
+    PWB:Print(message)
     return
   end
 
@@ -58,5 +71,6 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r all ' .. (PWB_config.allFactions and 1 or 0) .. PWB.Colors.grey .. ' - Show both factions\' world buff timers')
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r clear ' .. PWB.Colors.grey .. '- Clear all world buff timers')
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r fontSize ' .. PWB_config.fontSize .. PWB.Colors.grey .. ' - Set font size')
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r cb ' .. (PWB_config.colorblind and 1 or 0) .. PWB.Colors.grey .. ' - Enable colorblind friendly mode')
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r version ' .. PWB.Colors.grey .. '- Show current version')
 end
