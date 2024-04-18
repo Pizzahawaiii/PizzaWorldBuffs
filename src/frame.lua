@@ -74,7 +74,7 @@ PWB.frame:SetScript('OnUpdate', function ()
   --   newText = newText .. '\n\nPublish in ' .. publishIn .. ' seconds'
   -- end
 
-  PWB.frame.text:SetText(PWB.Colors.pizzaPurple .. 'Pizza' .. PWB.Colors.darkgrey .. 'WorldBuffs|r\n' .. newText)
+  PWB.frame.text:SetText(PWB.Colors.primary .. 'Pizza' .. PWB.Colors.secondary .. 'WorldBuffs|r\n' .. newText)
 
   PWB.frame:SetHeight(PWB.frame.text:GetHeight() + 10)
 end)

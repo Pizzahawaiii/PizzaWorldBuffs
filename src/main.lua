@@ -3,11 +3,12 @@ PWB.name = 'PizzaWorldBuffs'
 PWB.abbrev = 'PWB'
 
 PWB.Colors = {
-  pizzaPurple = '|cffa050ff',
+  primary = '|cffa050ff',
+  secondary = '|cff777777',
+
   alliance = '|cff0070dd',
   horde = '|cffc41e3a',
   grey = '|cffaaaaaa',
-  darkgrey = '|cff777777',
   green = '|cff00ff98',
   orange = '|cffff7c0a',
   red = '|cffc41e3a',
@@ -19,7 +20,7 @@ PWB.Bosses = {
 }
 
 function PWB:Print(msg, withPrefix)
-  local prefix = withPrefix == false and '' or PWB.Colors.pizzaPurple .. 'Pizza' .. PWB.Colors.darkgrey .. 'WorldBuffs:|r '
+  local prefix = withPrefix == false and '' or PWB.Colors.primary .. 'Pizza' .. PWB.Colors.secondary .. 'WorldBuffs:|r '
   DEFAULT_CHAT_FRAME:AddMessage(prefix .. msg)
 end
 
