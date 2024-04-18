@@ -21,16 +21,6 @@ if PWB_config.show then
   PWB.frame:Show()
 end
 
--- Mouse Over
-PWB.frame:SetScript('OnEnter', function ()
-  PWB.frame.backdrop:SetBackdropColor(0, 0, 0, .5)
-end)
-PWB.frame:SetScript('OnLeave', function ()
-  if not this.isMoving then
-    PWB.frame.backdrop:SetBackdropColor(0, 0, 0, 0)
-  end
-end)
-
 -- Text
 PWB.frame.text = PWB.frame:CreateFontString('PizzaWorldBuffText', 'DIALOG', 'GameFontWhite')
 PWB.frame.text:SetJustifyH('CENTER')
