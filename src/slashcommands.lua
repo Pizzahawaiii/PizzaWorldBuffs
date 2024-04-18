@@ -53,10 +53,10 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   end
 
   PWB:PrintClean(PWB.Colors.primary .. 'Pizza' .. PWB.Colors.secondary .. 'WorldBuffs|r commands:')
-  PWB:PrintClean(PWB.Colors.primary .. '  /wb|r show ' .. PWB.Colors.grey .. '- Show the addon')
-  PWB:PrintClean(PWB.Colors.primary .. '  /wb|r hide ' .. PWB.Colors.grey .. '- Hide the addon')
-  PWB:PrintClean(PWB.Colors.primary .. '  /wb|r clear ' .. PWB.Colors.grey .. '- Clear all world buff timers')
-  PWB:PrintClean(PWB.Colors.primary .. '  /wb|r fontSize ' .. PWB_config.fontSize .. PWB.Colors.grey .. ' - Set font size')
-  PWB:PrintClean(PWB.Colors.primary .. '  /wb|r all ' .. (PWB_config.allFactions and 1 or 0) .. PWB.Colors.grey .. ' - Show both factions\' world buff timers')
-  PWB:PrintClean(PWB.Colors.primary .. '  /wb|r version ' .. PWB.Colors.grey .. '- Show current version')
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r show ' .. PWB.Colors.grey .. '- Show the addon')
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r hide ' .. PWB.Colors.grey .. '- Hide the addon')
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r all ' .. (PWB_config.allFactions and 1 or 0) .. PWB.Colors.grey .. ' - Show both factions\' world buff timers')
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r clear ' .. PWB.Colors.grey .. '- Clear all world buff timers')
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r fontSize ' .. PWB_config.fontSize .. PWB.Colors.grey .. ' - Set font size')
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r version ' .. PWB.Colors.grey .. '- Show current version')
 end
