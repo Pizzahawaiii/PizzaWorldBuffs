@@ -4,7 +4,7 @@ PWB.abbrev = 'PWB'
 
 PWB.Colors = {
   primary = '|cffa050ff',
-  secondary = '|cff777777',
+  secondary = '|cffffffff',
 
   alliance = '|cff0070dd',
   horde = '|cffc41e3a',
