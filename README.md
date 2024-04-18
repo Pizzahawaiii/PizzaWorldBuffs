@@ -29,14 +29,14 @@ Before requesting a new feature, please check the [roadmap](#roadmap). Maybe the
 ## Commands
 
 ```
-/wb                 - Show all commands
-/wb show            - Show the addon
-/wb hide            - Hide the addon
-/wb all <0 or 1>    - 1 to show timers for both factions, 0 to only show timers for your faction
-/wb cb <0 or 1>     - 1 to enable colorblind friendly mode, 0 to disable it
-/wb clear           - Delete all timers
-/wb fontSize <size> - Change the font size of the PizzaWorldBuff frame (Default: 14)
-/wb version         - Show current PizzaWorldBuffs version
+/wb                   Show all commands
+/wb show              Show the addon
+/wb hide              Hide the addon
+/wb all <0 or 1>      1 to show timers for both factions, 0 to only show timers for your faction
+/wb cb <0 or 1>       1 to enable colorblind friendly mode, 0 to disable it
+/wb clear             Delete all timers
+/wb fontSize <size>   Change the font size of the PizzaWorldBuff frame (Default: 14)
+/wb version           Show current PizzaWorldBuffs version
 ```
 
 ## How it Works
