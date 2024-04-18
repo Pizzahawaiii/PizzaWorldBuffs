@@ -65,7 +65,7 @@ PWB:SetScript('OnEvent', function ()
 		end
 
     if channelName == PWB.name then
-			local addonName, version, msg = PWB.utils.strSplit(arg1, ':')
+			local addonName, remoteVersion, msg = PWB.utils.strSplit(arg1, ':')
 			if addonName == PWB.abbrev then
         PWB.core.resetPublishDelay()
 
@@ -78,6 +78,11 @@ PWB:SetScript('OnEvent', function ()
           if PWB.core.shouldAcceptNewTimer(timer) then
             PWB.core.setTimer(timer)
           end
+        end
+
+        if tonumber(remoteVersion) > PWB.utils.getVersion() and not PWB.updateNotified then
+          PWB:Print('New version available! Get it at https://github.com/Pizzahawaiii/PizzaWorldBuffs')
+          PWB.updateNotified = true
         end
       end
 		end
