@@ -177,6 +177,6 @@ function PWB.core.publishTimers ()
 
   local pwbChannel = GetChannelName(PWB.name)
   if pwbChannel ~= 0 then
-    SendChatMessage(PWB.abbrev .. ':' .. PWB.utils.getVersion() .. ':' .. PWB.core.encodeAll(), 'CHANNEL', nil, pwbChannel)
+    SendChatMessage(PWB.abbrev .. ':' .. PWB.utils.getVersionNumber() .. ':' .. PWB.core.encodeAll(), 'CHANNEL', nil, pwbChannel)
   end
 end

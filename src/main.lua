@@ -18,8 +18,13 @@ PWB.Bosses = {
   N = 'Nefarian',
 }
 
-function PWB:Print(msg)
-  DEFAULT_CHAT_FRAME:AddMessage(PWB.Colors.pizzaPurple .. 'Pizza' .. PWB.Colors.darkgrey .. 'WorldBuffs:|r ' .. msg)
+function PWB:Print(msg, withPrefix)
+  local prefix = withPrefix == false and '' or PWB.Colors.pizzaPurple .. 'Pizza' .. PWB.Colors.darkgrey .. 'WorldBuffs:|r '
+  DEFAULT_CHAT_FRAME:AddMessage(prefix .. msg)
+end
+
+function PWB:PrintClean(msg)
+  PWB:Print(msg, false)
 end
 
 PWB:RegisterEvent('PLAYER_ENTERING_WORLD')
@@ -80,7 +85,7 @@ PWB:SetScript('OnEvent', function ()
           end
         end
 
-        if tonumber(remoteVersion) > PWB.utils.getVersion() and not PWB.updateNotified then
+        if tonumber(remoteVersion) > PWB.utils.getVersionNumber() and not PWB.updateNotified then
           PWB:Print('New version available! Get it at https://github.com/Pizzahawaiii/PizzaWorldBuffs')
           PWB.updateNotified = true
         end

@@ -37,8 +37,12 @@ function PWB.utils.getServerTime ()
   }
 end
 
-function PWB.utils.getVersion ()
-  local major, minor, patch = PWB.utils.strSplit(tostring(GetAddOnMetadata(PWB.name, "Version")), '.')
+function PWB.utils.getVersion()
+  return tostring(GetAddOnMetadata(PWB.name, "Version"))
+end
+
+function PWB.utils.getVersionNumber ()
+  local major, minor, patch = PWB.utils.strSplit(PWB.utils.getVersion(), '.')
   major = tonumber(major) or 0
   minor = tonumber(minor) or 0
   patch = tonumber(patch) or 0
