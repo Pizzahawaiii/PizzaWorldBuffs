@@ -74,13 +74,13 @@ PWB:SetScript('OnEvent', function ()
     local _, _, source = string.find(arg4, '(%d+)%.')
     local channelName
 
-		if source then
-			_, channelName = GetChannelName(source)
-		end
+    if source then
+      _, channelName = GetChannelName(source)
+    end
 
     if channelName == PWB.name then
-			local addonName, remoteVersion, msg = PWB.utils.strSplit(arg1, ':')
-			if addonName == PWB.abbrev then
+      local addonName, remoteVersion, msg = PWB.utils.strSplit(arg1, ':')
+      if addonName == PWB.abbrev then
         PWB.core.resetPublishDelay()
 
         local timerStrs = { PWB.utils.strSplit(msg, ';') }
@@ -99,7 +99,7 @@ PWB:SetScript('OnEvent', function ()
           PWB.updateNotified = true
         end
       end
-		end
+    end
   end
 end)
 
