@@ -2,7 +2,7 @@
 ## Title: |cffa050ffPizza|cffffffffWorldBuffs
 ## Author: Pizzahawaii
 ## Notes: Shows Ony/Nef head despawn timers. Please check the README on GitHub!
-## Version: 0.0.10
+## Version: 0.0.11
 ## SavedVariablesPerCharacter: PWB_config, PWB_timers
 
 src\config.lua
