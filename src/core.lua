@@ -131,7 +131,8 @@ end
 
 -- Clear all invalid timers from our local timer store.
 function PWB.core.clearExpiredTimers ()
-  if not PWB_timers then return end
+  -- Initialize timers if they somehow haven't been initialized yet
+  if not PWB_timers then PWB.core.clearAllTimers() end
 
   PWB.utils.forEachTimer(function (timer)
     if not PWB.core.isValid(timer) then

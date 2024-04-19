@@ -71,7 +71,11 @@ end
 
 -- Check if condition applies to any of our timers.
 function PWB.utils.someTimer (fn)
-  if not PWB_timers then return false end
+  if not PWB_timers then
+    PWB.core.clearAllTimers()
+    return false
+  end
+
   for _, timers in pairs(PWB_timers) do
     for _, timer in pairs(timers) do
       if fn(timer) then return true end
@@ -82,7 +86,11 @@ end
 
 -- Invoke fn for each timer we have stored currently.
 function PWB.utils.forEachTimer (fn)
-  if not PWB_timers then return end
+  if not PWB_timers then
+    PWB.core.clearAllTimers()
+    return
+  end
+
   for _, timers in pairs(PWB_timers) do
     for _, timer in pairs(timers) do
       fn(timer)
