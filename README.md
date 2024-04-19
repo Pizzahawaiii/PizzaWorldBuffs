@@ -2,8 +2,6 @@
 
 Addon for [TurtleWoW](https://turtle-wow.org) that shows Onyxia/Nefarian head cooldown timers. Timers are constantly shared between all players, so you will still get them if you're not in the city and even if you weren't online when the buff popped. See [below](#how-it-works) for more details on how it works.
 
-Before requesting a new feature, please check the [roadmap](#roadmap). Maybe the feature you want to request is planned already.
-
 <img src="img/frame.png">
 
 > [!WARNING]  
@@ -62,27 +60,6 @@ The addon only accepts timers it receives from other players if it has the same 
 ### Timer Storing & Sharing
 
 Timers are stored persistently, so you will keep your timers even after relogging. Also, timers are (eventually) propagated to and reshared by everyone who's using the addon. So timers that haven't expired yet will continue to be shared automatically, even if the player who originally witnessed the buff has logged off already.
-
-## Roadmap
-
-Here's a list of features I'm planning on adding in the future. They're roughly ordered by priority, so features at the top of the list will probably be added next.
-
-- Colorblind mode
-- Option to hide the "PizzaWorldBuffs" header
-- Option to automatically hide the addon if there are no known timers
-- Mouseover tooltip showing timer witness, confidence, deadline (local time)
-- Option to get alerted when certain timers are about to run out
-- Ability to announce timers to specific chat channels, e.g. guild or raid
-- Add some smart logic for publish priorities, e.g. players who witnessed a
-  buff themselves are more likely to publish that timer
-- Prevent players from being completely blocked from publishing their timers,
-  e.g. by guaranteeing a publish at least every X minutes
-- Prevent (or mitigate) the risk of corrupted/malicious timers spreading through
-  the network
-- Keep publishing timers in [pfUI](https://github.com/shagu/pfUI)'s "AFK cam"
-  mode
-
-If you'd like to contribute, please [fork](https://github.com/Pizzahawaiii/PizzaWorldBuffs/fork) this repo, apply the changes to your fork and [create a pull request](https://github.com/Pizzahawaiii/PizzaWorldBuffs/compare).
 
 ## FAQ
 
