@@ -62,6 +62,18 @@ function PWB.core.getTimeLeft (timer)
 end
 
 function PWB.core.isValid (timer)
+  local now = GetTime()
+  local twoHours = 2 * 60 * 60
+
+  -- Mark timer as invalid if we accepted/stored it more than 2 hours ago. This prevents an
+  -- issue that's due to the timers containing only the time, not the date. Without this, if
+  -- you log off at e.g. 7 pm with 1 hour left on Ony buff and then log back in the next day
+  -- at 7 pm, the addon will just resume the old timer because it doesn't know it's from
+  -- the day before.
+  if timer.acceptedAt and now > timer.acceptedAt + twoHours then
+    return false
+  end
+
   return PWB.core.getTimeLeft(timer) ~= nil
 end
 
@@ -92,6 +104,7 @@ end
 
 function PWB.core.setTimer (timer)
   PWB_timers[timer.faction][timer.boss] = timer
+  PWB_timers[timer.faction][timer.boss].acceptedAt = GetTime()
 end
 
 function PWB.core.clearTimer (faction, boss)
