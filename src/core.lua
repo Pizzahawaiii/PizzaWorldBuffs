@@ -174,11 +174,11 @@ function PWB.core.resetPublishDelay ()
   -- (Re)set our own publishAll delay to a random number of seconds
   -- TODO: Tweak this so we don't spam the channel too much once more people use the addon
   -- TODO: Ideally, think of a better solution
-  PWB.publishAt = GetTime() + math.random(5, 30)
+  PWB.nextPublishAt = GetTime() + math.random(5, 30)
 end
 
 function PWB.core.shouldPublishTimers ()
-  return PWB.publishAt and GetTime() > PWB.publishAt
+  return PWB.nextPublishAt and GetTime() > PWB.nextPublishAt
 end
 
 function PWB.core.publishTimers ()
