@@ -38,34 +38,25 @@ end)
 -- Update
 PWB.frame:SetScript('OnUpdate', function ()
   local newText
-  for faction, bossTimers in pairs(PWB_timers) do
-    if PWB_config.allFactions or faction == PWB.myFaction then
-      for boss, timer in pairs(bossTimers) do
-        if timer and timer.deadline then
-          local timeLeft = PWB.core.getTimeLeft(timer)
-          if timeLeft then
-            local bossColor = faction == 'A' and PWB.Colors.alliance or PWB.Colors.horde
-            local timerText = bossColor .. PWB.Bosses[boss] .. ':|r ' .. PWB.utils.getTimerColor(timer) .. PWB.utils.toString(timeLeft, 'hm') .. '|r'
-            newText = newText and newText .. '\n' .. timerText or timerText
-          else
-            PWB_timers[faction][boss] = nil
-          end
-        end
+
+  PWB.utils.forEachTimer(function (timer)
+    if PWB_config.allFactions or timer.faction == PWB.myFaction then
+      local timeLeft = PWB.core.getTimeLeft(timer)
+      if timeLeft then
+        local bossColor = timer.faction == 'A' and PWB.Colors.alliance or PWB.Colors.horde
+        local timerText = bossColor .. PWB.Bosses[timer.boss] .. ':|r ' .. PWB.utils.getTimerColor(timer) .. PWB.utils.toString(timeLeft) .. '|r'
+        newText = newText and newText .. '\n' .. timerText or timerText
+      else
+        PWB_timers[timer.faction][timer.boss] = nil
       end
     end
-  end
+  end)
 
   if not newText then
     newText = PWB.Colors.grey .. 'No known world buff timers'
   end
 
-  -- if PWB.publishAt then
-  --   local publishIn = math.ceil(PWB.publishAt - GetTime())
-  --   newText = newText .. '\n\nPublish in ' .. publishIn .. ' seconds'
-  -- end
-
   PWB.frame.text:SetText(PWB.Colors.primary .. 'Pizza' .. PWB.Colors.secondary .. 'WorldBuffs|r\n' .. newText)
-
   PWB.frame:SetHeight(PWB.frame.text:GetHeight() + 10)
 end)
 
