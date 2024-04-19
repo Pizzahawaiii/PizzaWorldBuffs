@@ -15,9 +15,9 @@ local BUFF_CD_HOURS = 2
 --
 -- Example:
 --   A-O-16-37-Pizzahawaii
-function PWB.core.encode (timer)
-  if not timer or not timer.faction or not timer.boss or not timer.h or not timer.m or not timer.witness then return end
-  return string.format('%s-%s-%.2d-%.2d-%s', timer.faction, timer.boss, timer.h, timer.m, timer.witness)
+function PWB.core.encode (faction, boss, h, m, witness)
+  if not faction or not boss or not h or not m or not witness then return end
+  return string.format('%s-%s-%.2d-%.2d-%s', faction, boss, h, m, witness)
 end
 
 -- Encode all of our timers as strings, separated by semicolon.
@@ -25,23 +25,17 @@ function PWB.core.encodeAll ()
   local timersStr
   for _, timers in pairs(PWB_timers) do
     for _, timer in pairs(timers) do
-      timersStr = (timersStr and timersStr .. ';' or '') .. PWB.core.encode(timer)
+      local faction, boss, h, m, witness = timer.faction, timer.boss, timer.h, timer.m, timer.witness
+      timersStr = (timersStr and timersStr .. ';' or '') .. PWB.core.encode(faction, boss, h, m, witness)
     end
   end
   return timersStr
 end
 
 -- Decode the provided timer string into a timer table.
-function PWB.core.decode (timerStr, receivedFrom)
+function PWB.core.decode (timerStr)
   local faction, boss, hStr, mStr, witness = PWB.utils.strSplit(timerStr, '-')
-  return {
-    receivedFrom = receivedFrom,
-    witness = witness,
-    faction = faction,
-    boss = boss,
-    h = tonumber(hStr),
-    m = tonumber(mStr),
-  }
+  return faction, boss, tonumber(hStr), tonumber(mStr), witness
 end
 
 -- Generate a time table representing the duration from now until the provided
@@ -70,7 +64,7 @@ end
 --   1. The timer is less than 2 hours in the future.
 --   2. The timer has not expired, i.e. it's not in the past.
 --   3. We received/stored the timer no more than 2 hours ago.
-function PWB.core.isValid (timer)
+function PWB.core.isValid (h, m, acceptedAt)
   local now = GetTime()
   local twoHours = 2 * 60 * 60
 
@@ -79,11 +73,11 @@ function PWB.core.isValid (timer)
   -- you log off at e.g. 7 pm with 1 hour left on Ony buff and then log back in the next day
   -- at 7 pm, the addon will just resume the old timer because it doesn't know it's from
   -- the day before.
-  if timer.acceptedAt and now > timer.acceptedAt + twoHours then
+  if acceptedAt and now > acceptedAt + twoHours then
     return false
   end
 
-  return PWB.core.getTimeLeft(timer.h, timer.m) ~= nil
+  return PWB.core.getTimeLeft(h, m) ~= nil
 end
 
 -- These are the NPC yell triggers we use to detect that one of the buffs has dropped.
@@ -117,9 +111,16 @@ function PWB.core.getTimer (faction, boss)
 end
 
 -- Store the provided timer locally.
-function PWB.core.setTimer (timer)
-  PWB_timers[timer.faction][timer.boss] = timer
-  PWB_timers[timer.faction][timer.boss].acceptedAt = GetTime()
+function PWB.core.setTimer (faction, boss, h, m, witness, receivedFrom)
+  PWB_timers[faction][boss] = {
+    faction = faction,
+    boss = boss,
+    h = h,
+    m = m,
+    witness = witness,
+    receivedFrom = receivedFrom,
+    acceptedAt = GetTime(),
+  }
 end
 
 -- Remove the provided timer from our local timer store.
@@ -133,7 +134,7 @@ function PWB.core.clearExpiredTimers ()
   if not PWB_timers then PWB.core.clearAllTimers() end
 
   PWB.utils.forEachTimer(function (timer)
-    if not PWB.core.isValid(timer) then
+    if not PWB.core.isValid(timer.h, timer.m, timer.acceptedAt) then
       PWB.core.clearTimer(timer)
     end
   end)
@@ -147,26 +148,26 @@ function PWB.core.clearAllTimers ()
 end
 
 -- Check if the provided timer should be accepted and stored locally.
-function PWB.core.shouldAcceptNewTimer (newTimer)
-  local currentTimer = PWB.core.getTimer(newTimer.faction, newTimer.boss)
+function PWB.core.shouldAcceptNewTimer (faction, boss, h, m, witness, receivedFrom)
+  local currentTimer = PWB.core.getTimer(faction, boss)
 
   -- Never accept invalid or expired timers
-  if not PWB.core.isValid(newTimer) then return false end
+  if not PWB.core.isValid(h, m) then return false end
 
   -- Always accept if we currently don't have a timer for this buff
   if not currentTimer then return true end
 
   -- Always accept if current timer is expired or invalid
-  if not PWB.core.isValid(currentTimer) then return true end
+  if not PWB.core.isValid(currentTimer.h, currentTimer.m, currentTimer.acceptedAt) then return true end
 
   -- Always accept new timers that we witnessed ourselves
-  if newTimer.witness == PWB.me then return true end
+  if witness == PWB.me then return true end
 
   -- Never accept other peoples' timers if we currently have a timer that we witnessed ourselves
   if currentTimer.witness == PWB.me then return false end
 
   -- Otherwise, only accept if the new timer came from a direct witness and our current one didn't
-  return PWB.utils.receivedFromWitness(newTimer) and not PWB.utils.receivedFromWitness(currentTimer)
+  return receivedFrom == witness and currentTimer.receivedFrom ~= currentTimer.witness
 end
 
 -- Reset the publish delay that we will count down from before we publish our local timers.

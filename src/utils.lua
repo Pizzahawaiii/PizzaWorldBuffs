@@ -54,16 +54,6 @@ function PWB.utils.getVersionNumber ()
   return major*10000 + minor*100 + patch
 end
 
--- Check if we directly witnessed the provided timer ourselves.
-function PWB.utils.witnessedByMe (timer)
-  return timer.witness and timer.witness == PWB.me
-end
-
--- Check if we received the provided timer from a direct witness.
-function PWB.utils.receivedFromWitness (timer)
-  return timer.receivedFrom and timer.witness and timer.receivedFrom == timer.witness
-end
-
 -- Identity function
 function PWB.utils.identity (x)
   return x
@@ -99,7 +89,9 @@ end
 
 -- Check if I'm the direct witness for any of my timers.
 function PWB.utils.isWitness ()
-  return PWB.utils.someTimer(PWB.utils.witnessedByMe)
+  return PWB.utils.someTimer(function (timer)
+    return timer.witness == PWB.me
+  end)
 end
 
 -- Split the provided string by the specified delimiter.
@@ -112,8 +104,8 @@ function PWB.utils.strSplit (str, delimiter)
 end
 
 -- Get the color that should be used for a timer, based on how confident we are in it.
-function PWB.utils.getTimerColor (timer)
-  if PWB.utils.witnessedByMe(timer) then return PWB.Colors.green end
-  if PWB.utils.receivedFromWitness(timer) then return PWB.Colors.orange end
+function PWB.utils.getTimerColor (witness, receivedFrom)
+  if witness == PWB.me then return PWB.Colors.green end
+  if receivedFrom == witness then return PWB.Colors.orange end
   return PWB.Colors.red
 end

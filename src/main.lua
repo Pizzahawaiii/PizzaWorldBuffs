@@ -61,14 +61,7 @@ PWB:SetScript('OnEvent', function ()
     local boss, faction = PWB.core.parseMonsterYell(arg1)
     if boss and faction then
       local h, m = PWB.utils.hoursFromNow(2)
-      PWB.core.setTimer({
-        receivedFrom = PWB.me,
-        witness = PWB.me,
-        faction = faction,
-        boss = boss,
-        h = h,
-        m = m,
-      })
+      PWB.core.setTimer(faction, boss, h, m, PWB.me, PWB.me)
     end
   end
 
@@ -87,12 +80,12 @@ PWB:SetScript('OnEvent', function ()
 
         local timerStrs = { PWB.utils.strSplit(msg, ';') }
         for _, timerStr in next, timerStrs do
-          local timer = PWB.core.decode(timerStr)
-          if not timer or not timer.faction or not timer.boss or not timer.h or not timer.m or not timer.witness then return end
+          local faction, boss, h, m, witness = PWB.core.decode(timerStr)
+          if not faction or not boss or not h or not m or not witness then return end
 
-          timer.receivedFrom = arg2
-          if PWB.core.shouldAcceptNewTimer(timer) then
-            PWB.core.setTimer(timer)
+          local receivedFrom = arg2
+          if PWB.core.shouldAcceptNewTimer(faction, boss, h, m, witness, receivedFrom) then
+            PWB.core.setTimer(faction, boss, h, m, witness, receivedFrom)
           end
         end
 
@@ -106,11 +99,8 @@ PWB:SetScript('OnEvent', function ()
 end)
 
 PWB:SetScript('OnUpdate', function ()
-  -- local now = GetTime()
-  -- if PWB.nextClear and now > PWB.nextClear then
-  --   PWB.core.clearExpiredTimers()
-  -- end
-  -- PWB.nextClear = now + 10
+  -- Throttle this function so it doesn't run on every frame render
+  if (this.tick or 1) > GetTime() then return else this.tick = GetTime() + 1 end
 
   PWB.core.clearExpiredTimers()
 
