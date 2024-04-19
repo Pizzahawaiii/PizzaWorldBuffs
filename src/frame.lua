@@ -37,28 +37,30 @@ PWB.frame:SetScript('OnEvent', function ()
   end
 end)
 
+function PWB.frame.appendTimerText (timer)
+  if PWB_config.allFactions or timer.faction == PWB.myFaction then
+    local h, m = PWB.core.getTimeLeft(timer.h, timer.m)
+    if h and m then
+      local bossColor = timer.faction == 'A' and PWB.Colors.alliance or PWB.Colors.horde
+      local timerText = bossColor .. PWB.Bosses[timer.boss] .. ':|r ' .. PWB.utils.getTimerColor(timer) .. PWB.utils.toString(h, m) .. '|r'
+      PWB.frame.content = PWB.frame.content and PWB.frame.content .. '\n' .. timerText or timerText
+    end
+  end
+end
+
 -- Update
 PWB.frame:SetScript('OnUpdate', function ()
-  local newText
+  -- Throttle this function so it doesn't run on every frame render
+  if (this.tick or 1) > GetTime() then return else this.tick = GetTime() + .1 end
 
-  PWB.utils.forEachTimer(function (timer)
-    if PWB_config.allFactions or timer.faction == PWB.myFaction then
-      local h, m = PWB.core.getTimeLeft(timer.h, timer.m)
-      if h and m then
-        local bossColor = timer.faction == 'A' and PWB.Colors.alliance or PWB.Colors.horde
-        local timerText = bossColor .. PWB.Bosses[timer.boss] .. ':|r ' .. PWB.utils.getTimerColor(timer) .. PWB.utils.toString(h, m) .. '|r'
-        newText = newText and newText .. '\n' .. timerText or timerText
-      else
-        PWB_timers[timer.faction][timer.boss] = nil
-      end
-    end
-  end)
+  PWB.frame.content = nil
+  PWB.utils.forEachTimer(PWB.frame.appendTimerText)
 
-  if not newText then
-    newText = PWB.Colors.grey .. 'No known world buff timers'
+  if not PWB.frame.content then
+    PWB.frame.content = PWB.Colors.grey .. 'No known world buff timers'
   end
 
-  PWB.frame.text:SetText(PWB.Colors.primary .. 'Pizza' .. PWB.Colors.secondary .. 'WorldBuffs|r\n' .. newText)
+  PWB.frame.text:SetText(PWB.Colors.primary .. 'Pizza' .. PWB.Colors.secondary .. 'WorldBuffs|r\n' .. PWB.frame.content)
   PWB.frame:SetHeight(PWB.frame.text:GetHeight() + 10)
 end)
 
