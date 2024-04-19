@@ -179,10 +179,13 @@ end
 
 -- Reset the publish delay that we will count down from before we publish our local timers.
 function PWB.core.resetPublishDelay ()
-  -- (Re)set our own publishAll delay to a random number of seconds
-  -- TODO: Tweak this so we don't spam the channel too much once more people use the addon
-  -- TODO: Ideally, think of a better solution
-  PWB.nextPublishAt = GetTime() + math.random(5, 30)
+  local min, max = 5, 30
+  local witnessPriority = .3
+
+  -- (Re)set our own publish delay to a random number of seconds. If we have witnessed one of our
+  -- timers ourselves, we get publish priority, i.e. we're more likely to publish our timers.
+  local delay = PWB.utils.isWitness() and math.random((1 - witnessPriority) * min, (1 - witnessPriority) * max) or math.random(min, max)
+  PWB.nextPublishAt = GetTime() + delay
 end
 
 -- Check if we should publish our local timers.
