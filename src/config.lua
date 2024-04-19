@@ -2,7 +2,6 @@ local defaultConfig = {
   show = true,
   fontSize = 14,
   allFactions = true,
-  colorblind = false,
   frame = {
     top = 50,
     center = 0,
