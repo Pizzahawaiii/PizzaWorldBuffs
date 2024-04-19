@@ -178,11 +178,22 @@ function PWB.core.resetPublishDelay ()
 end
 
 function PWB.core.shouldPublishTimers ()
-  return PWB.nextPublishAt and GetTime() > PWB.nextPublishAt
+  local now = GetTime()
+
+  -- If we've reached the publish interval limit (i.e. we haven't published our timers in X minutes),
+  -- we just force publish our timers.
+  if PWB.lastPublishedAt and now > PWB.lastPublishedAt + PWB.maxPublishIntervalMinutes * 60 then
+    return true
+  end
+
+  return PWB.nextPublishAt and now > PWB.nextPublishAt
 end
 
 function PWB.core.publishTimers ()
   PWB.core.resetPublishDelay()
+
+  -- Remember the last time we published our timers.
+  PWB.lastPublishedAt = GetTime()
 
   if UnitLevel('player') < 5 or not PWB.core.hasTimers() then
     return
