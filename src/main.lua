@@ -1,5 +1,5 @@
-PWB = CreateFrame('Frame', nil, UIParent)
-PWB.name = 'PizzaWorldBuffs'
+PizzaWorldBuffs = CreateFrame('Frame', 'PizzaWorldBuffs', UIParent)
+local PWB = PizzaWorldBuffs
 PWB.abbrev = 'PWB'
 
 -- If many players are using the addon and we're unlucky, we mayb never be able to publish our timers, because
@@ -78,7 +78,7 @@ PWB:SetScript('OnEvent', function ()
       _, channelName = GetChannelName(source)
     end
 
-    if channelName == PWB.name then
+    if channelName == PWB:GetName() then
       local addonName, remoteVersion, msg = PWB.utils.strSplit(arg1, ':')
       if addonName == PWB.abbrev then
         PWB.core.resetPublishDelay()

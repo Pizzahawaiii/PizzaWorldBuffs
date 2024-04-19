@@ -1,3 +1,4 @@
+local PWB = PizzaWorldBuffs
 PWB.core = {}
 
 local BUFF_CD_HOURS = 2
@@ -215,7 +216,7 @@ function PWB.core.publishTimers ()
     return
   end
 
-  local pwbChannel = GetChannelName(PWB.name)
+  local pwbChannel = GetChannelName(PWB:GetName())
   if pwbChannel ~= 0 then
     SendChatMessage(PWB.abbrev .. ':' .. PWB.utils.getVersionNumber() .. ':' .. PWB.core.encodeAll(), 'CHANNEL', nil, pwbChannel)
   end

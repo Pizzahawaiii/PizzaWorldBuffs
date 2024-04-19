@@ -1,3 +1,5 @@
+local PWB = PizzaWorldBuffs
+
 -- Frame
 PWB.frame = CreateFrame("Frame", "PizzaWorldBuffFrame", UIParent)
 PWB.frame:ClearAllPoints()

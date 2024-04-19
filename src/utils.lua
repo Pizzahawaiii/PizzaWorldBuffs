@@ -1,3 +1,4 @@
+local PWB = PizzaWorldBuffs
 PWB.utils = {}
 
 -- Convert a time (duration) table to a number of minutes.
@@ -41,7 +42,7 @@ end
 
 -- Get local PizzaWorldBuffs version as a semantic versioning string
 function PWB.utils.getVersion()
-  return tostring(GetAddOnMetadata(PWB.name, "Version"))
+  return tostring(GetAddOnMetadata(PWB:GetName(), "Version"))
 end
 
 -- Get local PizzaWorldBuffs version as a single number
