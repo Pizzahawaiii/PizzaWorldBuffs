@@ -60,12 +60,14 @@ PWB:SetScript('OnEvent', function ()
   if event == 'CHAT_MSG_MONSTER_YELL' then
     local boss, faction = PWB.core.parseMonsterYell(arg1)
     if boss and faction then
+      local h, m = PWB.utils.hoursFromNow(2)
       PWB.core.setTimer({
+        receivedFrom = PWB.me,
+        witness = PWB.me,
         faction = faction,
         boss = boss,
-        deadline = PWB.utils.hoursFromNow(2),
-        witness = PWB.me,
-        receivedFrom = PWB.me,
+        h = h,
+        m = m,
       })
     end
   end
@@ -86,7 +88,7 @@ PWB:SetScript('OnEvent', function ()
         local timerStrs = { PWB.utils.strSplit(msg, ';') }
         for _, timerStr in next, timerStrs do
           local timer = PWB.core.decode(timerStr)
-          if not timer or not timer.faction or not timer.boss or not timer.deadline or not timer.witness then return end
+          if not timer or not timer.faction or not timer.boss or not timer.h or not timer.m or not timer.witness then return end
 
           timer.receivedFrom = arg2
           if PWB.core.shouldAcceptNewTimer(timer) then
@@ -104,7 +106,14 @@ PWB:SetScript('OnEvent', function ()
 end)
 
 PWB:SetScript('OnUpdate', function ()
+  -- local now = GetTime()
+  -- if PWB.nextClear and now > PWB.nextClear then
+  --   PWB.core.clearExpiredTimers()
+  -- end
+  -- PWB.nextClear = now + 10
+
   PWB.core.clearExpiredTimers()
+
   if PWB.core.shouldPublishTimers() then
     PWB.core.publishTimers()
   end

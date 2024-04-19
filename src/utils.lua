@@ -2,42 +2,41 @@ local PWB = PizzaWorldBuffs
 PWB.utils = {}
 
 -- Convert a time (duration) table to a number of minutes.
-function PWB.utils.toMinutes (time)
-  return time.h * 60 + time.m
+function PWB.utils.toMinutes (h, m)
+  return h * 60 + m
 end
 
 -- Convert a number of minutes to a time table representing the same duration.
 function PWB.utils.toTime (minutes)
-  local time = {}
-  time.m = math.mod(minutes, 60)
-  time.h = (minutes - time.m) / 60
-  return time
+  local m = math.mod(minutes, 60)
+  local h = (minutes - m) / 60
+  return h, m
 end
 
 -- Convert a time table to string in Hh Mm format, e.g. 1h 52m.
-function PWB.utils.toString (time)
-  if not time then return 'N/A' end
-  return (time.h > 0 and time.h .. 'h ' or '') .. time.m .. 'm'
+function PWB.utils.toString (h, m)
+  if not h and not m then return 'N/A' end
+  return (h > 0 and h .. 'h ' or '') .. m .. 'm'
 end
 
 -- Get a time table representing a certain number of hours from now (server time).
 function PWB.utils.hoursFromNow (hours)
-  local serverTime = PWB.utils.getServerTime()
-  return {
-    h = math.mod(serverTime.h + hours, 24),
-    m = serverTime.m,
-  }
+  local h, m = PWB.utils.getServerTime()
+  h = math.mod(h + hours, 24)
+  return h, m
 end
 
 -- Get current server time, normalized by accounting for TurtleWoW's in-game timezones.
 function PWB.utils.getServerTime ()
   local h, m = GetGameTime()
   local isOnKalimdor = GetCurrentMapContinent() == 1
-  return {
-    -- TurtleWoW has continent timezones, so we need to normalize the server time if player is on Kalimdor
-    h = (isOnKalimdor and math.mod(h + 12, 24)) or h,
-    m = m,
-  }
+
+  -- TurtleWoW has continent timezones, so we need to normalize the server time if player is on Kalimdor
+  if isOnKalimdor then
+    h = math.mod(h + 12, 24)
+  end
+
+  return h, m
 end
 
 -- Get local PizzaWorldBuffs version as a semantic versioning string
@@ -72,10 +71,7 @@ end
 
 -- Check if condition applies to any of our timers.
 function PWB.utils.someTimer (fn)
-  if not PWB_timers then
-    PWB.core.clearAllTimers()
-    return false
-  end
+  if not PWB_timers then return false end
 
   for _, timers in pairs(PWB_timers) do
     for _, timer in pairs(timers) do
@@ -87,10 +83,7 @@ end
 
 -- Invoke fn for each timer we have stored currently.
 function PWB.utils.forEachTimer (fn)
-  if not PWB_timers then
-    PWB.core.clearAllTimers()
-    return
-  end
+  if not PWB_timers then return end
 
   for _, timers in pairs(PWB_timers) do
     for _, timer in pairs(timers) do

@@ -16,8 +16,8 @@ local BUFF_CD_HOURS = 2
 -- Example:
 --   A-O-16-37-Pizzahawaii
 function PWB.core.encode (timer)
-  if not timer or not timer.faction or not timer.boss or not timer.deadline or not timer.witness then return end
-  return string.format('%s-%s-%.2d-%.2d-%s', timer.faction, timer.boss, timer.deadline.h, timer.deadline.m, timer.witness)
+  if not timer or not timer.faction or not timer.boss or not timer.h or not timer.m or not timer.witness then return end
+  return string.format('%s-%s-%.2d-%.2d-%s', timer.faction, timer.boss, timer.h, timer.m, timer.witness)
 end
 
 -- Encode all of our timers as strings, separated by semicolon.
@@ -35,30 +35,27 @@ end
 function PWB.core.decode (timerStr, receivedFrom)
   local faction, boss, hStr, mStr, witness = PWB.utils.strSplit(timerStr, '-')
   return {
+    receivedFrom = receivedFrom,
+    witness = witness,
     faction = faction,
     boss = boss,
-    deadline = {
-      h = tonumber(hStr),
-      m = tonumber(mStr),
-    },
-    witness = witness,
-    receivedFrom = receivedFrom,
+    h = tonumber(hStr),
+    m = tonumber(mStr),
   }
 end
 
 -- Generate a time table representing the duration from now until the provided
 -- timer will run out.
-function PWB.core.getTimeLeft (timer)
-  local deadline = { h = timer.deadline.h, m = timer.deadline.m }
-  local now = PWB.utils.getServerTime()
+function PWB.core.getTimeLeft (h, m)
+  local sh, sm = PWB.utils.getServerTime()
 
-  if now.h > deadline.h and deadline.h < BUFF_CD_HOURS then
+  if sh > h and h < BUFF_CD_HOURS then
     -- now is before and deadline is after midnight. Let's just fix the diff
     -- calculation by adding 24 hours to the deadline time.
-    deadline.h = deadline.h + 24
+    h = h + 24
   end
 
-  local diff = PWB.utils.toMinutes(deadline) - PWB.utils.toMinutes(now)
+  local diff = PWB.utils.toMinutes(h, m) - PWB.utils.toMinutes(sh, sm)
 
   local isExpired = diff < 0
   local isInvalid = diff > BUFF_CD_HOURS * 60
@@ -86,7 +83,7 @@ function PWB.core.isValid (timer)
     return false
   end
 
-  return PWB.core.getTimeLeft(timer) ~= nil
+  return PWB.core.getTimeLeft(timer.h, timer.m) ~= nil
 end
 
 -- These are the NPC yell triggers we use to detect that one of the buffs has dropped.
