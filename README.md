@@ -77,9 +77,9 @@ The timer sharing logic is not very sophisticated. We don't want everyone to alw
 
 ### Q: Wait a second, I actually never see a single timer. Why?
 
-Try relogging or running `/join PizzaWorldBuffs`. If that doesn't help, please [create an issue](https://github.com/Pizzahawaiii/PizzaWorldBuffs/issues/new).
+Try relogging or running `/join LFT`. If that doesn't help, please [create an issue](https://github.com/Pizzahawaiii/PizzaWorldBuffs/issues/new).
 
-The addon uses a hidden chat channel named `PizzaWorldBuffs` to receive data from and share data with other players. It should automatically join that channel whenever the addon is loaded. But if it doesn't, maybe one of your other addons is interfering. You can check if you're in that channel by right-clicking your chat tab and selecting "Channels". You can also try disabling all other addons.
+The addon uses TurtleWoW's hidden `LFT` chat channel to receive data from and share data with other players. It should automatically join that channel whenever the addon is loaded. But if it doesn't, maybe one of your other addons is interfering. You can check if you're in that channel by right-clicking your chat tab and selecting "Channels". You can also try disabling all other addons.
 
 ### Q: What's the best pizza topping?
 
