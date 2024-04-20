@@ -1,7 +1,7 @@
 local PWB = PizzaWorldBuffs
 
 -- Frame
-PWB.frame = CreateFrame("Frame", "PizzaWorldBuffFrame", UIParent)
+PWB.frame = CreateFrame("Frame", "PizzaWorldBuffsFrame", UIParent)
 PWB.frame:ClearAllPoints()
 PWB.frame:SetPoint("TOP", 0, -50)
 PWB.frame:SetFrameStrata('LOW')
@@ -73,7 +73,7 @@ local backdrop = {
   edgeSize = 4,
   insets = {left = 0, right = 0, top = 0, bottom = 0},
 }
-PWB.frame.backdrop = CreateFrame("Frame", nil, PWB.frame)
+PWB.frame.backdrop = CreateFrame("Frame", 'PizzaWorldBuffsFrameBackdrop', PWB.frame)
 level = PWB.frame:GetFrameLevel()
 if level < 1 then
   PWB.frame.backdrop:SetFrameLevel(level)

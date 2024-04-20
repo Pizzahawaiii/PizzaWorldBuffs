@@ -3,7 +3,7 @@ local PWB = PizzaWorldBuffs
 PWB.channelName = 'LFT'
 
 -- Frame to delay joining PWB channel
-PWB.channelJoinDelay = CreateFrame('Frame')
+PWB.channelJoinDelay = CreateFrame('Frame', 'PizzaWorldBuffsChannelJoinDelay', UIParent)
 PWB.channelJoinDelay:Hide()
 
 PWB.channelJoinDelay:SetScript('OnShow', function ()
