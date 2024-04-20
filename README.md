@@ -92,3 +92,9 @@ The addon uses a hidden chat channel named `PizzaWorldBuffs` to receive data fro
 ### Q: What's the best pizza topping?
 
 🍍
+
+## Acknowledgements
+
+❤️ [Shagu](https://github.com/shagu) - Thanks for all the help!
+
+🚀 Everyone from \<TURTLE HARDCORE\> who tested and provided feedback during early development
