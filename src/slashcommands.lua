@@ -1,6 +1,6 @@
 local PWB = PizzaWorldBuffs
 
-SLASH_PIZZAWORLDBUFFS1, SLASH_PIZZAWORLDBUFFS2 = '/pwb', '/wb'
+SLASH_PIZZAWORLDBUFFS1, SLASH_PIZZAWORLDBUFFS2, SLASH_PIZZAWORLDBUFFS3 = '/wb', '/pwb', '/pizzawb'
 
 SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   local cmd, msg = PWB.utils.strSplit(args, ' ')
