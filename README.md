@@ -91,4 +91,4 @@ The addon uses TurtleWoW's hidden `LFT` chat channel to receive data from and sh
 
 ❤️ [Shagu](https://github.com/shagu) - Thanks for all the help!
 
-🚀 Everyone from \<TURTLE HARDCORE\> who tested and provided feedback during early development
+🚀 Everyone from \<TURTLE HARDCORE\> who tested and provided feedback during initial development
