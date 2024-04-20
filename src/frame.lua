@@ -42,7 +42,7 @@ function PWB.frame.appendTimerText (timer)
     local h, m = PWB.core.getTimeLeft(timer.h, timer.m)
     if h and m then
       local bossColor = timer.faction == 'A' and PWB.Colors.alliance or PWB.Colors.horde
-      local timerText = bossColor .. PWB.Bosses[timer.boss] .. ':|r ' .. PWB.utils.getTimerColor(timer) .. PWB.utils.toString(h, m) .. '|r'
+      local timerText = bossColor .. PWB.Bosses[timer.boss] .. ':|r ' .. PWB.utils.getTimerColor(timer.witness, timer.receivedFrom) .. PWB.utils.toString(h, m) .. '|r'
       PWB.frame.content = PWB.frame.content and PWB.frame.content .. '\n' .. timerText or timerText
     end
   end
