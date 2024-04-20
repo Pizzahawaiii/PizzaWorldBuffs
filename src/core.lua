@@ -15,13 +15,13 @@ local BUFF_CD_HOURS = 2
 --
 -- Example:
 --   A-O-16-37-Pizzahawaii
-function PWB.core.encode (faction, boss, h, m, witness)
+function PWB.core.encode(faction, boss, h, m, witness)
   if not faction or not boss or not h or not m or not witness then return end
   return string.format('%s-%s-%.2d-%.2d-%s', faction, boss, h, m, witness)
 end
 
 -- Encode all of our timers as strings, separated by semicolon.
-function PWB.core.encodeAll ()
+function PWB.core.encodeAll()
   local timersStr
   for _, timers in pairs(PWB_timers) do
     for _, timer in pairs(timers) do
@@ -33,14 +33,14 @@ function PWB.core.encodeAll ()
 end
 
 -- Decode the provided timer string into a timer table.
-function PWB.core.decode (timerStr)
+function PWB.core.decode(timerStr)
   local faction, boss, hStr, mStr, witness = PWB.utils.strSplit(timerStr, '-')
   return faction, boss, tonumber(hStr), tonumber(mStr), witness
 end
 
 -- Generate a time table representing the duration from now until the provided
 -- timer will run out.
-function PWB.core.getTimeLeft (h, m)
+function PWB.core.getTimeLeft(h, m)
   local sh, sm = PWB.utils.getServerTime()
 
   if sh > h and h < BUFF_CD_HOURS then
@@ -64,7 +64,7 @@ end
 --   1. The timer is less than 2 hours in the future.
 --   2. The timer has not expired, i.e. it's not in the past.
 --   3. We received/stored the timer no more than 2 hours ago.
-function PWB.core.isValid (h, m, acceptedAt)
+function PWB.core.isValid(h, m, acceptedAt)
   local now = GetTime()
   local twoHours = 2 * 60 * 60
 
@@ -94,7 +94,7 @@ local yellTriggers = {
 
 -- Given an NPC's yell message, check if it's one of the triggers for a buff being dropped.
 -- If yes, return the boss and faction. Otherwise, return nil.
-function PWB.core.parseMonsterYell (yellMsg)
+function PWB.core.parseMonsterYell(yellMsg)
   for faction, bossTriggers in pairs(yellTriggers) do
     for boss, yellTrigger in pairs(bossTriggers) do
       local found = string.find(yellMsg, yellTrigger)
@@ -106,12 +106,12 @@ function PWB.core.parseMonsterYell (yellMsg)
 end
 
 -- Get our current timer for the provided faction and boss.
-function PWB.core.getTimer (faction, boss)
+function PWB.core.getTimer(faction, boss)
   return PWB_timers[faction][boss]
 end
 
 -- Store the provided timer locally.
-function PWB.core.setTimer (faction, boss, h, m, witness, receivedFrom)
+function PWB.core.setTimer(faction, boss, h, m, witness, receivedFrom)
   PWB_timers[faction][boss] = {
     faction = faction,
     boss = boss,
@@ -124,12 +124,12 @@ function PWB.core.setTimer (faction, boss, h, m, witness, receivedFrom)
 end
 
 -- Remove the provided timer from our local timer store.
-function PWB.core.clearTimer (timer)
+function PWB.core.clearTimer(timer)
   PWB_timers[timer.faction][timer.boss] = nil
 end
 
 -- Clear all invalid timers from our local timer store.
-function PWB.core.clearExpiredTimers ()
+function PWB.core.clearExpiredTimers()
   -- Initialize timers if they somehow haven't been initialized yet
   if not PWB_timers then PWB.core.clearAllTimers() end
 
@@ -141,14 +141,14 @@ function PWB.core.clearExpiredTimers ()
 end
 
 -- Clear all local timers, even valid ones.
-function PWB.core.clearAllTimers ()
+function PWB.core.clearAllTimers()
   PWB.utils.forEachTimer(function (timer)
     PWB.core.clearTimer(timer)
   end)
 end
 
 -- Check if the provided timer should be accepted and stored locally.
-function PWB.core.shouldAcceptNewTimer (faction, boss, h, m, witness, receivedFrom)
+function PWB.core.shouldAcceptNewTimer(faction, boss, h, m, witness, receivedFrom)
   local currentTimer = PWB.core.getTimer(faction, boss)
 
   -- Never accept invalid or expired timers
@@ -171,7 +171,7 @@ function PWB.core.shouldAcceptNewTimer (faction, boss, h, m, witness, receivedFr
 end
 
 -- Reset the publish delay that we will count down from before we publish our local timers.
-function PWB.core.resetPublishDelay ()
+function PWB.core.resetPublishDelay()
   local min, max = 5, 30
   local witnessPriority = .3
 
@@ -182,7 +182,7 @@ function PWB.core.resetPublishDelay ()
 end
 
 -- Check if we should publish our local timers.
-function PWB.core.shouldPublishTimers ()
+function PWB.core.shouldPublishTimers()
   local now = GetTime()
 
   -- If we've reached the publish interval limit (i.e. we haven't published our timers in X minutes),
@@ -204,7 +204,7 @@ end
 --
 -- Example:
 --   PizzaWorldBuffs:1337:A-O-13-37-Pizzahawaii;H-N-14-44-Someotherdude
-function PWB.core.publishTimers ()
+function PWB.core.publishTimers()
   PWB.core.resetPublishDelay()
 
   -- Remember the last time we published our timers.
