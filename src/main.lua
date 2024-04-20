@@ -73,7 +73,7 @@ PWB:SetScript('OnEvent', function ()
       _, channelName = GetChannelName(source)
     end
 
-    if channelName == PWB:GetName() then
+    if channelName == PWB.channelName then
       local addonName, remoteVersion, msg = PWB.utils.strSplit(arg1, ':')
       if addonName == PWB.abbrev then
         PWB.core.resetPublishDelay()

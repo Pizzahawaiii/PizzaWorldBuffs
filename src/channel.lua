@@ -1,5 +1,7 @@
 local PWB = PizzaWorldBuffs
 
+PWB.channelName = 'LFT'
+
 -- Frame to delay joining PWB channel
 PWB.channelJoinDelay = CreateFrame('Frame')
 PWB.channelJoinDelay:Hide()
@@ -13,14 +15,14 @@ PWB.channelJoinDelay:SetScript('OnHide', function ()
   local channels = { GetChannelList() }
 
   for _, channel in next, channels do
-    if channel == PWB:GetName() then
+    if channel == PWB.channelName then
       isInChannel = true
       break
     end
   end
 
   if not isInChannel then
-    JoinChannelByName(PWB:GetName())
+    JoinChannelByName(PWB.channelName)
   end
 end)
 
