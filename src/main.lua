@@ -45,8 +45,8 @@ PWB:SetScript('OnEvent', function ()
     PWB.me = UnitName('player')
     PWB.myFaction = string.sub(UnitFactionGroup('player'), 1, 1)
 
-    if not PWB.utils.hasTimers() then
-      -- If we don't have any timers, initialize them
+    -- If we don't have any timers or we still have timers in a deprecated format, clear/initialize them first.
+    if not PWB.utils.hasTimers() or PWB.utils.hasDeprecatedTimerFormat() then
       PWB.core.clearAllTimers()
     end
 
