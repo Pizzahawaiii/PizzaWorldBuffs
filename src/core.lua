@@ -149,6 +149,8 @@ end
 
 -- Check if the provided timer should be accepted and stored locally.
 function PWB.core.shouldAcceptNewTimer(faction, boss, h, m, witness, receivedFrom)
+  if not PWB_config.sharingEnabled then return false end
+
   local currentTimer = PWB.core.getTimer(faction, boss)
 
   -- Never accept invalid or expired timers
@@ -183,6 +185,8 @@ end
 
 -- Check if we should publish our local timers.
 function PWB.core.shouldPublishTimers()
+  if not PWB_config.sharingEnabled then return false end
+
   local now = GetTime()
 
   -- If we've reached the publish interval limit (i.e. we haven't published our timers in X minutes),
@@ -206,6 +210,8 @@ end
 --   PizzaWorldBuffs:1337:A-O-13-37-Pizzahawaii;H-N-14-44-Someotherdude
 function PWB.core.publishTimers()
   PWB.core.resetPublishDelay()
+
+  if not PWB_config.sharingEnabled then return end
 
   -- Remember the last time we published our timers.
   PWB.lastPublishedAt = GetTime()

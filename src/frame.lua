@@ -19,21 +19,20 @@ PWB.frame:SetScript('OnDragStop', function ()
   PWB.frame:StopMovingOrSizing()
 end)
 
-if PWB_config.show then
-  PWB.frame:Show()
-end
-
 -- Text
 PWB.frame.text = PWB.frame:CreateFontString('PizzaWorldBuffText', 'DIALOG', 'GameFontWhite')
 PWB.frame.text:SetJustifyH('CENTER')
-PWB.frame.text:SetFont(STANDARD_TEXT_FONT, PWB_config.fontSize, 'OUTLINE')
 PWB.frame.text:SetPoint('CENTER', 0, 0)
 
 -- Apply saved variables
-PWB.frame:RegisterEvent('ADDON_LOADED')
+PWB.frame:RegisterEvent('PLAYER_ENTERING_WORLD')
 PWB.frame:SetScript('OnEvent', function ()
-  if event == 'ADDON_LOADED' then
+  if event == 'PLAYER_ENTERING_WORLD' then
     PWB.frame.text:SetFont(STANDARD_TEXT_FONT, PWB_config.fontSize, 'OUTLINE')
+
+    if PWB_config.show then
+      PWB.frame:Show()
+    end
   end
 end)
 

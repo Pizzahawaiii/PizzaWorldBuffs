@@ -46,6 +46,9 @@ PWB:SetScript('OnEvent', function ()
     PWB.me = UnitName('player')
     PWB.myFaction = string.sub(UnitFactionGroup('player'), 1, 1)
 
+    -- Initialize config with default values if necessary
+    PWB.config.init()
+
     -- If we don't have any timers or we still have timers in a deprecated format, clear/initialize them first.
     if not PWB.utils.hasTimers() or PWB.utils.hasDeprecatedTimerFormat() then
       PWB.core.clearAllTimers()
@@ -54,8 +57,10 @@ PWB:SetScript('OnEvent', function ()
     -- Publish our timers once whenever we log in
     PWB.core.publishTimers()
 
-    -- Trigger delayed joining of the PWB chat channel
-    PWB.channelJoinDelay:Show()
+    -- Trigger delayed joining of the PWB chat channel if sharing is enabled
+    if PWB_config.sharingEnabled then
+      PWB.channelJoinDelay:Show()
+    end
   end
 
   if event == 'CHAT_MSG_MONSTER_YELL' then
@@ -67,6 +72,8 @@ PWB:SetScript('OnEvent', function ()
   end
 
   if event == 'CHAT_MSG_CHANNEL' and arg2 ~= UnitName('player') then
+    if not PWB_config.sharingEnabled then return end
+
     local _, _, source = string.find(arg4, '(%d+)%.')
     local channelName
 
