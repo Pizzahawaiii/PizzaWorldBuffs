@@ -35,6 +35,7 @@ function PWB:PrintClean(msg)
   PWB:Print(msg, false)
 end
 
+local timerStrs = {}
 PWB:RegisterEvent('PLAYER_ENTERING_WORLD')
 PWB:RegisterEvent('CHAT_MSG_ADDON')
 PWB:RegisterEvent('CHAT_MSG_CHANNEL')
@@ -78,7 +79,7 @@ PWB:SetScript('OnEvent', function ()
       if addonName == PWB.abbrev then
         PWB.core.resetPublishDelay()
 
-        local timerStrs = { PWB.utils.strSplit(msg, ';') }
+        timerStrs[1], timerStrs[2], timerStrs[3], timerStrs[4] = PWB.utils.strSplit(msg, ';')
         for _, timerStr in next, timerStrs do
           local faction, boss, h, m, witness = PWB.core.decode(timerStr)
           if not faction or not boss or not h or not m or not witness then return end
