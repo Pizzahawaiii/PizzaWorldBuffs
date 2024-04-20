@@ -89,17 +89,9 @@ end
 
 -- Check if we have any timers stored in a deprecated format (pre-v0.0.15)
 function PWB.utils.hasDeprecatedTimerFormat()
-  local x = PWB.utils.someTimer(function (timer)
+  return PWB.utils.someTimer(function (timer)
     return timer.deadline ~= nil
   end)
-
-  if x then
-    PWB:Print('Found timers in a deprecated format!')
-  else
-    PWB:Print('No timers in deprecated format found! \\o/')
-  end
-
-  return x
 end
 
 -- Check if I'm the direct witness for any of my timers.
