@@ -41,7 +41,7 @@ end
 
 -- Get local PizzaWorldBuffs version as a semantic versioning string
 function PWB.utils.getVersion()
-  return tostring(GetAddOnMetadata(PWB:GetName(), "Version"))
+  return tostring(GetAddOnMetadata(PWB:GetName(), 'Version'))
 end
 
 -- Get local PizzaWorldBuffs version as a single number

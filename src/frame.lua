@@ -1,9 +1,9 @@
 local PWB = PizzaWorldBuffs
 
 -- Frame
-PWB.frame = CreateFrame("Frame", "PizzaWorldBuffsFrame", UIParent)
+PWB.frame = CreateFrame('Frame', 'PizzaWorldBuffsFrame', UIParent)
 PWB.frame:ClearAllPoints()
-PWB.frame:SetPoint("TOP", 0, -50)
+PWB.frame:SetPoint('TOP', 0, -50)
 PWB.frame:SetFrameStrata('LOW')
 PWB.frame:SetWidth(200)
 PWB.frame:SetHeight(1)
@@ -66,22 +66,22 @@ end)
 
 -- Backdrop
 local backdrop = {
-  bgFile = "Interface\\BUTTONS\\WHITE8X8",
+  bgFile = 'Interface\\BUTTONS\\WHITE8X8',
   tile = false,
   tileSize = 0,
-  edgeFile = "Interface\\BUTTONS\\WHITE8X8",
+  edgeFile = 'Interface\\BUTTONS\\WHITE8X8',
   edgeSize = 4,
   insets = {left = 0, right = 0, top = 0, bottom = 0},
 }
-PWB.frame.backdrop = CreateFrame("Frame", 'PizzaWorldBuffsFrameBackdrop', PWB.frame)
+PWB.frame.backdrop = CreateFrame('Frame', 'PizzaWorldBuffsFrameBackdrop', PWB.frame)
 level = PWB.frame:GetFrameLevel()
 if level < 1 then
   PWB.frame.backdrop:SetFrameLevel(level)
 else
   PWB.frame.backdrop:SetFrameLevel(level - 1)
 end
-PWB.frame.backdrop:SetPoint("TOPLEFT", PWB.frame, "TOPLEFT", 0, 0)
-PWB.frame.backdrop:SetPoint("BOTTOMRIGHT", PWB.frame, "BOTTOMRIGHT", 0, 0)
+PWB.frame.backdrop:SetPoint('TOPLEFT', PWB.frame, 'TOPLEFT', 0, 0)
+PWB.frame.backdrop:SetPoint('BOTTOMRIGHT', PWB.frame, 'BOTTOMRIGHT', 0, 0)
 PWB.frame.backdrop:SetBackdrop(backdrop)
 PWB.frame.backdrop:SetBackdropColor(0, 0, 0, 0)
 PWB.frame.backdrop:SetBackdropBorderColor(0, 0, 0, 0)
