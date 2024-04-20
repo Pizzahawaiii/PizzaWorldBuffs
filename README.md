@@ -28,11 +28,13 @@ Addon for [TurtleWoW](https://turtle-wow.org) that shows Onyxia/Nefarian head co
 /wb version           Show current PizzaWorldBuffs version
 ```
 
-## Update
+## Version Upgrade
 
 To update to the latest version, delete your `<WoW>/Interface/AddOns/PizzaWorldBuffs` folder and follow the [installation steps](#install) again.
 
 If updating to the latest version causes any issues, delete `<WoW>/WTF/Account/<Account>/<Server>/<Character>/SavedVariables/PizzaWorldBuffs.lua` and restart WoW. If the problems persist, please [create an issue](https://github.com/Pizzahawaiii/PizzaWorldBuffs/issues/new).
+
+Check the [commit history](https://github.com/Pizzahawaiii/PizzaWorldBuffs/commits/main) to see the latest changes.
 
 ## How it Works
 
