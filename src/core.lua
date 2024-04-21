@@ -142,9 +142,10 @@ end
 
 -- Clear all local timers, even valid ones.
 function PWB.core.clearAllTimers()
-  PWB.utils.forEachTimer(function (timer)
-    PWB.core.clearTimer(timer)
-  end)
+  PWB_timers = {
+    A = {},
+    H = {},
+  }
 end
 
 -- Check if the provided timer should be accepted and stored locally.
