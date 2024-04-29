@@ -212,6 +212,10 @@ end
 function PWB.core.publishTimers()
   PWB.core.resetPublishDelay()
 
+  -- Always clear all expired timers (again) right before publishing to make sure we never share
+  -- outdated timers.
+  PWB.core.clearExpiredTimers()
+
   if not PWB_config.sharingEnabled then return end
 
   -- Remember the last time we published our timers.
