@@ -49,6 +49,7 @@ Additionally, if the default chat edit box is not open and no WIM edit box is fo
 
 - `Shift-Leftclick` immediately reports the timer in `/say`
 - `Shift-Rightclick` immediately reports the timer in `/guild`
+- `Shift-Middleclick` immediately reports the timer in `/h` (TurtleWoW's HC channel)
 
 > [!TIP]
 > If you get asked which addon you're using for buff timers, try shift-clicking the "PizzaWorldBuffs" header! 😉
