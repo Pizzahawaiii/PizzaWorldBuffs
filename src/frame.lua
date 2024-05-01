@@ -47,18 +47,10 @@ local function initFrame(f, anchor)
           local sendTo
           if arg1 == 'LeftButton' then sendTo = 'SAY' end
           if arg1 == 'RightButton' then sendTo = 'GUILD' end
-          if arg1 == 'MiddleButton' then sendTo = 'Hardcore' end
+          if arg1 == 'MiddleButton' then sendTo = 'HARDCORE' end
 
           if sendTo then
-            if sendTo == 'SAY' or sendTo == 'GUILD' then
-              SendChatMessage(text, sendTo)
-            else
-              -- TODO: Fix this! How do we send messages to the HC channel?
-              local channel = GetChannelName(sendTo)
-              if channel ~= 0 then
-                SendChatMessage(text, 'CHANNEL', nil, channel)
-              end
-            end
+            SendChatMessage(text, sendTo)
           end
         end
       end
