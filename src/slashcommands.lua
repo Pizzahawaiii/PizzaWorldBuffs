@@ -36,6 +36,19 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
     return
   end
 
+  if command == 'align' then
+    local align = string.lower(msg)
+    if align ~= 'left' and align ~= 'center' and align ~= 'right' then
+      PWB:Print('Invalid option. Valid options are: left, center, right')
+      return
+    end
+
+    PWB_config.align = align
+    PWB.frame.updateFrames()
+    PWB:Print('Changed text alignment to ' .. PWB_config.align)
+    return
+  end
+
   if command == 'all' then
     local number = tonumber(msg)
     if not number or (number ~= 0 and number ~= 1) then
@@ -86,5 +99,6 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r sharing ' .. (PWB_config.sharingEnabled and 1 or 0) .. PWB.Colors.grey .. ' - Enable timer sharing between you and other players')
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r clear ' .. PWB.Colors.grey .. '- Clear all world buff timers')
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r fontSize ' .. PWB_config.fontSize .. PWB.Colors.grey .. ' - Set font size')
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r align ' .. PWB_config.align .. PWB.Colors.grey .. ' - Align text left/center/right')
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r version ' .. PWB.Colors.grey .. '- Show current version')
 end

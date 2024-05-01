@@ -35,6 +35,7 @@ Check the [commit history](https://github.com/Pizzahawaiii/PizzaWorldBuffs/commi
                        own timers and not share them with anyone
 /wb clear              Delete all timers from your local storage
 /wb fontSize <size>    Change the font size of the PizzaWorldBuff frame (Default: 14)
+/wb align <x>          Change text alignment. Valid options: left, center, right (Default: center)
 /wb version            Show current PizzaWorldBuffs version
 ```
 

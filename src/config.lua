@@ -5,6 +5,7 @@ PWB.config = {}
 local defaultConfig = {
   show = true,
   fontSize = 14,
+  align = 'center',
   allFactions = true,
   sharingEnabled = true,
   frame = {

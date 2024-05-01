@@ -73,7 +73,8 @@ local function initFrame(f, anchor)
   f.frame.text = f.frame:CreateFontString(f.name .. 'Text', 'DIALOG', 'GameFontWhite')
   f.frame.text:SetFont(STANDARD_TEXT_FONT, PWB_config.fontSize, 'OUTLINE')
   f.frame.text:SetJustifyH('LEFT')
-  f.frame.text:SetPoint('TOP', 0, 0)
+  local point = PWB_config.align == 'left' and 'TOPLEFT' or PWB_config.align == 'right' and 'TOPRIGHT' or 'TOP'
+  f.frame.text:SetPoint(point, 0, 0)
   f.frame.text:SetText(f.text)
 end
 
@@ -163,7 +164,8 @@ function PWB.frame.updateFrames()
 
     frame.frame:ClearAllPoints()
     local y = frame.anchor and (-frame.anchor.frame.text:GetHeight()) or 0
-    frame.frame:SetPoint('TOP', 0, (i - 1) * y)
+    local point = PWB_config.align == 'left' and 'TOPLEFT' or PWB_config.align == 'right' and 'TOPRIGHT' or 'TOP'
+    frame.frame:SetPoint(point, 0, (i - 1) * y)
     frame.frame:SetWidth(frame.frame.text:GetWidth())
     frame.frame:SetHeight(frame.frame.text:GetHeight())
   end
