@@ -30,9 +30,8 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
       return
     end
 
-    local fontName, _, fontStyle = PWB.frame.text:GetFont()
-    PWB.frame.text:SetFont(fontName, fontSize, fontStyle)
     PWB_config.fontSize = fontSize
+    PWB.frame.updateFrames()
     PWB:Print('Changed font size to ' .. PWB_config.fontSize)
     return
   end

@@ -16,6 +16,14 @@ Addon for [TurtleWoW](https://turtle-wow.org) that shows Onyxia/Nefarian head de
 2. Copy the "PizzaWorldBuffs-main" folder to `<WoW>/Interface/AddOns` and rename it to "PizzaWorldBuffs"
 3. (Re)start WoW
 
+## Version Upgrade
+
+To update to the latest version, delete your `<WoW>/Interface/AddOns/PizzaWorldBuffs` folder and follow the [installation steps](#install) again.
+
+If updating to the latest version causes any issues, delete `<WoW>/WTF/Account/<Account>/<Server>/<Character>/SavedVariables/PizzaWorldBuffs.lua` and restart WoW. If the problems persist, please [create an issue](https://github.com/Pizzahawaiii/PizzaWorldBuffs/issues/new).
+
+Check the [commit history](https://github.com/Pizzahawaiii/PizzaWorldBuffs/commits/main) to see the latest changes.
+
 ## Commands
 
 ```
@@ -30,13 +38,19 @@ Addon for [TurtleWoW](https://turtle-wow.org) that shows Onyxia/Nefarian head de
 /wb version            Show current PizzaWorldBuffs version
 ```
 
-## Version Upgrade
+## Reporting Timers
 
-To update to the latest version, delete your `<WoW>/Interface/AddOns/PizzaWorldBuffs` folder and follow the [installation steps](#install) again.
+<img src="img/timer_report.png">
 
-If updating to the latest version causes any issues, delete `<WoW>/WTF/Account/<Account>/<Server>/<Character>/SavedVariables/PizzaWorldBuffs.lua` and restart WoW. If the problems persist, please [create an issue](https://github.com/Pizzahawaiii/PizzaWorldBuffs/issues/new).
+You can report your timers via chat in different ways. If your chat edit box is open (`Enter`), clicking one of your timers while holding `Shift` will paste it into the edit box so you only have to press Enter again to share it. This also works for [WIM](https://github.com/shirsig/WIM) chat windows, but only if one of those WIM edit boxes is currently focussed.
 
-Check the [commit history](https://github.com/Pizzahawaiii/PizzaWorldBuffs/commits/main) to see the latest changes.
+Additionally, if the default chat edit box is not open and no WIM edit box is focussed, you can use the following shortcuts for convenient timer reporting:
+
+- `Shift-Leftclick` immediately reports the timer in `/say`
+- `Shift-Rightclick` immediately reports the timer in `/guild`
+
+> [!TIP]
+> If you get asked which addon you're using for buff timers, try shift-clicking the "PizzaWorldBuffs" header! 😉
 
 ## How it Works
 
@@ -93,4 +107,4 @@ The addon uses TurtleWoW's hidden `LFT` chat channel to receive data from and sh
 
 ❤️ [Shagu](https://github.com/shagu) - Thanks for all the help!
 
-🚀 Everyone from \<TURTLE HARDCORE\> who tested and provided feedback during initial development
+🚀 Everyone in \<TURTLE HARDCORE\> who tested and provided feedback during initial development
