@@ -72,6 +72,8 @@ end
 
 -- Initialize all frames
 local function initFrames()
+  if PWB.frames then return end
+
   local otherFaction = PWB.myFaction == 'A' and 'H' or 'A'
 
   PWB.frames = {
