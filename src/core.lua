@@ -65,7 +65,7 @@ end
 --   2. The timer has not expired, i.e. it's not in the past.
 --   3. We received/stored the timer no more than 2 hours ago.
 function PWB.core.isValid(h, m, acceptedAt)
-  local now = GetTime()
+  local now = time()
   local twoHours = 2 * 60 * 60
 
   -- Mark timer as invalid if we accepted/stored it more than 2 hours ago. This prevents an
@@ -119,7 +119,7 @@ function PWB.core.setTimer(faction, boss, h, m, witness, receivedFrom)
     m = m,
     witness = witness,
     receivedFrom = receivedFrom,
-    acceptedAt = GetTime(),
+    acceptedAt = time(),
   }
 end
 
@@ -181,14 +181,14 @@ function PWB.core.resetPublishDelay()
   -- (Re)set our own publish delay to a random number of seconds. If we have witnessed one of our
   -- timers ourselves, we get publish priority, i.e. we're more likely to publish our timers.
   local delay = PWB.utils.isWitness() and math.random((1 - witnessPriority) * min, (1 - witnessPriority) * max) or math.random(min, max)
-  PWB.nextPublishAt = GetTime() + delay
+  PWB.nextPublishAt = time() + delay
 end
 
 -- Check if we should publish our local timers.
 function PWB.core.shouldPublishTimers()
   if not PWB_config.sharingEnabled then return false end
 
-  local now = GetTime()
+  local now = time()
 
   -- If we've reached the publish interval limit (i.e. we haven't published our timers in X minutes),
   -- we just force publish our timers.
@@ -219,7 +219,7 @@ function PWB.core.publishTimers()
   if not PWB_config.sharingEnabled then return end
 
   -- Remember the last time we published our timers.
-  PWB.lastPublishedAt = GetTime()
+  PWB.lastPublishedAt = time()
 
   if UnitLevel('player') < 5 or not PWB.utils.hasTimers() then
     return
