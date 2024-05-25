@@ -73,7 +73,7 @@ function PWB.core.isValid(h, m, acceptedAt)
   -- you log off at e.g. 7 pm with 1 hour left on Ony buff and then log back in the next day
   -- at 7 pm, the addon will just resume the old timer because it doesn't know it's from
   -- the day before.
-  if acceptedAt and now > acceptedAt + twoHours then
+  if not acceptedAt or acceptedAt > now or acceptedAt < now - twoHours then
     return false
   end
 
@@ -155,7 +155,7 @@ function PWB.core.shouldAcceptNewTimer(faction, boss, h, m, witness, receivedFro
   local currentTimer = PWB.core.getTimer(faction, boss)
 
   -- Never accept invalid or expired timers
-  if not PWB.core.isValid(h, m) then return false end
+  if not PWB.core.isValid(h, m, time()) then return false end
 
   -- Always accept if we currently don't have a timer for this buff
   if not currentTimer then return true end
