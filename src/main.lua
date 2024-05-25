@@ -104,7 +104,7 @@ PWB:SetScript('OnEvent', function ()
         end
 
         if tonumber(remoteVersion) > PWB.utils.getVersionNumber() and not PWB.updateNotified then
-          PWB:Print('New version available! Get it at https://github.com/Pizzahawaiii/PizzaWorldBuffs')
+          PWB:Print('New version available, please update to get more accurate timers! https://github.com/Pizzahawaiii/PizzaWorldBuffs')
           PWB.updateNotified = true
         end
       end
