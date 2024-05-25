@@ -84,6 +84,12 @@ PWB:SetScript('OnEvent', function ()
     if channelName == PWB.channelName then
       local addonName, remoteVersion, msg = PWB.utils.strSplit(arg1, ':')
       if addonName == PWB.abbrev then
+        -- Ignore timers from players with pre-1.1.4 versions that contain a bug where it sometimes
+        -- shares invalid/expired timers with everyone.
+        if tonumber(remoteVersion) < 10104 then
+          return
+        end
+
         PWB.core.resetPublishDelay()
 
         timerStrs[1], timerStrs[2], timerStrs[3], timerStrs[4] = PWB.utils.strSplit(msg, ';')
