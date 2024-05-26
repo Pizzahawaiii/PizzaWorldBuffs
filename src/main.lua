@@ -36,11 +36,19 @@ function PWB:PrintClean(msg)
 end
 
 local timerStrs = {}
+PWB:RegisterEvent('ADDON_LOADED')
 PWB:RegisterEvent('PLAYER_ENTERING_WORLD')
 PWB:RegisterEvent('CHAT_MSG_ADDON')
 PWB:RegisterEvent('CHAT_MSG_CHANNEL')
 PWB:RegisterEvent('CHAT_MSG_MONSTER_YELL')
 PWB:SetScript('OnEvent', function ()
+  if event == 'ADDON_LOADED' and arg1 == 'PizzaWorldBuffs' then
+    if PWB_config.autoLogout then
+      PWB_config.autoLogout = false
+      PWB:Print('Auto-logout disabled automatically. To enable it again, use /wb logout 1')
+    end
+  end
+
   if event == 'PLAYER_ENTERING_WORLD' then
     -- Store player's name & faction ('A' or 'H') for future use
     PWB.me = UnitName('player')
@@ -68,6 +76,11 @@ PWB:SetScript('OnEvent', function ()
     if boss and faction then
       local h, m = PWB.utils.hoursFromNow(2)
       PWB.core.setTimer(faction, boss, h, m, PWB.me, PWB.me)
+
+      if PWB_config.autoLogout then
+        PWB:Print('About to receive buff and auto-logout is enabled. Will log out in 1 minute.')
+        PWB.logoutAt = time() + 60
+      end
     end
   end
 
@@ -118,7 +131,12 @@ PWB:SetScript('OnUpdate', function ()
 
   PWB.core.clearExpiredTimers()
 
-  if PWB.core.shouldPublishTimers() then
+  if PWB_config.autoLogout and PWB.logoutAt and time() >= PWB.logoutAt then
+    PWB.logoutAt = nil
+    PWB.core.publishTimers()
+    PWB:Print('Logging out...')
+    Logout()
+  elseif PWB.core.shouldPublishTimers() then
     PWB.core.publishTimers()
   end
 end)

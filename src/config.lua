@@ -8,12 +8,12 @@ local defaultConfig = {
   align = 'center',
   allFactions = true,
   sharingEnabled = true,
+  autoLogout = false,
   frame = {
     top = 50,
     center = 0,
   },
 }
-
 
 function PWB.config.init()
   if not PWB_config then

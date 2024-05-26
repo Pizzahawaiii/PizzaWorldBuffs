@@ -33,6 +33,7 @@ Check the [commit history](https://github.com/Pizzahawaiii/PizzaWorldBuffs/commi
 /wb all <1 or 0>       1 to show timers for both factions, 0 to only show timers for your faction
 /wb sharing <1 or 0>   1 to enable timer sharing between you and other players, 0 to only see your
                        own timers and not share them with anyone
+/wb logout <1 or 0>    1 to log out automatically after receiving the next buff, 0 to stay logged in
 /wb clear              Delete all timers from your local storage
 /wb fontSize <size>    Change the font size of the PizzaWorldBuff frame (Default: 14)
 /wb align <x>          Change text alignment. Valid options: left, center, right (Default: center)
