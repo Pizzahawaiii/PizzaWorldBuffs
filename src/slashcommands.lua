@@ -101,6 +101,20 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
     return
   end
 
+  if command == 'setquit' then
+    local number = tonumber(msg)
+    if not number or (number ~= 0 and number ~= 1) then
+      PWB:Print('Valid options are 0 and 1')
+      return
+    end
+
+    PWB_config.setQuit = number == 1
+
+    local suffix = PWB_config.setQuit and 'enabled.' or 'disabled.'
+    PWB:Print('Use Exit instead of Logout ' .. suffix)
+    return
+  end
+
   if command == 'version' then
     PWB:Print('Version ' .. PWB.utils.getVersion())
     return
@@ -112,6 +126,7 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r all ' .. (PWB_config.allFactions and 1 or 0) .. PWB.Colors.grey .. ' - Show both factions\' world buff timers')
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r sharing ' .. (PWB_config.sharingEnabled and 1 or 0) .. PWB.Colors.grey .. ' - Enable timer sharing between you and other players')
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r logout ' .. (PWB_config.autoLogout and 1 or 0) .. PWB.Colors.grey .. ' - Log out automatically after receiving next buff')
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r setquit ' .. (PWB_config.setQuit and 1 or 0) .. PWB.Colors.grey .. ' - Use Exit instead of Logout')
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r clear ' .. PWB.Colors.grey .. '- Clear all world buff timers')
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r fontSize ' .. PWB_config.fontSize .. PWB.Colors.grey .. ' - Set font size')
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r align ' .. PWB_config.align .. PWB.Colors.grey .. ' - Align text left/center/right')

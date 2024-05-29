@@ -9,6 +9,7 @@ local defaultConfig = {
   allFactions = true,
   sharingEnabled = true,
   autoLogout = false,
+  setQuit = false,
   frame = {
     top = 50,
     center = 0,
