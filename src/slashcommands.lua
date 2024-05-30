@@ -96,6 +96,7 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
 
     PWB_config.autoLogout = number == 1
 
+    PWB.frame.updatePizzaWorldBuffsHeader()
     local suffix = PWB_config.autoLogout and 'enabled. This will be disabled again the next time you relog or reload your UI.' or 'disabled.'
     PWB:Print('Auto-logout after receiving next buff ' .. suffix)
     return
@@ -110,6 +111,7 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
 
     PWB_config.setQuit = number == 1
 
+    PWB.frame.updatePizzaWorldBuffsHeader()
     local suffix = PWB_config.setQuit and 'enabled.' or 'disabled.'
     PWB:Print('Use Exit instead of Logout ' .. suffix)
     return
