@@ -170,6 +170,7 @@ function PWB.frame.updatePizzaWorldBuffsHeader()
     if frame.name == 'PizzaWorldBuffsHeader' then
       frame.text = PWB.Colors.primary .. 'Pizza' .. PWB.Colors.secondary .. 'WorldBuffs' .. PWB.Colors.grey .. (PWB_config.autoLogout and (PWB_config.setQuit and ' (AutoQuit)' or ' (AutoLogout)') or '')
       frame.frame.text:SetText(frame.text)
+      return
     end
   end
 end
