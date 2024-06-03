@@ -1,5 +1,7 @@
 local PWB = PizzaWorldBuffs
 
+setfenv(1, PWB:GetEnv())
+
 -- Main container frame
 PWB.frame = CreateFrame('Frame', 'PizzaWorldBuffsFrame', UIParent)
 PWB.frame:ClearAllPoints()
@@ -19,21 +21,21 @@ local function initFrame(f, anchor)
 
       local text
       if f.timer then
-        local city = f.timer.faction == 'A' and 'SW' or 'OG'
+        local city = f.timer.faction == 'A' and T['SW'] or T['OG']
         local timer = PWB_timers[f.timer.faction][f.timer.boss]
-        local suffix = ' head has no timer, it\'s probably despawned'
+        local suffix = T['head has no timer, it\'s probably despawned']
 
         if timer then
           local h, m = PWB.core.getTimeLeft(timer.h, timer.m)
-          local timeLeft = h == 0 and m == 0 and ' NOW!' or ' in ' .. PWB.utils.toString(h, m)
-          suffix = ' head will despawn ' .. timeLeft
+          local isNow = h == 0 and m == 0
+          suffix = isNow and T['head will despawn NOW!'] or T['head will despawn in'] .. ' ' .. PWB.utils.toString(h, m)
         end
 
-        text = '(' .. city .. ') ' .. PWB.Bosses[f.timer.boss] .. suffix
+        text = '(' .. city .. ') ' .. T[PWB.Bosses[f.timer.boss]] .. ' ' .. suffix
       else
-        local prefix = 'I\'m using PizzaWorldBuffs. Get it at'
+        local prefix = T['I\'m using PizzaWorldBuffs. Get it at']
         if math.random(1, 20) == 1 then
-          prefix = 'I <3 pineapple on pizza!'
+          prefix = T['I <3 pineapple on pizza! Get some at']
         end
         text = prefix .. ' https://github.com/Pizzahawaiii/PizzaWorldBuffs'
       end
@@ -139,7 +141,7 @@ function PWB.frame.updateFrames()
 
     if frame.timer then
       local timer = PWB_timers[frame.timer.faction][frame.timer.boss]
-      local timeStr = PWB.Colors.grey .. 'N/A'
+      local timeStr = PWB.Colors.grey .. T['N/A']
 
       if timer then
         local h, m = PWB.core.getTimeLeft(timer.h, timer.m)
@@ -147,7 +149,7 @@ function PWB.frame.updateFrames()
       end
 
       local bossColor = frame.timer.faction == 'A' and PWB.Colors.alliance or PWB.Colors.horde
-      frame.frame.text:SetText(bossColor .. PWB.Bosses[frame.timer.boss] .. ': ' .. timeStr)
+      frame.frame.text:SetText(bossColor .. T[PWB.Bosses[frame.timer.boss]] .. ': ' .. timeStr)
 
       if not PWB_config.allFactions and frame.timer.faction ~= PWB.myFaction then
         frame.frame:Hide()

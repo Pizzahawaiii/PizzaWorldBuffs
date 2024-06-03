@@ -26,6 +26,23 @@ PWB.Bosses = {
   N = 'Nefarian',
 }
 
+PWB.env = {}
+setmetatable(PWB.env, { __index = getfenv(0) })
+function PWB:GetEnv()
+  if not PWB.env.T then
+    local locale = GetLocale() or 'enUS'
+    PWB.env.T = setmetatable((PWB_translations or {})[locale] or {}, {
+      __index = function(tbl, key)
+        local value = tostring(key)
+        rawset(tbl, key, value)
+        return value
+      end
+    })
+  end
+  return PWB.env
+end
+setfenv(1, PWB:GetEnv())
+
 function PWB:Print(msg, withPrefix)
   local prefix = withPrefix == false and '' or PWB.Colors.primary .. 'Pizza' .. PWB.Colors.secondary .. 'WorldBuffs:|r '
   DEFAULT_CHAT_FRAME:AddMessage(prefix .. msg)
@@ -48,11 +65,13 @@ PWB:SetScript('OnEvent', function ()
 
     if PWB_config.autoLogout then
       PWB_config.autoLogout = false
-      PWB:Print('Auto-logout disabled automatically. To enable it again, use /wb logout 1')
+      PWB:Print(T['Auto-logout disabled automatically. To enable it again, use /wb logout 1'])
     end
   end
 
   if event == 'PLAYER_ENTERING_WORLD' then
+    -- PWB:Print(T['Just a test LOL'])
+
     -- Store player's name & faction ('A' or 'H') for future use
     PWB.me = UnitName('player')
     PWB.myFaction = string.sub(UnitFactionGroup('player'), 1, 1)
@@ -74,11 +93,12 @@ PWB:SetScript('OnEvent', function ()
   if event == 'CHAT_MSG_MONSTER_YELL' then
     local boss, faction = PWB.core.parseMonsterYell(arg1)
     if boss and faction then
+      PWB:Print('Buff triggering: ' .. faction .. ' - ' .. PWB.Bosses[boss])
       local h, m = PWB.utils.hoursFromNow(2)
       PWB.core.setTimer(faction, boss, h, m, PWB.me, PWB.me)
 
       if PWB_config.autoLogout then
-        PWB:Print('About to receive buff and auto-logout is enabled. Will log out in 1 minute.')
+        PWB:Print(T['About to receive buff and auto-logout is enabled. Will log out in 1 minute.'])
         PWB.logoutAt = time() + 60
       end
     end
@@ -117,7 +137,7 @@ PWB:SetScript('OnEvent', function ()
         end
 
         if tonumber(remoteVersion) > PWB.utils.getVersionNumber() and not PWB.updateNotified then
-          PWB:Print('New version available, please update to get more accurate timers! https://github.com/Pizzahawaiii/PizzaWorldBuffs')
+          PWB:Print(T['New version available, please update to get more accurate timers! https://github.com/Pizzahawaiii/PizzaWorldBuffs'])
           PWB.updateNotified = true
         end
       end
@@ -134,7 +154,7 @@ PWB:SetScript('OnUpdate', function ()
   if PWB_config.autoLogout and PWB.logoutAt and time() >= PWB.logoutAt then
     PWB.logoutAt = nil
     PWB.core.publishTimers()
-    PWB:Print('Logging out...')
+    PWB:Print(T['Logging out...'])
     Logout()
   elseif PWB.core.shouldPublishTimers() then
     PWB.core.publishTimers()

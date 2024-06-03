@@ -5,6 +5,8 @@
 ## Version: 1.2.0
 ## SavedVariablesPerCharacter: PWB_config, PWB_timers
 
+translations\enUS.lua
+
 src\main.lua
 src\config.lua
 src\utils.lua
