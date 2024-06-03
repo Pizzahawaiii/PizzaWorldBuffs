@@ -6,6 +6,7 @@
 ## SavedVariablesPerCharacter: PWB_config, PWB_timers
 
 translations\enUS.lua
+translations\zhCN.lua
 
 src\main.lua
 src\config.lua
