@@ -83,12 +83,24 @@ end
 -- These are the NPC yell triggers we use to detect that one of the buffs has dropped.
 local yellTriggers = {
   A = {
-    O = 'The dread lady, Onyxia, hangs from the arches!',
-    N = 'Citizens of the Alliance, the Lord of Blackrock is slain! Nefarian has been subdued',
+    O = {
+      'The dread lady, Onyxia, hangs from the arches!',
+      '一起庆祝英雄的诞生',
+    },
+    N = {
+      'Citizens of the Alliance, the Lord of Blackrock is slain! Nefarian has been subdued',
+      '黑石领主已经被干掉了',
+    },
   },
   H = {
-    O = 'The brood mother, Onyxia, has been slain!',
-    N = 'NEFARIAN IS SLAIN! People of Orgrimmar, bow down before the might of',
+    O = {
+      'The brood mother, Onyxia, has been slain!',
+      '奥妮克希亚已经被斩杀了',
+    },
+    N = {
+      'NEFARIAN IS SLAIN! People of Orgrimmar, bow down before the might of',
+      '奈法利安被杀掉了',
+    },
   },
 }
 
@@ -96,10 +108,12 @@ local yellTriggers = {
 -- If yes, return the boss and faction. Otherwise, return nil.
 function PWB.core.parseMonsterYell(yellMsg)
   for faction, bossTriggers in pairs(yellTriggers) do
-    for boss, yellTrigger in pairs(bossTriggers) do
-      local found = string.find(yellMsg, yellTrigger)
-      if found then
-        return boss, faction
+    for boss, triggers in pairs(bossTriggers) do
+      for _, yellTrigger in ipairs(triggers) do
+        local found = string.find(yellMsg, yellTrigger)
+        if found then
+          return boss, faction
+        end
       end
     end
   end
