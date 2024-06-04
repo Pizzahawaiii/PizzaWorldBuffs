@@ -93,7 +93,6 @@ PWB:SetScript('OnEvent', function ()
   if event == 'CHAT_MSG_MONSTER_YELL' then
     local boss, faction = PWB.core.parseMonsterYell(arg1)
     if boss and faction then
-      PWB:Print('Buff triggering: ' .. faction .. ' - ' .. PWB.Bosses[boss])
       local h, m = PWB.utils.hoursFromNow(2)
       PWB.core.setTimer(faction, boss, h, m, PWB.me, PWB.me)
 
