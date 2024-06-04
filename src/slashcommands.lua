@@ -106,6 +106,7 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
     end
 
     PWB_config.autoLogout = number == 1
+    PWB.logoutFrame.update()
 
     local message
     if PWB_config.autoLogout then
