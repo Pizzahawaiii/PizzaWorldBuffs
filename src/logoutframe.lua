@@ -9,14 +9,21 @@ PWB.logoutFrame:SetFrameStrata('LOW')
 PWB.logoutFrame:SetWidth(1)
 PWB.logoutFrame:SetHeight(1)
 
+PWB.logoutFrame:EnableMouse(true)
+PWB.logoutFrame:SetMovable(true)
+PWB.logoutFrame:RegisterForDrag('LeftButton')
+PWB.logoutFrame:SetScript('OnDragStart', function ()
+  this:StartMoving()
+end)
+PWB.logoutFrame:SetScript('OnDragStop', function ()
+  this:StopMovingOrSizing()
+end)
+
 PWB.logoutFrame.text = PWB.logoutFrame:CreateFontString('PizzaWorldBuffsLogoutFrameText', 'DIALOG', 'GameFontWhite')
 PWB.logoutFrame.text:SetFont(STANDARD_TEXT_FONT, 16, 'OUTLINE')
 PWB.logoutFrame.text:SetJustifyH('CENTER')
 PWB.logoutFrame.text:SetPoint('TOP', 0, 0)
 local prefix = PWB.Colors.primary .. 'Pizza' .. PWB.Colors.secondary .. 'WorldBuffs'
-
-PWB.logoutFrame:SetWidth(PWB.logoutFrame.text:GetWidth())
-PWB.logoutFrame:SetHeight(PWB.logoutFrame.text:GetHeight())
 
 PWB.logoutFrame:Show()
 
@@ -35,6 +42,9 @@ function PWB.logoutFrame.update()
       local message = PWB_config.autoExit and T['Auto-exit enabled!'] or T['Auto-logout enabled!']
       PWB.logoutFrame.text:SetText(prefix .. '\n\n' .. PWB.Colors.orange .. message .. '|r\n' .. suffix)
     end
+
+    PWB.logoutFrame:SetWidth(PWB.logoutFrame.text:GetWidth())
+    PWB.logoutFrame:SetHeight(PWB.logoutFrame.text:GetHeight())
 
     PWB.logoutFrame.text:Show()
   else
