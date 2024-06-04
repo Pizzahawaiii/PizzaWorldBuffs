@@ -1,6 +1,8 @@
 local PWB = PizzaWorldBuffs
 PWB.core = {}
 
+setfenv(1, PWB:GetEnv())
+
 local BUFF_CD_HOURS = 2
 
 -- Encode the provided timer as a string that can be shared with other addon users.
@@ -83,12 +85,12 @@ end
 -- These are the NPC yell triggers we use to detect that one of the buffs has dropped.
 local yellTriggers = {
   A = {
-    O = 'The dread lady, Onyxia, hangs from the arches!',
-    N = 'Citizens of the Alliance, the Lord of Blackrock is slain! Nefarian has been subdued',
+    O = T['YELL_TRIGGER_ALLIANCE_ONYXIA'],
+    N = T['YELL_TRIGGER_ALLIANCE_NEFARIAN'],
   },
   H = {
-    O = 'The brood mother, Onyxia, has been slain!',
-    N = 'NEFARIAN IS SLAIN! People of Orgrimmar, bow down before the might of',
+    O = T['YELL_TRIGGER_HORDE_ONYXIA'],
+    N = T['YELL_TRIGGER_HORDE_NEFARIAN'],
   },
 }
 

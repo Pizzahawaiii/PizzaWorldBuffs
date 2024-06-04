@@ -1,6 +1,11 @@
 if not PWB_translations then PWB_translations = {} end
 
 PWB_translations['enUS'] = {
+  ['YELL_TRIGGER_ALLIANCE_ONYXIA'] = 'The dread lady, Onyxia, hangs from the arches!',
+  ['YELL_TRIGGER_ALLIANCE_NEFARIAN'] = 'Citizens of the Alliance, the Lord of Blackrock is slain! Nefarian has been subdued',
+  ['YELL_TRIGGER_HORDE_ONYXIA'] = 'The brood mother, Onyxia, has been slain!',
+  ['YELL_TRIGGER_HORDE_NEFARIAN'] = 'NEFARIAN IS SLAIN! People of Orgrimmar, bow down before the might of',
+
   ['SW'] = nil,
   ['OG'] = nil,
   ['Onyxia'] = nil,
