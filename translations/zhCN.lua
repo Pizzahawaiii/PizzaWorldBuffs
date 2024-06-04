@@ -1,6 +1,11 @@
 if not PWB_translations then PWB_translations = {} end
 
 PWB_translations['zhCN'] = {
+  ['YELL_TRIGGER_ALLIANCE_ONYXIA'] = '一起庆祝英雄的诞生',
+  ['YELL_TRIGGER_ALLIANCE_NEFARIAN'] = '黑石领主已经被干掉了',
+  ['YELL_TRIGGER_HORDE_ONYXIA'] = '奥妮克希亚已经被斩杀了',
+  ['YELL_TRIGGER_HORDE_NEFARIAN'] = '奈法利安被杀掉了',
+
   ['SW'] = nil,
   ['OG'] = nil,
   ['Onyxia'] = nil,
