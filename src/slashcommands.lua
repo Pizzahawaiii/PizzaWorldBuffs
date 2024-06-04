@@ -106,15 +106,47 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
     end
 
     PWB_config.autoLogout = number == 1
-    PWB.logoutFrame.update()
 
     local message
     if PWB_config.autoLogout then
       message = T['Auto-logout after receiving next buff enabled. This will be disabled again the next time you relog or reload your UI.']
+      if PWB_config.autoExit then
+        PWB_config.autoExit = false
+        PWB:Print(T['Auto-exit after receiving next buff disabled.'])
+      end
     else
       message = T['Auto-logout after receiving next buff disabled.']
     end
+
+    PWB.logoutFrame.update()
     PWB:Print(message)
+
+    return
+  end
+
+  if command == 'exit' then
+    local number = tonumber(msg)
+    if not number or (number ~= 0 and number ~= 1) then
+      PWB:Print(T['Valid options are 0 and 1'])
+      return
+    end
+
+    PWB_config.autoExit = number == 1
+
+    local message
+    if PWB_config.autoExit then
+      message = T['Auto-exit after receiving next buff enabled. This will be disabled again the next time you relog or reload your UI.']
+      if PWB_config.autoLogout then
+        PWB_config.autoLogout = false
+        PWB:Print(T['Auto-logout after receiving next buff disabled.'])
+      end
+    else
+      message = T['Auto-exit after receiving next buff disabled.']
+    end
+
+    PWB.logoutFrame.update()
+    PWB:Print(message)
+
     return
   end
 
@@ -129,6 +161,7 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r all ' .. (PWB_config.allFactions and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show both factions\' world buff timers'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r sharing ' .. (PWB_config.sharingEnabled and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Enable timer sharing between you and other players'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r logout ' .. (PWB_config.autoLogout and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Log out automatically after receiving next buff'])
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r exit ' .. (PWB_config.autoExit and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Exit game automatically after receiving next buff'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r clear ' .. PWB.Colors.grey .. '- ' .. T['Clear all world buff timers'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r fontSize ' .. PWB_config.fontSize .. PWB.Colors.grey .. ' - ' .. T['Set font size'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r align ' .. PWB_config.align .. PWB.Colors.grey .. ' - ' .. T['Align text left/center/right'])

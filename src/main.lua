@@ -67,6 +67,11 @@ PWB:SetScript('OnEvent', function ()
       PWB_config.autoLogout = false
       PWB:Print(T['Auto-logout disabled automatically. To enable it again, use /wb logout 1'])
     end
+
+    if PWB_config.autoExit then
+      PWB_config.autoExit = false
+      PWB:Print(T['Auto-exit disabled automatically. To enable it again, use /wb exit 1'])
+    end
   end
 
   if event == 'PLAYER_ENTERING_WORLD' then
@@ -96,8 +101,9 @@ PWB:SetScript('OnEvent', function ()
       local h, m = PWB.utils.hoursFromNow(2)
       PWB.core.setTimer(faction, boss, h, m, PWB.me, PWB.me)
 
-      if PWB_config.autoLogout then
-        PWB:Print(T['About to receive buff and auto-logout is enabled. Will log out in 1 minute.'])
+      if PWB_config.autoLogout or PWB_config.autoExit then
+        local message = PWB_config.autoExit and T['About to receive buff and auto-exit is enabled. Will exit game in 1 minute.'] or T['About to receive buff and auto-logout is enabled. Will log out in 1 minute.']
+        PWB:Print(message)
         PWB.logoutAt = time() + 60
       end
     end
@@ -150,11 +156,16 @@ PWB:SetScript('OnUpdate', function ()
 
   PWB.core.clearExpiredTimers()
 
-  if PWB_config.autoLogout and PWB.logoutAt and time() >= PWB.logoutAt then
+  if (PWB_config.autoLogout or PWB_config.autoExit) and PWB.logoutAt and time() >= PWB.logoutAt then
     PWB.logoutAt = nil
     PWB.core.publishTimers()
-    PWB:Print(T['Logging out...'])
-    Logout()
+    if PWB_config.autoLogout then
+      PWB:Print(T['Logging out...'])
+      Logout()
+    else
+      PWB:Print(T['Exiting game...'])
+      Quit()
+    end
   elseif PWB.core.shouldPublishTimers() then
     PWB.core.publishTimers()
   end

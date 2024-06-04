@@ -14,9 +14,6 @@ PWB.logoutFrame.text:SetFont(STANDARD_TEXT_FONT, 16, 'OUTLINE')
 PWB.logoutFrame.text:SetJustifyH('CENTER')
 PWB.logoutFrame.text:SetPoint('TOP', 0, 0)
 local prefix = PWB.Colors.primary .. 'Pizza' .. PWB.Colors.secondary .. 'WorldBuffs'
-local defaultMessage = PWB.Colors.orange .. T['Auto-logout enabled!'] .. '|r'
-local suffix = T['To disable this, type'] .. PWB.Colors.primary .. ' /wb logout 0' .. '|r'
-PWB.logoutFrame.text:SetText(prefix .. '\n\n' .. defaultMessage .. '\n' .. suffix)
 
 PWB.logoutFrame:SetWidth(PWB.logoutFrame.text:GetWidth())
 PWB.logoutFrame:SetHeight(PWB.logoutFrame.text:GetHeight())
@@ -24,17 +21,22 @@ PWB.logoutFrame:SetHeight(PWB.logoutFrame.text:GetHeight())
 PWB.logoutFrame:Show()
 
 function PWB.logoutFrame.update()
-  if PWB_config.autoLogout then
-    PWB.logoutFrame.text:Show()
+  if PWB_config.autoLogout or PWB_config.autoExit then
+    local command = PWB_config.autoExit and '/wb exit 0' or '/wb logout 0'
+    local suffix = T['To disable this, type'] .. PWB.Colors.primary .. ' ' .. command .. '|r'
 
     local now = time()
     if PWB.logoutAt and now < PWB.logoutAt then
       local diff = PWB.logoutAt - now
-      local message = PWB.Colors.red .. T['Received buff. Logging out in'] .. '|r ' .. diff .. ' ' .. PWB.Colors.red .. T['seconds'] .. '...|r'
+      local msg = PWB_config.autoExit and T['Received buff. Exiting game in'] or T['Received buff. Logging out in']
+      local message = PWB.Colors.red .. msg .. '|r ' .. diff .. ' ' .. PWB.Colors.red .. T['seconds'] .. '...|r'
       PWB.logoutFrame.text:SetText(prefix .. '\n\n' .. message .. '\n' .. suffix)
     else
-      PWB.logoutFrame.text:SetText(prefix .. '\n\n' .. defaultMessage .. '\n' .. suffix)
+      local message = PWB_config.autoExit and T['Auto-exit enabled!'] or T['Auto-logout enabled!']
+      PWB.logoutFrame.text:SetText(prefix .. '\n\n' .. PWB.Colors.orange .. message .. '|r\n' .. suffix)
     end
+
+    PWB.logoutFrame.text:Show()
   else
     PWB.logoutFrame.text:Hide()
   end
