@@ -8,6 +8,7 @@ PWB.logoutFrame:SetPoint('TOP', 0, -200)
 PWB.logoutFrame:SetFrameStrata('LOW')
 PWB.logoutFrame:SetWidth(1)
 PWB.logoutFrame:SetHeight(1)
+PWB.logoutFrame:Show()
 
 PWB.logoutFrame:EnableMouse(true)
 PWB.logoutFrame:SetMovable(true)
@@ -23,9 +24,6 @@ PWB.logoutFrame.text = PWB.logoutFrame:CreateFontString('PizzaWorldBuffsLogoutFr
 PWB.logoutFrame.text:SetFont(STANDARD_TEXT_FONT, 16, 'OUTLINE')
 PWB.logoutFrame.text:SetJustifyH('CENTER')
 PWB.logoutFrame.text:SetPoint('TOP', 0, 0)
-local prefix = PWB.Colors.primary .. 'Pizza' .. PWB.Colors.secondary .. 'WorldBuffs'
-
-PWB.logoutFrame:Show()
 
 function PWB.logoutFrame.update()
   if PWB_config.autoLogout or PWB_config.autoExit then
@@ -37,10 +35,14 @@ function PWB.logoutFrame.update()
       local diff = PWB.logoutAt - now
       local msg = PWB_config.autoExit and T['Received buff. Exiting game in'] or T['Received buff. Logging out in']
       local message = PWB.Colors.red .. msg .. '|r ' .. diff .. ' ' .. PWB.Colors.red .. T['seconds'] .. '...|r'
-      PWB.logoutFrame.text:SetText(prefix .. '\n\n' .. message .. '\n' .. suffix)
+      PWB.logoutFrame.text:SetText(message .. '\n' .. suffix)
     else
-      local message = PWB_config.autoExit and T['Auto-exit enabled!'] or T['Auto-logout enabled!']
-      PWB.logoutFrame.text:SetText(prefix .. '\n\n' .. PWB.Colors.orange .. message .. '|r\n' .. suffix)
+      -- local message = PWB_config.autoExit and T['Auto-exit enabled!'] or T['Auto-logout enabled!']
+
+      local type = PWB_config.autoExit and T['Auto-exit'] or T['Auto-logout']
+      local message = PWB.Colors.orange .. type .. '|r ' .. T['after next buff'] .. ': ' .. PWB.Colors.orange .. T['ENABLED']
+
+      PWB.logoutFrame.text:SetText(message .. '|r\n' .. suffix)
     end
 
     PWB.logoutFrame:SetWidth(PWB.logoutFrame.text:GetWidth())
