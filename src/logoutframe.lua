@@ -4,7 +4,7 @@ setfenv(1, PWB:GetEnv())
 
 PWB.logoutFrame = CreateFrame('Frame', 'PizzaWorldBuffsLogoutFrame', UIParent)
 PWB.logoutFrame:ClearAllPoints()
-PWB.logoutFrame:SetPoint('TOP', 0, -150)
+PWB.logoutFrame:SetPoint('TOP', 0, -200)
 PWB.logoutFrame:SetFrameStrata('LOW')
 PWB.logoutFrame:SetWidth(1)
 PWB.logoutFrame:SetHeight(1)
