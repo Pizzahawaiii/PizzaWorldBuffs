@@ -15,7 +15,7 @@ end
 
 -- Convert a time table to string in Hh Mm format, e.g. 1h 52m.
 function PWB.utils.toString(h, m)
-  if not h and not m then return 'N/A' end
+  if not h and not m then return T['N/A'] end
   return (h > 0 and h .. 'h ' or '') .. m .. 'm'
 end
 
