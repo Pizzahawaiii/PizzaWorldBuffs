@@ -1,6 +1,8 @@
 local PWB = PizzaWorldBuffs
 PWB.utils = {}
 
+setfenv(1, PWB:GetEnv())
+
 -- Convert a time (duration) table to a number of minutes.
 function PWB.utils.toMinutes(h, m)
   return h * 60 + m
