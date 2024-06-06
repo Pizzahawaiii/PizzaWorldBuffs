@@ -27,7 +27,10 @@ PWB.Bosses = {
 }
 
 PWB.env = {}
-setmetatable(PWB.env, { __index = getfenv(0) })
+setmetatable(PWB.env, { __index = function (self, key)
+  if key == 'T' then return end
+  return getfenv(0)[key]
+end})
 function PWB:GetEnv()
   if not PWB.env.T then
     local locale = GetLocale() or 'enUS'
