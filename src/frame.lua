@@ -82,6 +82,9 @@ local function initFrames()
     {
       name = 'PizzaWorldBuffsHeader',
       text = PWB.Colors.primary .. 'Pizza' .. PWB.Colors.secondary .. 'WorldBuffs',
+      shouldShow =  function() 
+        return PWB_config.header ~= nil and PWB_config.header
+      end,
     },
     {
       name = 'PizzaWorldBuffsTimer1',
@@ -164,6 +167,15 @@ function PWB.frame.updateFrames()
     frame.frame:SetPoint(point, 0, (i - 1) * y)
     frame.frame:SetWidth(frame.frame.text:GetWidth())
     frame.frame:SetHeight(frame.frame.text:GetHeight())
+
+    if frame.shouldShow then
+      if frame.shouldShow() then
+        frame.frame:Show()
+      else
+        frame.frame:SetHeight(0)
+        frame.frame:Hide()
+      end
+    end
   end
 end
 

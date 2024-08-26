@@ -6,6 +6,7 @@ local defaultConfig = {
   show = true,
   fontSize = 14,
   align = 'center',
+  header = true,
   allFactions = true,
   sharingEnabled = true,
   autoLogout = false,
