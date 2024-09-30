@@ -48,9 +48,9 @@ function PWB.logoutFrame.update()
     PWB.logoutFrame:SetWidth(PWB.logoutFrame.text:GetWidth())
     PWB.logoutFrame:SetHeight(PWB.logoutFrame.text:GetHeight())
 
-    PWB.logoutFrame.text:Show()
+    PWB.logoutFrame:Show()
   else
-    PWB.logoutFrame.text:Hide()
+    PWB.logoutFrame:Hide()
   end
 end
 
