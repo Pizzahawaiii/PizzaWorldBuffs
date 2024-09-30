@@ -28,7 +28,9 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   if command == 'reset' then
     PWB.frame:ClearAllPoints()
     PWB.frame:SetPoint('TOP', 0, -50)
-    PWB:Print(T['Reset PizzaWorldBuffs frame to its default position'])
+    PWB.logoutFrame:ClearAllPoints()
+    PWB.logoutFrame:SetPoint('TOP', 0, -200)
+    PWB:Print(T['Reset PizzaWorldBuffs frames to their default position'])
     return
   end
 
@@ -189,7 +191,7 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r sharing ' .. (PWB_config.sharingEnabled and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Enable timer sharing between you and other players'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r logout ' .. (PWB_config.autoLogout and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Log out automatically after receiving next buff'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r exit ' .. (PWB_config.autoExit and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Exit game automatically after receiving next buff'])
-  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r reset ' .. PWB.Colors.grey .. '- ' .. T['Reset PizzaWorldBuffs frame to its default position'])
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r reset ' .. PWB.Colors.grey .. '- ' .. T['Reset PizzaWorldBuffs frames to their default positions'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r clear ' .. PWB.Colors.grey .. '- ' .. T['Clear all world buff timers'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r fontSize ' .. PWB_config.fontSize .. PWB.Colors.grey .. ' - ' .. T['Set font size'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r align ' .. PWB_config.align .. PWB.Colors.grey .. ' - ' .. T['Align text left/center/right'])
