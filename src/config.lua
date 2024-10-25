@@ -16,6 +16,7 @@ local defaultConfig = {
     center = 0,
   },
   dmf = true,
+  tents = true,
 }
 
 function PWB.config.init()

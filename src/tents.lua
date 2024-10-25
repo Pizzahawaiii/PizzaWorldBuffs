@@ -124,7 +124,7 @@ function PWB.tents.save(zone, x, y, stack, firstSeen, lastSeen, imTheWitness)
 
     -- Announce if new tent is in our zone, but only if the map is currently not
     -- open so we don't annoy/distract the player.
-    if not imTheWitness and not WorldMapFrame:IsShown() then
+    if PWB_config.tents and not imTheWitness and not WorldMapFrame:IsShown() then
       SetMapToCurrentZone()
       if zone == PWB.tents.getCurrentMapZoneName() then
         PWB:Print('Just found a tent in your zone, check the map!')
@@ -429,7 +429,12 @@ function PWB.tents.updatePins()
     f.tex = f:CreateTexture(nil, 'MEDIUM')
     f.tex:SetAllPoints(f)
     f.tex:SetTexture('Interface\\AddOns\\PizzaWorldBuffs\\img\\tent')
-    f:Show()
+
+    if PWB_config.tents then
+      f:Show()
+    else
+      f:Hide()
+    end
 
     f:SetScript('OnEnter', function()
       GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)

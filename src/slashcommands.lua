@@ -112,6 +112,25 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
     return
   end
 
+  if command == 'tents' then
+    local number = tonumber(msg)
+    if not number or (number ~= 0 and number ~= 1) then
+      PWB:Print(T['Valid options are 0 and 1'])
+      return
+    end
+
+    PWB_config.tents = number == 1
+    PWB.tents.updatePins()
+    local message
+    if PWB_config.tents then
+      message = T['Showing tents on the world map']
+    else
+      message = T['Hiding tents from the world map']
+    end
+    PWB:Print(message)
+    return
+  end
+
   if command == 'sharing' then
     local number = tonumber(msg)
     if not number or (number ~= 0 and number ~= 1) then
@@ -221,6 +240,7 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r header ' .. (PWB_config.header and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show PizzaWorldBuffs header'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r dmf ' .. (PWB_config.dmf and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show Darkmoon Faire location'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r all ' .. (PWB_config.allFactions and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show both factions\' world buff timers'])
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r tents ' .. (PWB_config.tents and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show tent locations on the world map'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r sharing ' .. (PWB_config.sharingEnabled and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Enable timer sharing between you and other players'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r logout ' .. (PWB_config.autoLogout and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Log out automatically after receiving next buff'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r exit ' .. (PWB_config.autoExit and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Exit game automatically after receiving next buff'])
