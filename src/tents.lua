@@ -122,14 +122,14 @@ function PWB.tents.save(zone, x, y, stack, firstSeen, lastSeen, imTheWitness)
       PWB.tents.publish(tent)
     end
 
-    -- Announce if new tent is in our zone, but only if the map is currently not
-    -- open so we don't annoy/distract the player.
-    if PWB_config.tents and not imTheWitness and not WorldMapFrame:IsShown() then
-      SetMapToCurrentZone()
-      if zone == PWB.tents.getCurrentMapZoneName() then
-        PWB:Print('Just found a tent in your zone, check the map!')
-      end
-    end
+    -- -- Announce if new tent is in our zone, but only if the map is currently not
+    -- -- open so we don't annoy/distract the player.
+    -- if PWB_config.tents and not imTheWitness and not WorldMapFrame:IsShown() then
+    --   SetMapToCurrentZone()
+    --   if zone == PWB.tents.getCurrentMapZoneName() then
+    --     PWB:Print('Just found a tent in your zone, check the map!')
+    --   end
+    -- end
   end
 
   PWB.tents.updatePins()
