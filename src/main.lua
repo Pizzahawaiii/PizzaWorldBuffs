@@ -42,6 +42,7 @@ function PWB:GetEnv()
       end
     })
   end
+  PWB.env._G = getfenv(0)
   return PWB.env
 end
 setfenv(1, PWB:GetEnv())

@@ -114,7 +114,7 @@ end
 
 -- Store the provided timer locally.
 function PWB.core.setTimer(faction, boss, h, m, witness, receivedFrom)
-  PWB_timers[faction][boss] = {
+  _G.PWB_timers[faction][boss] = {
     faction = faction,
     boss = boss,
     h = h,
@@ -127,7 +127,7 @@ end
 
 -- Remove the provided timer from our local timer store.
 function PWB.core.clearTimer(timer)
-  PWB_timers[timer.faction][timer.boss] = nil
+  _G.PWB_timers[timer.faction][timer.boss] = nil
 end
 
 -- Clear all invalid timers from our local timer store.
@@ -144,7 +144,7 @@ end
 
 -- Clear all local timers, even valid ones.
 function PWB.core.clearAllTimers()
-  PWB_timers = {
+  _G.PWB_timers = {
     A = {},
     H = {},
   }
