@@ -174,6 +174,23 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
     return
   end
 
+  if command == 'dmfbuffs' then
+    PWB:PrintClean(PWB.Colors.primary .. 'Darkmoon Faire|r Buffs:')
+    PWB:PrintClean('   (1-1)  +10% Damage')
+    PWB:PrintClean('   (1-2)  +25 All Resistances')
+    PWB:PrintClean('   (1-3)  +10% Armor')
+    PWB:PrintClean('   (2-1)  +10% Spirit')
+    PWB:PrintClean('   (2-2)  +10% Intelligence')
+    PWB:PrintClean('   (2-3)  +25 All Resistances')
+    PWB:PrintClean('   (3-1)  +10% Stamina')
+    PWB:PrintClean('   (3-2)  +10% Strength')
+    PWB:PrintClean('   (3-3)  +10% Agility')
+    PWB:PrintClean('   (4-1)  +10% Intelligence')
+    PWB:PrintClean('   (4-2)  +10% Spirit')
+    PWB:PrintClean('   (4-3)  +10% Armor')
+    return
+  end
+
   if command == 'version' then
     PWB:Print(T['Version'] .. ' ' .. PWB.utils.getVersion())
     return
@@ -190,5 +207,6 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r reset ' .. PWB.Colors.grey .. '- ' .. T['Reset PizzaWorldBuffs frames to their default positions'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r fontSize ' .. PWB_config.fontSize .. PWB.Colors.grey .. ' - ' .. T['Set font size'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r align ' .. PWB_config.align .. PWB.Colors.grey .. ' - ' .. T['Align text left/center/right'])
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r dmfbuffs ' .. PWB.Colors.grey .. '- ' .. T['Show list of Darkmoon Faire buffs'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r version ' .. PWB.Colors.grey .. '- ' .. T['Show current version'])
 end

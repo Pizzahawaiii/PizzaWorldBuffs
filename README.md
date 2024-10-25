@@ -39,6 +39,7 @@ Check the [commit history](https://github.com/Pizzahawaiii/PizzaWorldBuffs/commi
 /wb reset              Reset PizzaWorldBuffs frames to their default positions
 /wb fontSize <size>    Change the font size of the PizzaWorldBuff frame (Default: 14)
 /wb align <x>          Change text alignment. Valid options: left, center, right (Default: center)
+/wb dmfbuffs           Show a list of all available Darkmoon Faire buffs
 /wb version            Show current PizzaWorldBuffs version
 ```
 
