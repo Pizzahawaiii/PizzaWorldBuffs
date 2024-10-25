@@ -1,6 +1,7 @@
 PizzaWorldBuffs = CreateFrame('Frame', 'PizzaWorldBuffs', UIParent)
 local PWB = PizzaWorldBuffs
 PWB.abbrev = 'PWB'
+PWB.abbrevDmf = 'PWB_DMF'
 
 -- If many players are using the addon and we're unlucky, we mayb never be able to publish our timers, because
 -- someone else will publish theirs before us every time. To combat this and allow everyone to publish their
@@ -24,6 +25,37 @@ PWB.Colors = {
 PWB.Bosses = {
   O = 'Onyxia',
   N = 'Nefarian',
+}
+
+PWB.DmfLocations = {
+  E = 'Elwynn Forest',
+  M = 'Mulgore',
+}
+
+local dmfNpcNames = {
+  'Flik',
+  'Sayge',
+  'Burth',
+  'Lhara',
+  'Morja',
+  'Jubjub',
+  'Chronos',
+  'Felinni',
+  'Rinling',
+  'Sylannia',
+  'Hornsley',
+  'Kerri Hicks',
+  'Flik\'s Frog',
+  'Yebb Neblegear',
+  'Silas Darkmoon',
+  'Selina Dourman',
+  'Khaz Modan Ram',
+  'Pygmy Cockatrice',
+  'Gelvas Grimegate',
+  'Stamp Thunderhorn',
+  'Maxima Blastenheimer',
+  'Darkmoon Faire Carnie',
+  'Professor Thaddeus Paleo',
 }
 
 PWB.env = {}
@@ -62,6 +94,7 @@ PWB:RegisterEvent('PLAYER_ENTERING_WORLD')
 PWB:RegisterEvent('CHAT_MSG_ADDON')
 PWB:RegisterEvent('CHAT_MSG_CHANNEL')
 PWB:RegisterEvent('CHAT_MSG_MONSTER_YELL')
+PWB:RegisterEvent('UPDATE_MOUSEOVER_UNIT')
 PWB:SetScript('OnEvent', function ()
   if event == 'ADDON_LOADED' and arg1 == 'PizzaWorldBuffs' then
     -- Initialize config with default values if necessary
@@ -90,8 +123,8 @@ PWB:SetScript('OnEvent', function ()
       PWB.core.clearAllTimers()
     end
 
-    -- Publish our timers once whenever we log in
-    PWB.core.publishTimers()
+    -- Publish everything once whenever we log in
+    PWB.core.publishAll()
 
     -- Trigger delayed joining of the PWB chat channel if sharing is enabled
     if PWB_config.sharingEnabled then
@@ -149,7 +182,20 @@ PWB:SetScript('OnEvent', function ()
           PWB:Print(T['New version available, please update to get more accurate timers! https://github.com/Pizzahawaiii/PizzaWorldBuffs'])
           PWB.updateNotified = true
         end
+      elseif addonName == PWB.abbrevDmf then
+        PWB.core.resetPublishDelay()
+        local location, seenAt, witness = PWB.core.decodeDmf(msg)
+        if PWB.core.shouldAcceptDmfLocation(seenAt) then
+          PWB.core.setDmfLocation(location, seenAt, witness)
+        end
       end
+    end
+  end
+
+  if event == 'UPDATE_MOUSEOVER_UNIT' and PWB.utils.contains(dmfNpcNames, UnitName('mouseover')) then
+    local zone = GetZoneText()
+    if zone == 'Elwynn Forest' or zone == 'Mulgore' then
+      PWB.core.setDmfLocation(string.sub(zone, 1, 1), time(), PWB.me)
     end
   end
 end)
@@ -162,7 +208,7 @@ PWB:SetScript('OnUpdate', function ()
 
   if (PWB_config.autoLogout or PWB_config.autoExit) and PWB.logoutAt and time() >= PWB.logoutAt then
     PWB.logoutAt = nil
-    PWB.core.publishTimers()
+    PWB.core.publishAll()
     if PWB_config.autoLogout then
       PWB:Print(T['Logging out...'])
       Logout()
@@ -170,7 +216,7 @@ PWB:SetScript('OnUpdate', function ()
       PWB:Print(T['Exiting game...'])
       Quit()
     end
-  elseif PWB.core.shouldPublishTimers() then
-    PWB.core.publishTimers()
+  elseif PWB.core.shouldPublish() then
+    PWB.core.publishAll()
   end
 end)

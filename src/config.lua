@@ -15,6 +15,7 @@ local defaultConfig = {
     top = 50,
     center = 0,
   },
+  dmf = true,
 }
 
 function PWB.config.init()

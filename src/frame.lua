@@ -32,6 +32,15 @@ local function initFrame(f, anchor)
         end
 
         text = '(' .. city .. ') ' .. T[PWB.Bosses[f.timer.boss]] .. ' ' .. suffix
+      elseif f.name == 'PizzaWorldBuffsDmf' then
+        text = 'Darkmoon Faire location is currently unknown. Try "/w Tents dmf?"'
+
+        if PWB.utils.hasDmf() then
+          local location = PWB.DmfLocations[PWB_dmf.location]
+          local secondsAgo = time() - PWB_dmf.seenAt
+          local timeAgo = PWB.utils.toRoughTimeString(secondsAgo)
+          text = 'Darkmoon Faire was last seen in ' .. location .. ' ' .. timeAgo .. ' ago.'
+        end
       else
         local prefix = T['I\'m using PizzaWorldBuffs. Get it at']
         if math.random(1, 20) == 1 then
@@ -64,6 +73,39 @@ local function initFrame(f, anchor)
     PWB.frame:StopMovingOrSizing()
   end)
 
+  if f.name == 'PizzaWorldBuffsDmf' then
+    f.frame:SetScript('OnEnter', function ()
+      local location
+      local lastSeen
+
+      if PWB_dmf then
+        local locationColor = PWB_dmf.location == 'E' and PWB.Colors.alliance or PWB.Colors.horde
+        location = locationColor .. PWB.DmfLocations[PWB_dmf.location]
+
+        local lastSeenSeconds = time() - PWB_dmf.seenAt
+        local lastSeenColor = PWB.Colors.green
+        if lastSeenSeconds > (60 * 60) then lastSeenColor = PWB.Colors.orange end
+        if lastSeenSeconds > (60 * 60 * 12) then lastSeenColor = PWB.Colors.red end
+        lastSeen = lastSeenColor .. PWB.utils.toRoughTimeString(lastSeenSeconds)
+      end
+
+      GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
+      GameTooltip:SetText(PWB.Colors.primary .. 'Darkmoon Faire')
+      if location and lastSeen then
+        GameTooltip:AddLine(PWB.Colors.secondary .. '\nLast seen ' .. lastSeen .. PWB.Colors.secondary .. ' ago in ' .. location .. PWB.Colors.secondary .. '.')
+      else
+        GameTooltip:AddLine(PWB.Colors.secondary .. '\nLocation currently unknown')
+      end
+      GameTooltip:AddLine(PWB.Colors.grey .. '\nThe Faire shuts down on Wednesdays and\nmoves between Elwynn Forest and Mulgore\nevery Sunday at midnight (server time).')
+      GameTooltip:AddLine(PWB.Colors.primary .. '\n/wb dmfbuffs' .. PWB.Colors.grey .. ' shows all available buffs.')
+      GameTooltip:AddLine(PWB.Colors.primary .. '\n/wb dmf 0' .. PWB.Colors.grey .. ' hides DMF location.')
+      GameTooltip:Show()
+    end)
+    f.frame:SetScript('OnLeave', function ()
+      GameTooltip:Hide()
+    end)
+  end
+
   f.frame.text = f.frame:CreateFontString(f.name .. 'Text', 'DIALOG', 'GameFontWhite')
   f.frame.text:SetFont(STANDARD_TEXT_FONT, PWB_config.fontSize, 'OUTLINE')
   f.frame.text:SetJustifyH('LEFT')
@@ -83,7 +125,7 @@ local function initFrames()
       name = 'PizzaWorldBuffsHeader',
       text = PWB.Colors.primary .. 'Pizza' .. PWB.Colors.secondary .. 'WorldBuffs',
       shouldShow =  function() 
-        return PWB_config.header ~= nil and PWB_config.header
+        return PWB_config.header == true
       end,
     },
     {
@@ -113,6 +155,12 @@ local function initFrames()
         faction = otherFaction,
         boss = 'N',
       },
+    },
+    {
+      name = 'PizzaWorldBuffsDmf',
+      shouldShow =  function() 
+        return PWB_config.dmf == true
+      end,
     },
   }
 
@@ -159,12 +207,27 @@ function PWB.frame.updateFrames()
       else
         frame.frame:Show()
       end
+    elseif frame.name == 'PizzaWorldBuffsDmf' then
+      local location = PWB.Colors.grey .. 'N/A'
+
+      if PWB_dmf then
+        local color = PWB_dmf.location == 'E' and PWB.Colors.alliance or PWB.Colors.horde
+        location = color .. PWB.utils.strSplit(PWB.DmfLocations[PWB_dmf.location], ' ')
+      end
+
+      frame.frame.text:SetText(PWB.Colors.primary .. 'DMF: ' .. location)
     end
 
     frame.frame:ClearAllPoints()
     local y = frame.anchor and (-frame.anchor.frame.text:GetHeight()) or 0
     local point = PWB_config.align == 'left' and 'TOPLEFT' or PWB_config.align == 'right' and 'TOPRIGHT' or 'TOP'
-    frame.frame:SetPoint(point, 0, (i - 1) * y)
+
+    local idx = i - 1
+    -- Anchor DMF frame correctly if only own faction timers are shown.
+    if frame.name == 'PizzaWorldBuffsDmf' and not PWB_config.allFactions then
+      idx = i - 3
+    end
+    frame.frame:SetPoint(point, 0, idx * y)
     frame.frame:SetWidth(frame.frame.text:GetWidth())
     frame.frame:SetHeight(frame.frame.text:GetHeight())
 
