@@ -391,12 +391,15 @@ function PWB.tents.clearPins()
   pins = {}
 end
 
-function PWB.tents.getSeenAgoStr(seenAgoSeconds)
+function PWB.tents.getSeenAgoStr(seenAgoSeconds, isFirstSeen)
+  local thresholdOrange = isFirstSeen and 300 or 60
+  local thresholdRed = isFirstSeen and 600 or 180
+
   local color = PWB.Colors.green
-  if seenAgoSeconds > 300 then
+  if seenAgoSeconds > thresholdOrange then
     color = PWB.Colors.orange
   end
-  if seenAgoSeconds > 600 then
+  if seenAgoSeconds > thresholdRed then
     color = PWB.Colors.red
   end
   return PWB.utils.toRoughTimeString(seenAgoSeconds), color
@@ -440,7 +443,7 @@ function PWB.tents.updatePins()
       GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
       local title = f.tent.stack > 1 and 'Tent Stack ' .. PWB.Colors.grey .. '(' .. f.tent.stack .. 'x)' or 'Tent'
       GameTooltip:SetText(PWB.Colors.primary .. title)
-      local firstSeenAgoStr, firstSeenAgoColor = PWB.tents.getSeenAgoStr(time() - f.tent.firstSeen)
+      local firstSeenAgoStr, firstSeenAgoColor = PWB.tents.getSeenAgoStr(time() - f.tent.firstSeen, true)
       GameTooltip:AddLine(PWB.Colors.secondary .. 'First seen ' .. firstSeenAgoColor .. firstSeenAgoStr .. PWB.Colors.secondary .. ' ago.')
       local lastSeenAgoStr, lastSeenAgoColor = PWB.tents.getSeenAgoStr(time() - f.tent.lastSeen)
       GameTooltip:AddLine(PWB.Colors.secondary .. 'Last seen ' .. lastSeenAgoColor .. lastSeenAgoStr .. PWB.Colors.secondary .. ' ago.')
