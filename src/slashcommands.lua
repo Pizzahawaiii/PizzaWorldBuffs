@@ -82,6 +82,7 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
     end
 
     PWB_config.allFactions = number == 1
+    PWB.frame.updateFrames()
     local message
     if PWB_config.allFactions then
       message = T['Showing both factions\' world buff timers']
