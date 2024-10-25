@@ -204,7 +204,24 @@ function PWB.tents.getCurrentMapZoneName()
   return list[mid]
 end
 
-local tentDurationSeconds = 15 * 60
+function PWB.tents.isExpired(tent)
+  local tentDuration = 15 * 60
+  local tenMinutes = 10 * 60
+  local fiveMinutes = 5 * 60
+  local firstSeenAgo = time() - tent.firstSeen
+  local lastSeenAgo = time() - tent.lastSeen
+
+  if lastSeenAgo > tentDuration then
+    return true
+  end
+
+  if firstSeenAgo > tenMinutes and lastSeenAgo > fiveMinutes then
+    return true
+  end
+
+  return false
+end
+
 function PWB.tents.clearExpiredTents()
   if not PWB_tents then
     return
@@ -213,7 +230,7 @@ function PWB.tents.clearExpiredTents()
   local repaint = false
   for zone, tents in pairs(PWB_tents) do
     for idx, tent in ipairs(tents) do
-      if tent.lastSeen < (time() - tentDurationSeconds) then
+      if PWB.tents.isExpired(tent) then
         _G.PWB_tents[zone][idx] = nil
         if length(PWB_tents[zone]) == 0 then
           _G.PWB_tents[zone] = nil
