@@ -40,6 +40,22 @@ function PWB.core.decode(timerStr)
   return faction, boss, tonumber(hStr), tonumber(mStr), witness
 end
 
+-- LOCATION-SECONDSAGO-WITNESS
+function PWB.core.encodeDmf()
+  if not PWB_dmf or not PWB_dmf.location or not PWB_dmf.seenAt or not PWB_dmf.witness then
+    return
+  end
+
+  local secondsAgo = math.floor(time() - PWB_dmf.seenAt)
+  return string.format('%s-%d-%s', PWB_dmf.location, secondsAgo, PWB_dmf.witness)
+end
+
+function PWB.core.decodeDmf(dmfStr)
+  local location, secondsAgoStr, witness = PWB.utils.strSplit(dmfStr, '-')
+  local seenAt = time() - tonumber(secondsAgoStr)
+  return location, seenAt, witness
+end
+
 -- Generate a time table representing the duration from now until the provided
 -- timer will run out.
 function PWB.core.getTimeLeft(h, m)
@@ -105,6 +121,14 @@ function PWB.core.parseMonsterYell(yellMsg)
       end
     end
   end
+end
+
+function PWB.core.setDmfLocation(location, seenAt, witness)
+  _G.PWB_dmf = {
+    location = location,
+    seenAt = seenAt,
+    witness = witness,
+  }
 end
 
 -- Get our current timer for the provided faction and boss.
@@ -175,6 +199,18 @@ function PWB.core.shouldAcceptNewTimer(faction, boss, h, m, witness, receivedFro
   return receivedFrom == witness and currentTimer.receivedFrom ~= currentTimer.witness
 end
 
+local sevenDays = 7 * 24 * 60 * 60
+function PWB.core.shouldAcceptDmfLocation(seenAt)
+  -- Don't accept any DMF locations older than 7 days.
+  if seenAt < (time() - sevenDays) then return false end
+
+  -- Accept any reasonably up-to-date DMF location if we don't have any.
+  if not PWB.utils.hasDmf() then return true end
+
+  -- Always accept the most recent DMF location.
+  return seenAt > PWB_dmf.seenAt
+end
+
 -- Reset the publish delay that we will count down from before we publish our local timers.
 function PWB.core.resetPublishDelay()
   local min, max = 5, 30
@@ -186,8 +222,8 @@ function PWB.core.resetPublishDelay()
   PWB.nextPublishAt = time() + delay
 end
 
--- Check if we should publish our local timers.
-function PWB.core.shouldPublishTimers()
+-- Check if we should publish our local data.
+function PWB.core.shouldPublish()
   if not PWB_config.sharingEnabled then return false end
 
   local now = time()
@@ -201,6 +237,14 @@ function PWB.core.shouldPublishTimers()
   return PWB.nextPublishAt and now > PWB.nextPublishAt
 end
 
+function PWB.core.publishAll()
+  PWB.core.publishDmfLocation()
+  PWB.core.publishTimers()
+
+  PWB.lastPublishedAt = time()
+  PWB.core.resetPublishDelay()
+end
+
 -- Publish our local timers by sending them to the hidden PWB chat channel.
 --
 -- Message format:
@@ -212,23 +256,27 @@ end
 -- Example:
 --   PizzaWorldBuffs:1337:A-O-13-37-Pizzahawaii;H-N-14-44-Someotherdude
 function PWB.core.publishTimers()
-  PWB.core.resetPublishDelay()
-
   -- Always clear all expired timers (again) right before publishing to make sure we never share
   -- outdated timers.
   PWB.core.clearExpiredTimers()
 
-  if not PWB_config.sharingEnabled then return end
-
-  -- Remember the last time we published our timers.
-  PWB.lastPublishedAt = time()
-
-  if UnitLevel('player') < 5 or not PWB.utils.hasTimers() then
+  if not PWB_config.sharingEnabled or not PWB.utils.hasTimers() or UnitLevel('player') < 5 then
     return
   end
 
   local pwbChannel = GetChannelName(PWB.channelName)
   if pwbChannel ~= 0 then
     SendChatMessage(PWB.abbrev .. ':' .. PWB.utils.getVersionNumber() .. ':' .. PWB.core.encodeAll(), 'CHANNEL', nil, pwbChannel)
+  end
+end
+
+function PWB.core.publishDmfLocation()
+  if PWB_dmf == nil then
+    return
+  end
+
+  local pwbChannel = GetChannelName(PWB.channelName)
+  if pwbChannel ~= 0 then
+    SendChatMessage(PWB.abbrevDmf .. ':' .. PWB.utils.getVersionNumber() .. ':' .. PWB.core.encodeDmf(), 'CHANNEL', nil, pwbChannel)
   end
 end

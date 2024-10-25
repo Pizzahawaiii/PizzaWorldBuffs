@@ -15,6 +15,19 @@ function PWB.utils.toTime(minutes)
   return h, m
 end
 
+function PWB.utils.toRoughTimeString(seconds)
+  if seconds < 60 then return seconds .. 's' end
+
+  local minutes = seconds / 60
+  if minutes < 60 then return math.floor(minutes) .. 'm' end
+
+  local hours = minutes / 60
+  if hours < 24 then return '~ ' .. math.floor(hours) .. 'h' end
+
+  local days = hours / 24
+  return '~ ' .. math.floor(days + 0.5) .. 'd'
+end
+
 -- Convert a time table to string in Hh Mm format, e.g. 1h 52m.
 function PWB.utils.toString(h, m)
   if not h and not m then return T['N/A'] end
@@ -84,6 +97,10 @@ function PWB.utils.forEachTimer(fn)
   end
 end
 
+function PWB.utils.hasDmf()
+  return PWB_dmf and PWB_dmf.location and PWB_dmf.seenAt and PWB_dmf.witness
+end
+
 -- Check if we currently have any timers stored.
 function PWB.utils.hasTimers()
   return PWB.utils.someTimer(PWB.utils.identity)
@@ -117,4 +134,11 @@ function PWB.utils.getTimerColor(witness, receivedFrom)
   if witness == PWB.me then return PWB.Colors.green end
   if receivedFrom == witness then return PWB.Colors.orange end
   return PWB.Colors.red
+end
+
+function PWB.utils.contains(table, value)
+  for _, val in pairs(table) do
+    if val == value then return true end
+  end
+  return false
 end
