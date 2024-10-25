@@ -46,7 +46,6 @@ PWB_translations['zhCN'] = {
   ['Show both factions\' world buff timers'] = '显示所有阵营的世界增益计时器',
   ['Enable timer sharing between you and other players'] = '启用与其他玩家之间的计时器共享',
   ['Log out automatically after receiving next buff'] = '获得下一个增益后自动登出',
-  ['Clear all world buff timers'] = '清除所有世界增益计时器',
   ['Set font size'] = '设置字体大小',
   ['Align text left/center/right'] = '对齐文本 左/中/右',
   ['Show current version'] = '显示当前版本',

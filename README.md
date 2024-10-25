@@ -36,7 +36,6 @@ Check the [commit history](https://github.com/Pizzahawaiii/PizzaWorldBuffs/commi
 /wb logout <1 or 0>    1 to log out automatically after receiving the next buff, 0 to stay logged in
 /wb exit <1 or 0>      1 to exit game automatically after receiving the next buff, 0 to stay logged in
 /wb reset              Reset PizzaWorldBuffs frames to their default positions
-/wb clear              Delete all timers from your local storage
 /wb fontSize <size>    Change the font size of the PizzaWorldBuff frame (Default: 14)
 /wb align <x>          Change text alignment. Valid options: left, center, right (Default: center)
 /wb version            Show current PizzaWorldBuffs version

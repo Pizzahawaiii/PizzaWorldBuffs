@@ -46,7 +46,6 @@ PWB_translations['enUS'] = {
   ['Show both factions\' world buff timers'] = nil,
   ['Enable timer sharing between you and other players'] = nil,
   ['Log out automatically after receiving next buff'] = nil,
-  ['Clear all world buff timers'] = nil,
   ['Set font size'] = nil,
   ['Align text left/center/right'] = nil,
   ['Show current version'] = nil,
