@@ -2,6 +2,7 @@ PizzaWorldBuffs = CreateFrame('Frame', 'PizzaWorldBuffs', UIParent)
 local PWB = PizzaWorldBuffs
 PWB.abbrev = 'PWB'
 PWB.abbrevDmf = 'PWB_DMF'
+PWB.abbrevTents = 'PWB_T'
 
 -- If many players are using the addon and we're unlucky, we mayb never be able to publish our timers, because
 -- someone else will publish theirs before us every time. To combat this and allow everyone to publish their

@@ -240,6 +240,9 @@ end
 function PWB.core.publishAll()
   PWB.core.publishDmfLocation()
   PWB.core.publishTimers()
+  if PWB.tents and PWB.tents.publish then
+    PWB.tents.publish()
+  end
 
   PWB.lastPublishedAt = time()
   PWB.core.resetPublishDelay()
