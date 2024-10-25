@@ -97,30 +97,25 @@ function PWB.tents.save(zone, x, y, stack, firstSeen, lastSeen, imTheWitness)
     _G.PWB_tents[zone] = {}
   end
 
+  local newTent = {
+    x = x,
+    y = y,
+    zone = zone,
+    stack = stack,
+    firstSeen = firstSeen,
+    lastSeen = lastSeen,
+  }
+
   -- See if we already have a tent stored around that location and if
   -- we have to update it.
-  local tent, idx = PWB.tents.findTent(zone, x, y)
-  if tent then
-    if lastSeen > tent.lastSeen then
+  local existingTent, idx = PWB.tents.findTent(zone, x, y)
+  if existingTent then
+    if lastSeen > existingTent.lastSeen then
       _G.PWB_tents[zone][idx].stack = stack
       _G.PWB_tents[zone][idx].lastSeen = lastSeen
     end
   else
-    local tent = {
-      x = x,
-      y = y,
-      zone = zone,
-      stack = stack,
-      firstSeen = firstSeen,
-      lastSeen = lastSeen,
-    }
-    table.insert(_G.PWB_tents[zone], tent)
-
-    -- If it's a completely new tent for everyone (or at least for me), immediately
-    -- publish only that new tent!
-    if firstSeen == lastSeen or imTheWitness then
-      PWB.tents.publish(tent)
-    end
+    table.insert(_G.PWB_tents[zone], newTent)
 
     -- -- Announce if new tent is in our zone, but only if the map is currently not
     -- -- open so we don't annoy/distract the player.
@@ -130,6 +125,11 @@ function PWB.tents.save(zone, x, y, stack, firstSeen, lastSeen, imTheWitness)
     --     PWB:Print('Just found a tent in your zone, check the map!')
     --   end
     -- end
+  end
+
+  -- Always publish my own tent updates immediately.
+  if imTheWitness then
+    PWB.tents.publish(newTent)
   end
 
   PWB.tents.updatePins()
