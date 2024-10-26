@@ -131,6 +131,23 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
     return
   end
 
+  local tentStyles = { 1, 2, 3, 4, 5, 6, 7, 1337}
+  if command == 'tentstyle' then
+    local number = tonumber(msg)
+    if not number or not PWB.utils.contains(tentStyles, number) then
+      local options
+      for idx, style in ipairs(tentStyles) do
+        options = options and (options .. ', ' .. style) or style
+      end
+      PWB:Print(T['Valid options are:'] .. ' ' .. options)
+      return
+    end
+
+    PWB_config.tentStyle = number
+    PWB:Print(T['Switched to tent style'] .. ' ' .. number .. '. ' .. T['Please reload your UI to apply the changes.'])
+    return
+  end
+
   if command == 'sharing' then
     local number = tonumber(msg)
     if not number or (number ~= 0 and number ~= 1) then
@@ -241,6 +258,7 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r dmf ' .. (PWB_config.dmf and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show Darkmoon Faire location'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r all ' .. (PWB_config.allFactions and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show both factions\' world buff timers'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r tents ' .. (PWB_config.tents and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show tent locations on the world map'])
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r tentStyle ' .. PWB_config.tentStyle .. PWB.Colors.grey .. ' - ' .. T['Choose between tent styles 1, 2, 3, 4, 5, 6, 7 and 1337'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r sharing ' .. (PWB_config.sharingEnabled and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Enable timer sharing between you and other players'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r logout ' .. (PWB_config.autoLogout and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Log out automatically after receiving next buff'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r exit ' .. (PWB_config.autoExit and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Exit game automatically after receiving next buff'])
