@@ -419,11 +419,12 @@ function PWB.tents.updatePins()
 
   for i, tent in ipairs(PWB_tents[zone]) do
     local f = CreateFrame('Button', 'PizzaTentPin' .. i, WorldMapButton)
+    local pinSize = PWB_config.tentStyle == 1337 and 20 or 18
     f.tent = tent
     f:ClearAllPoints()
     f:SetFrameStrata('TOOLTIP')
-    f:SetWidth(20)
-    f:SetHeight(20)
+    f:SetWidth(pinSize)
+    f:SetHeight(pinSize)
     local mapWidth = WorldMapButton:GetWidth()
     local mapHeight = WorldMapButton:GetHeight()
     local tentX = tent.x * mapWidth
@@ -431,7 +432,7 @@ function PWB.tents.updatePins()
     f:SetPoint('CENTER', WorldMapButton, 'TOPLEFT', tentX, -tentY)
     f.tex = f:CreateTexture(nil, 'MEDIUM')
     f.tex:SetAllPoints(f)
-    f.tex:SetTexture('Interface\\AddOns\\PizzaWorldBuffs\\img\\tent')
+    f.tex:SetTexture('Interface\\AddOns\\PizzaWorldBuffs\\img\\tent' .. PWB_config.tentStyle)
 
     if PWB_config.tents then
       f:Show()
