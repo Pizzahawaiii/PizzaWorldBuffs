@@ -1,12 +1,14 @@
 # 🍕 PizzaWorldBuffs
 
-Addon for [TurtleWoW](https://turtle-wow.org) that shows Onyxia/Nefarian head despawn timers. Timers are constantly shared between all players, so you will still get them if you're not in the city and even if you weren't online when the buff popped. See [below](#how-it-works) for more details on how it works.
+Addon for [TurtleWoW](https://turtle-wow.org) that shows tents on the world map, Onyxia/Nefarian head despawn timers and the last known Darkmoon Faire location. All this info is constantly being shared between all addon users so you will e.g. see tents on the map that other people have found and see timers for Ony/Nef head even if you didn't witness the buff drop yourself. See [below](#how-it-works) for more details on how it works.
 
 <img src="img/frame.png">
 
+<img src="img/tent.png">
+
 > [!IMPORTANT]
 >
-> **This addon does NOT show you when the next buff will be triggered!** 
+> **This addon does NOT show you when the next Dragonslayer buff will be triggered!** 
 > 
 > It only shows you when the window for the buff to be triggered will open up again, i.e. when the Ony/Nef heads will despawn from the SW/OG city gates. The actual buff is only triggered when a player turns in the head of Ony/Nef and the addon can't possibly know when that's going to happen.
 
@@ -22,7 +24,7 @@ To update to the latest version, delete your `<WoW>/Interface/AddOns/PizzaWorldB
 
 If updating to the latest version causes any issues, delete `<WoW>/WTF/Account/<Account>/<Server>/<Character>/SavedVariables/PizzaWorldBuffs.lua` and restart WoW. If the problems persist, please [create an issue](https://github.com/Pizzahawaiii/PizzaWorldBuffs/issues/new).
 
-Check the [commit history](https://github.com/Pizzahawaiii/PizzaWorldBuffs/commits/main) to see the latest changes.
+Check the [forum post](https://forum.turtle-wow.org/viewtopic.php?t=13704) or the [commit history](https://github.com/Pizzahawaiii/PizzaWorldBuffs/commits/main) to see the latest changes.
 
 ## Commands
 
@@ -61,9 +63,25 @@ Additionally, if the default chat edit box is not open and no WIM edit box is fo
 
 ## How it Works
 
-PizzaWorldBuffs constantly communicates with every other player who's also using the addon. If you're in Stormwind or Orgrimmar while the dragonslayer buff is triggered, the addon starts tracking its cooldown and constantly shares that information with all other players in the background so everyone can see the timer, even if they didn't witness the buff being triggered themselves. This implicates that if nobody using the addon witnesses the buff being triggered, nobody will get a timer for that specific buff. Therefore, the more players are using the addon the better, as it increases the likelihood of someone with the addon witnessing the buff.
+PizzaWorldBuffs uses different triggers for detecting tents, Dragonslayer buffs and Darkmoon Faire location. When one of those is detected on your character, the addon continuously broadcasts that information to all other addon users in the background. On the flipside, when the addon receives previously unknown (to you) tent/buff/DMF information from other players, it stores that info for you and also shares it with other players again from that point on.
 
-### Color-Coding
+### Tent Location Detection
+
+The addon detects tents by constantly scanning your rested XP gain rate. As soon as that climbs up to at least +0.2% XP per second, it assumes you're standing under a tent. It then gets your current location and draws a tent on the map at those coordinates.
+
+### Ony/Nef Head Timer Detection
+
+To detect that an Ony/Nef buff popped, the addon uses the SW/OG-wide messages yelled by NPCs when someone triggers the buff. Once detected, it stores and broadcasts the server time at which the head will despawn again (i.e. 2 hours from now) and uses that for the countdown timer.
+
+### DMF Location Detection
+
+The location of the Darkmoon Faire is detected, stored and broadcasted when you move your mouse cursor over any of the DMF NPCs.
+
+### Data Storing & Sharing
+
+All data is stored persistently, so you will keep it even after relogging or reloading your UI. All the information is (eventually) propagated to and reshared by everyone who's using the addon. So the data will continue to be broadcasted, even after the player who originally found the tent, buff or DMF location has logged off.
+
+### Buff Timer Color-Coding
 
 A boss name's color designates the faction/city where the buff was triggered:
 
@@ -76,31 +94,31 @@ The color of the timer itself denotes how confident the addon is in the correctn
 - **Orange:** Medium confidence *(The person you received the timer from has witnessed that buff themselves)*
 - **Red:** Low confidence *(Neither you nor the person you received the timer from have actually witnessed that buff)*
 
-### Timer Prioritization
+### Buff Timer Prioritization
 
 The addon only accepts timers it receives from other players if it has the same or higher confidence in them than in your current timer for the respective boss/faction. If you currently don't have any timer for that boss/faction, the addon accepts any timer it receives. Timers you witnessed yourself are always accepted.
 
-### Timer Storing & Sharing
-
-Timers are stored persistently, so you will keep your timers even after relogging. Also, timers are (eventually) propagated to and reshared by everyone who's using the addon. So timers that haven't expired yet will continue to be shared automatically, even if the player who originally witnessed the buff has logged off already.
-
 ## FAQ
+
+### Q: Why don't I see a tent on the map even though there is one there?
+
+Probably because nobody using PizzaWorldBuffs is or was sitting under that tent, see [How it Works](#how-it-works)
 
 ### Q: Why don't I have a timer even though someone told me that buff just triggered?
 
-Most likely because the person who told you doesn't use this addon, see [How it Works](#how-it-works).
+Most likely because the person who told you doesn't use PizzaWorldBuffs, see [How it Works](#how-it-works).
 
-### Q: But I know they're using this addon. Why do they have a timer and I don't?
+### Q: The Darkmoon Faire is not there, even though PizzaWorldBuffs told me it was.
 
-It can take some time for a new timer to be shared with other players, so you might have to wait a few minutes.
+PizzaWorldBuffs only shows the last known DMF location, it doesn't guarantee that the faire is still there. You can check how long ago the faire was seen at the location the addon shows you by moving your mouse cursor over it.
 
-### Q: I don't see the new timer even after waiting for a few minutes, but other/older timers work fine. WTF?
+Note that DMF takes a break and shuts down every Wednesday and moves its location every Sunday at midnight (server time).
 
-Please [create an issue](https://github.com/Pizzahawaiii/PizzaWorldBuffs/issues/new). 
+### Q: Why doesn't PizzaWorldBuffs show me some of the data I know it shows to other players?
 
-The timer sharing logic is not very sophisticated. We don't want everyone to always share their timers to avoid spam and the person who gets to share their timers next is essentially picked at random. The more players are using the addon the less likely each individual player will be allowed to share their timers. We might have hit the critical mass where some players never get to share their timers if they're unlucky.
+It can take some time for all the data to be shared with other players, so you might have to wait a little bit. If you still don't see it after 3 minutes, please [create an issue](https://github.com/Pizzahawaiii/PizzaWorldBuffs/issues/new).
 
-### Q: Wait a second, I actually never see a single timer. Why?
+### Q: I don't ever see any data at all. No tents, no buff timers and no DMF location.
 
 Try relogging or running `/join LFT`. If that doesn't help, please [create an issue](https://github.com/Pizzahawaiii/PizzaWorldBuffs/issues/new).
 
@@ -110,8 +128,15 @@ The addon uses TurtleWoW's hidden `LFT` chat channel to receive data from and sh
 
 🍍
 
+## Contact
+
+You're always more than welcome to ask questions or provide any kind of feedback.
+
+- **Turtle Discord**: Pizzahawaii
+- **Nordanaar**: Pizzahawaii, Pizzamista, Pizzapimp<br />If you see anyone whose name starts with 'Pizza', chances are it's me. 
+
 ## Acknowledgements
 
-❤️ [Shagu](https://github.com/shagu) - Thanks for all the help!
+🐢 The members of \<TURTLE HARDCORE\> who constantly provide valuable feedback
 
-🚀 Everyone in \<TURTLE HARDCORE\> who tested and provided feedback during initial development
+❤️ [Shagu](https://github.com/shagu) - Thanks for all the help!
