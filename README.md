@@ -2,9 +2,8 @@
 
 Addon for [TurtleWoW](https://turtle-wow.org) that shows tents on the world map, Onyxia/Nefarian head despawn timers and the last known Darkmoon Faire location. All this info is constantly being shared between all addon users so you will e.g. see tents on the map that other people have found and see timers for Ony/Nef head even if you didn't witness the buff drop yourself. See [below](#how-it-works) for more details on how it works.
 
-<img src="img/frame.png">
-
-<img src="img/tent.png">
+<img src="img/frame.png" width="100%">
+<img src="img/tent.png" width="100%">
 
 > [!IMPORTANT]
 >
