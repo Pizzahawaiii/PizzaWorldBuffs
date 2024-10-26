@@ -176,8 +176,6 @@ end
 
 -- Check if the provided timer should be accepted and stored locally.
 function PWB.core.shouldAcceptNewTimer(faction, boss, h, m, witness, receivedFrom)
-  if not PWB_config.sharingEnabled then return false end
-
   local currentTimer = PWB.core.getTimer(faction, boss)
 
   -- Never accept invalid or expired timers
@@ -224,8 +222,6 @@ end
 
 -- Check if we should publish our local data.
 function PWB.core.shouldPublish()
-  if not PWB_config.sharingEnabled then return false end
-
   local now = time()
 
   -- If we've reached the publish interval limit (i.e. we haven't published our timers in X minutes),
@@ -263,7 +259,7 @@ function PWB.core.publishTimers()
   -- outdated timers.
   PWB.core.clearExpiredTimers()
 
-  if not PWB_config.sharingEnabled or not PWB.utils.hasTimers() or UnitLevel('player') < 5 then
+  if not PWB.utils.hasTimers() or UnitLevel('player') < 5 then
     return
   end
 

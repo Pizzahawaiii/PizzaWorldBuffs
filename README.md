@@ -35,8 +35,6 @@ Check the [commit history](https://github.com/Pizzahawaiii/PizzaWorldBuffs/commi
 /wb all <1 or 0>       1 to show timers for both factions, 0 to only show timers for your faction
 /wb tents <1 or 0>     1 to show tent locations on the world map, 0 to hide them
 /wb tentStyle <style>  Pick a style for the tent icons on the map (1, 2, 3, 4, 5, 6, 7 or 1337)
-/wb sharing <1 or 0>   1 to enable timer sharing between you and other players, 0 to only see your
-                       own timers and not share them with anyone
 /wb logout <1 or 0>    1 to log out automatically after receiving the next buff, 0 to stay logged in
 /wb exit <1 or 0>      1 to exit game automatically after receiving the next buff, 0 to stay logged in
 /wb reset              Reset PizzaWorldBuffs frames to their default positions

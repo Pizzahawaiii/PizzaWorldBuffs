@@ -148,35 +148,6 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
     return
   end
 
-  if command == 'sharing' then
-    local number = tonumber(msg)
-    if not number or (number ~= 0 and number ~= 1) then
-      PWB:Print(T['Valid options are 0 and 1'])
-      return
-    end
-
-    PWB_config.sharingEnabled = number == 1
-
-    -- If sharing was disabled, clear all timers we didn't witness ourselves
-    if not PWB_config.sharingEnabled then
-      PWB.utils.forEachTimer(function (timer)
-        if timer.witness ~= PWB.me then
-          PWB.core.clearTimer(timer)
-        end
-      end)
-    end
-
-    local message
-    if PWB_config.sharingEnabled then
-      message = T['Timer sharing between you and other players enabled. You will see other peoples\' timers too.']
-    else
-      message = T['Timer sharing between you and other players disabled. You will only see your own timers.']
-    end
-    PWB:Print(message)
-
-    return
-  end
-
   if command == 'logout' then
     local number = tonumber(msg)
     if not number or (number ~= 0 and number ~= 1) then
@@ -259,7 +230,6 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r all ' .. (PWB_config.allFactions and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show both factions\' world buff timers'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r tents ' .. (PWB_config.tents and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show tent locations on the world map'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r tentStyle ' .. PWB_config.tentStyle .. PWB.Colors.grey .. ' - ' .. T['Choose between tent styles 1, 2, 3, 4, 5, 6, 7 and 1337'])
-  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r sharing ' .. (PWB_config.sharingEnabled and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Enable timer sharing between you and other players'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r logout ' .. (PWB_config.autoLogout and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Log out automatically after receiving next buff'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r exit ' .. (PWB_config.autoExit and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Exit game automatically after receiving next buff'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r reset ' .. PWB.Colors.grey .. '- ' .. T['Reset PizzaWorldBuffs frames to their default positions'])

@@ -127,10 +127,8 @@ PWB:SetScript('OnEvent', function ()
     -- Publish everything once whenever we log in
     PWB.core.publishAll()
 
-    -- Trigger delayed joining of the PWB chat channel if sharing is enabled
-    if PWB_config.sharingEnabled then
-      PWB.channelJoinDelay:Show()
-    end
+    -- Trigger delayed joining of the PWB chat channel
+    PWB.channelJoinDelay:Show()
   end
 
   if event == 'CHAT_MSG_MONSTER_YELL' then
@@ -148,8 +146,6 @@ PWB:SetScript('OnEvent', function ()
   end
 
   if event == 'CHAT_MSG_CHANNEL' and arg2 ~= UnitName('player') then
-    if not PWB_config.sharingEnabled then return end
-
     local _, _, source = string.find(arg4, '(%d+)%.')
     local channelName
 
