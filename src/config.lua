@@ -8,7 +8,6 @@ local defaultConfig = {
   align = 'center',
   header = true,
   allFactions = true,
-  sharingEnabled = true,
   autoLogout = false,
   autoExit = false,
   frame = {
