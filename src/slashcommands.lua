@@ -144,7 +144,7 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
     end
 
     PWB_config.tentStyle = number
-    PWB:Print(T['Switched to tent style'] .. ' ' .. number .. '. ' .. T['Please reload your UI to apply the changes.'])
+    PWB:Print(T['Switched to tent style'] .. ' ' .. number .. '. ')
     return
   end
 
