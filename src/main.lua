@@ -55,7 +55,6 @@ local dmfNpcNames = {
   'Gelvas Grimegate',
   'Stamp Thunderhorn',
   'Maxima Blastenheimer',
-  'Darkmoon Faire Carnie',
   'Professor Thaddeus Paleo',
 }
 
