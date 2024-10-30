@@ -307,6 +307,11 @@ end
 
 function PWB.tents.decode(tentStr)
   local cid, zid, x, y, stack, firstSeenAgo, lastSeenAgo = PWB.utils.strSplit(tentStr, '-')
+
+  if not cid or not zid or not x or not y or not stack or not firstSeenAgo or not lastSeenAgo then
+    return
+  end
+
   local zone = PWB.tents.getZoneName(tonumber(cid), tonumber(zid))
   local now = time()
   local firstSeen = now - tonumber(firstSeenAgo)
