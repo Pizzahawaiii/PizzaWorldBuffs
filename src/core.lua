@@ -274,6 +274,10 @@ function PWB.core.publishDmfLocation()
     return
   end
 
+  if not PWB.utils.hasTimers() or UnitLevel('player') < 5 then
+    return
+  end
+
   local pwbChannel = GetChannelName(PWB.channelName)
   if pwbChannel ~= 0 then
     SendChatMessage(PWB.abbrevDmf .. ':' .. PWB.utils.getVersionNumber() .. ':' .. PWB.core.encodeDmf(), 'CHANNEL', nil, pwbChannel)
