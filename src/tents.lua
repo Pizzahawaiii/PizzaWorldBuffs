@@ -366,7 +366,7 @@ end
 -- Tents Limit:       243
 -- # of Tents Limit:  9
 function PWB.tents.publish(tent)
-  if not PWB.tents.hasTents() then
+  if not PWB.tents.hasTents() or UnitLevel('player') < 5 then
     return
   end
 
