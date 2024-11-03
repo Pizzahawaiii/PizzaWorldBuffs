@@ -1,8 +1,8 @@
 ## Interface: 11200
 ## Title: |cffa050ffPizza|cffffffffWorldBuffs
 ## Author: Pizzahawaii
-## Notes: Shows Ony/Nef head despawn timers. Please check the README on GitHub! |cff777777Version 1.4.0|r
-## Version: 1.4.0
+## Notes: Shows Ony/Nef head despawn timers. Please check the README on GitHub! |cff777777Version 1.4.1|r
+## Version: 1.4.1
 ## SavedVariablesPerCharacter: PWB_config, PWB_timers, PWB_dmf, PWB_tents
 
 translations\enUS.lua
