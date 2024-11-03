@@ -306,16 +306,23 @@ function PWB.tents.encodeAll(tents)
 end
 
 function PWB.tents.decode(tentStr)
-  local cid, zid, x, y, stack, firstSeenAgo, lastSeenAgo = PWB.utils.strSplit(tentStr, '-')
+  local cid, zid, x, y, stack, firstSeenAgoStr, lastSeenAgoStr = PWB.utils.strSplit(tentStr, '-')
 
-  if not cid or not zid or not x or not y or not stack or not firstSeenAgo or not lastSeenAgo then
+  if not cid or not zid or not x or not y or not stack or not firstSeenAgoStr or not lastSeenAgoStr then
+    return
+  end
+
+  local firstSeenAgo = tonumber(firstSeenAgoStr)
+  local lastSeenAgo = tonumber(lastSeenAgoStr)
+
+  if not firstSeenAgo or not lastSeenAgo then
     return
   end
 
   local zone = PWB.tents.getZoneName(tonumber(cid), tonumber(zid))
   local now = time()
-  local firstSeen = now - tonumber(firstSeenAgo)
-  local lastSeen = now - tonumber(lastSeenAgo)
+  local firstSeen = now - firstSeenAgo
+  local lastSeen = now - lastSeenAgo
 
   return zone, tonumber(x) / 100, tonumber(y) / 100, tonumber(stack), firstSeen, lastSeen
 end
