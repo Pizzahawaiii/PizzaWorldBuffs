@@ -142,3 +142,14 @@ function PWB.utils.contains(table, value)
   end
   return false
 end
+
+function PWB.utils.getChannelId(channelName)
+  local channels = {}
+  local chanList = { GetChannelList() }
+
+  for i = 1, length(chanList), 3 do
+    if string.lower(chanList[i+1]) == channelName then
+      return chanList[i]
+    end
+  end
+end

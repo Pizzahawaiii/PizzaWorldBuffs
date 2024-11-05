@@ -17,7 +17,7 @@ local function initFrame(f, anchor)
   f.frame:EnableMouse(true)
   f.frame:SetScript('OnMouseDown', function ()
     if IsShiftKeyDown() then
-      if arg1 ~= 'LeftButton' and arg1 ~= 'RightButton' and arg1 ~= 'MiddleButton' then return end
+      if arg1 ~= 'LeftButton' and arg1 ~= 'RightButton' and arg1 ~= 'MiddleButton' and arg1 ~= 'Button4' then return end
 
       local text
       if f.timer then
@@ -54,6 +54,11 @@ local function initFrame(f, anchor)
         local targetEditBox = WIM_EditBoxInFocus or editBox:IsVisible() and editBox or nil
         if targetEditBox then
           targetEditBox:SetText(text)
+        elseif arg1 == 'Button4' then
+          local worldChannelId = PWB.utils.getChannelId('world')
+          if worldChannelId then
+            SendChatMessage(text, 'CHANNEL', nil, worldChannelId)
+          end
         else
           local sendTo
           if arg1 == 'LeftButton' then sendTo = 'SAY' end
