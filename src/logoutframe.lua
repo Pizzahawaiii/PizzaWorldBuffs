@@ -14,7 +14,9 @@ PWB.logoutFrame:EnableMouse(true)
 PWB.logoutFrame:SetMovable(true)
 PWB.logoutFrame:RegisterForDrag('LeftButton')
 PWB.logoutFrame:SetScript('OnDragStart', function ()
-  this:StartMoving()
+  if not PWB_config.lock then
+    this:StartMoving()
+  end
 end)
 PWB.logoutFrame:SetScript('OnDragStop', function ()
   this:StopMovingOrSizing()

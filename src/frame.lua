@@ -71,7 +71,9 @@ local function initFrame(f, anchor)
         end
       end
     else
-      PWB.frame:StartMoving()
+      if not PWB_config.lock then
+        PWB.frame:StartMoving()
+      end
     end
   end)
   f.frame:SetScript('OnMouseUp', function ()

@@ -31,6 +31,7 @@ Check the [forum post](https://forum.turtle-wow.org/viewtopic.php?t=13704) or th
 /wb                    Show all commands
 /wb show               Show the addon
 /wb hide               Hide the addon
+/wb lock <1 or 0>      1 to lock PizzaWorldBuffs frame, 0 to unlock it
 /wb header <1 or 0>    1 to show PizzaWorldBuffs header, 0 to hide it
 /wb dmf <1 or 0>       1 to show Darkmoon Faire location, 0 to hide it
 /wb all <1 or 0>       1 to show timers for both factions, 0 to only show timers for your faction

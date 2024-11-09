@@ -4,6 +4,7 @@ PWB.config = {}
 
 local defaultConfig = {
   show = true,
+  lock = false,
   fontSize = 14,
   align = 'center',
   header = true,

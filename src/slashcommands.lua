@@ -29,6 +29,18 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
     return
   end
 
+  if command == 'lock' then
+    local number = tonumber(msg)
+    if not number or (number ~= 0 and number ~= 1) then
+      PWB:Print(T['Valid options are 0 and 1'])
+      return
+    end
+
+    PWB_config.lock = number == 1
+    PWB:Print(T['Frame ' .. (PWB_config.lock and 'locked' or 'unlocked')])
+    return
+  end
+
   if command == 'fontsize' then
     local fontSize = tonumber(msg)
     if not fontSize then
@@ -225,6 +237,7 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   PWB:PrintClean(PWB.Colors.primary .. 'Pizza' .. PWB.Colors.secondary .. 'WorldBuffs|r ' .. T['commands'] .. ':')
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r show ' .. PWB.Colors.grey .. '- ' .. T['Show the addon'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r hide ' .. PWB.Colors.grey .. '- ' .. T['Hide the addon'])
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r lock ' .. (PWB_config.lock and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Lock PizzaWorldBuffs frame'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r header ' .. (PWB_config.header and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show PizzaWorldBuffs header'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r dmf ' .. (PWB_config.dmf and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show Darkmoon Faire location'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r all ' .. (PWB_config.allFactions and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show both factions\' world buff timers'])
