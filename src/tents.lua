@@ -293,6 +293,10 @@ function PWB.tents.encode(tent)
   local firstSeenAgo = now - tent.firstSeen
   local lastSeenAgo = now - tent.lastSeen
 
+  if not cid or not mid or not firstSeenAgo or not lastSeenAgo then
+    return
+  end
+
   return string.format('%d-%d-%.1f-%.1f-%d-%d-%d', cid, mid, tent.x * 100, tent.y * 100, tent.stack, firstSeenAgo, lastSeenAgo)
 end
 
@@ -300,7 +304,9 @@ function PWB.tents.encodeAll(tents)
   local encodedTents
   for _, tent in pairs(tents) do
     local encTent = PWB.tents.encode(tent)
-    encodedTents = (encodedTents and encodedTents .. ';' or '') .. encTent
+    if encTent then
+      encodedTents = (encodedTents and encodedTents .. ';' or '') .. encTent
+    end
   end
   return encodedTents
 end
@@ -390,8 +396,10 @@ function PWB.tents.publish(tent)
       encodedTentsToPub = PWB.tents.encodeAll(tentsToPub)
     end
 
-    local msg = PWB.abbrevTents .. ':' .. PWB.utils.getVersionNumber() .. ':' .. encodedTentsToPub
-    SendChatMessage(msg, 'CHANNEL', nil, pwbChannel)
+    if encodedTentsToPub then
+      local msg = PWB.abbrevTents .. ':' .. PWB.utils.getVersionNumber() .. ':' .. encodedTentsToPub
+      SendChatMessage(msg, 'CHANNEL', nil, pwbChannel)
+    end
   end
 end
 
