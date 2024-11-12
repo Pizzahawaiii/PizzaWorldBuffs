@@ -147,7 +147,7 @@ function PWB.utils.getChannelId(channelName)
   local channels = {}
   local chanList = { GetChannelList() }
 
-  for i = 1, length(chanList), 3 do
+  for i = 1, length(chanList), 2 do
     if string.lower(chanList[i+1]) == channelName then
       return chanList[i]
     end
