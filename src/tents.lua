@@ -106,6 +106,10 @@ function PWB.tents.save(zone, x, y, stack, firstSeen, lastSeen, imTheWitness)
     lastSeen = lastSeen,
   }
 
+  if not PWB.tents.valid(newTent) then
+    return
+  end
+
   -- See if we already have a tent stored around that location and if
   -- we have to update it.
   local existingTent, idx = PWB.tents.findTent(zone, x, y)
@@ -141,7 +145,7 @@ function PWB.tents.findTent(zone, x, y)
   end
 
   for idx, tent in ipairs(PWB_tents[zone]) do
-    if PWB.tents.distance(x, y, tent.x, tent.y) < 1.5 then
+    if PWB.tents.distance(x, y, tent.x, tent.y) < .03 then
       return tent, idx
     end
   end
@@ -231,12 +235,14 @@ function PWB.tents.clearExpiredTents()
   for zone, tents in pairs(PWB_tents) do
     for idx, tent in ipairs(tents) do
       if PWB.tents.isExpired(tent) then
-        _G.PWB_tents[zone][idx] = nil
-        if length(PWB_tents[zone]) == 0 then
-          _G.PWB_tents[zone] = nil
-        end
+        table.remove(_G.PWB_tents[zone], idx)
         repaint = true
       end
+    end
+
+    if length(PWB_tents[zone]) == 0 then
+      _G.PWB_tents[zone] = nil
+      repaint = true
     end
   end
 
@@ -246,7 +252,16 @@ function PWB.tents.clearExpiredTents()
 end
 
 function PWB.tents.valid(tent)
-  return tent and tent.x and tent.y and tent.zone and tent.stack and tent.firstSeen and tent.lastSeen
+  if not tent or not tent.x or not tent.y or not tent.zone or not tent.stack or not tent.firstSeen or not tent.lastSeen then
+    return false
+  end
+
+  -- -- Prevent tents from showing up inside the actual city of SW
+  -- if tent.zone == 'Stormwind City' and (tent.x < 0.73 or tent.y < 0.9) then
+  --   return false
+  -- end
+
+  return true
 end
 
 function PWB.tents.hasTents()
@@ -398,7 +413,7 @@ function PWB.tents.publish(tent)
 
     if encodedTentsToPub then
       local msg = PWB.abbrevTents .. ':' .. PWB.utils.getVersionNumber() .. ':' .. encodedTentsToPub
-      SendChatMessage(msg, 'CHANNEL', nil, pwbChannel)
+      -- SendChatMessage(msg, 'CHANNEL', nil, pwbChannel)
     end
   end
 end
@@ -437,44 +452,47 @@ function PWB.tents.updatePins()
     return
   end
 
-  for i, tent in ipairs(PWB_tents[zone]) do
-    local f = CreateFrame('Button', 'PizzaTentPin' .. i, WorldMapButton)
-    local pinSize = PWB_config.tentStyle == 1337 and 20 or 18
-    f.tent = tent
-    f:ClearAllPoints()
-    f:SetFrameStrata('TOOLTIP')
-    f:SetWidth(pinSize)
-    f:SetHeight(pinSize)
-    local mapWidth = WorldMapButton:GetWidth()
-    local mapHeight = WorldMapButton:GetHeight()
-    local tentX = tent.x * mapWidth
-    local tentY = tent.y * mapHeight
-    f:SetPoint('CENTER', WorldMapButton, 'TOPLEFT', tentX, -tentY)
-    f.tex = f:CreateTexture(nil, 'MEDIUM')
-    f.tex:SetAllPoints(f)
-    f.tex:SetTexture('Interface\\AddOns\\PizzaWorldBuffs\\img\\tent' .. PWB_config.tentStyle)
+  for i = 1, length(PWB_tents[zone]), 1 do
+    local tent = PWB_tents[zone][i]
+    if tent then
+      local f = CreateFrame('Button', 'PizzaTentPin' .. i, WorldMapButton)
+      local pinSize = PWB_config.tentStyle == 1337 and 20 or 18
+      f.tent = tent
+      f:ClearAllPoints()
+      f:SetFrameStrata('TOOLTIP')
+      f:SetWidth(pinSize)
+      f:SetHeight(pinSize)
+      local mapWidth = WorldMapButton:GetWidth()
+      local mapHeight = WorldMapButton:GetHeight()
+      local tentX = tent.x * mapWidth
+      local tentY = tent.y * mapHeight
+      f:SetPoint('CENTER', WorldMapButton, 'TOPLEFT', tentX, -tentY)
+      f.tex = f:CreateTexture(nil, 'MEDIUM')
+      f.tex:SetAllPoints(f)
+      f.tex:SetTexture('Interface\\AddOns\\PizzaWorldBuffs\\img\\tent' .. PWB_config.tentStyle)
 
-    if PWB_config.tents then
-      f:Show()
-    else
-      f:Hide()
+      if PWB_config.tents then
+        f:Show()
+      else
+        f:Hide()
+      end
+
+      f:SetScript('OnEnter', function()
+        GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
+        local title = f.tent.stack > 1 and 'Tent Stack ' .. PWB.Colors.grey .. '(' .. f.tent.stack .. 'x)' or 'Tent'
+        GameTooltip:SetText(PWB.Colors.primary .. title)
+        local firstSeenAgoStr, firstSeenAgoColor = PWB.tents.getSeenAgoStr(time() - f.tent.firstSeen, true)
+        GameTooltip:AddLine(PWB.Colors.secondary .. 'First seen ' .. firstSeenAgoColor .. firstSeenAgoStr .. PWB.Colors.secondary .. ' ago.')
+        local lastSeenAgoStr, lastSeenAgoColor = PWB.tents.getSeenAgoStr(time() - f.tent.lastSeen)
+        GameTooltip:AddLine(PWB.Colors.secondary .. 'Last seen ' .. lastSeenAgoColor .. lastSeenAgoStr .. PWB.Colors.secondary .. ' ago.')
+        GameTooltip:Show()
+      end)
+
+      f:SetScript('OnLeave', function()
+        GameTooltip:Hide()
+      end)
+
+      pins[i] = f
     end
-
-    f:SetScript('OnEnter', function()
-      GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
-      local title = f.tent.stack > 1 and 'Tent Stack ' .. PWB.Colors.grey .. '(' .. f.tent.stack .. 'x)' or 'Tent'
-      GameTooltip:SetText(PWB.Colors.primary .. title)
-      local firstSeenAgoStr, firstSeenAgoColor = PWB.tents.getSeenAgoStr(time() - f.tent.firstSeen, true)
-      GameTooltip:AddLine(PWB.Colors.secondary .. 'First seen ' .. firstSeenAgoColor .. firstSeenAgoStr .. PWB.Colors.secondary .. ' ago.')
-      local lastSeenAgoStr, lastSeenAgoColor = PWB.tents.getSeenAgoStr(time() - f.tent.lastSeen)
-      GameTooltip:AddLine(PWB.Colors.secondary .. 'Last seen ' .. lastSeenAgoColor .. lastSeenAgoStr .. PWB.Colors.secondary .. ' ago.')
-      GameTooltip:Show()
-    end)
-
-    f:SetScript('OnLeave', function()
-      GameTooltip:Hide()
-    end)
-
-    pins[i] = f
   end
 end
