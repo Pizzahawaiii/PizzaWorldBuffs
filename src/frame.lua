@@ -198,7 +198,7 @@ function PWB.frame.updateFrames()
     frame.frame.text:SetFont(STANDARD_TEXT_FONT, PWB_config.fontSize, 'OUTLINE')
 
     if frame.timer then
-      local timer = PWB_timers[frame.timer.faction][frame.timer.boss]
+      local timer = PWB_timers and PWB_timers[frame.timer.faction] and PWB_timers[frame.timer.faction][frame.timer.boss]
       local timeStr = PWB.Colors.grey .. T['N/A']
 
       if timer then
