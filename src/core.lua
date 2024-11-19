@@ -36,7 +36,7 @@ end
 
 -- Decode the provided timer string into a timer table.
 function PWB.core.decode(timerStr)
-  local faction, boss, hStr, mStr, witness = PWB.utils.strSplit(timerStr, '-')
+  local _, _, faction, boss, hStr, mStr, witness = string.find(timerStr, '(.*)%-(.*)%-(.*)%-(.*)%-(.*)')
   return faction, boss, tonumber(hStr), tonumber(mStr), witness
 end
 
@@ -51,7 +51,7 @@ function PWB.core.encodeDmf()
 end
 
 function PWB.core.decodeDmf(dmfStr)
-  local location, secondsAgoStr, witness = PWB.utils.strSplit(dmfStr, '-')
+  local _, _, location, secondsAgoStr, witness = string.find(dmfStr, '(.*)%-(.*)%-(.*)')
   local seenAt = time() - tonumber(secondsAgoStr)
   return location, seenAt, witness
 end
