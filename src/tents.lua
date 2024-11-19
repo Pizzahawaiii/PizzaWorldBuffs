@@ -168,7 +168,7 @@ frame:SetScript('OnEvent', function()
       end
 
       if channelName == PWB.channelName then
-        local addonName, remoteVersion, encodedTents = PWB.utils.strSplit(arg1, ':')
+        local _, _, addonName, remoteVersion, encodedTents = string.find(arg1, '(.*)%:(.*)%:(.*)')
         if addonName == PWB.abbrevTents then
           PWB.tents.decodeAndSaveAll(encodedTents)
 
@@ -312,7 +312,7 @@ function PWB.tents.encodeAll(tents)
 end
 
 function PWB.tents.decode(tentStr)
-  local cid, zid, x, y, stack, firstSeenAgoStr, lastSeenAgoStr = PWB.utils.strSplit(tentStr, '-')
+  local _, _, cid, zid, x, y, stack, firstSeenAgoStr, lastSeenAgoStr = string.find(tentStr, '(.*)%-(.*)%-(.*)%-(.*)%-(.*)%-(.*)%-(.*)%;')
 
   if not cid or not zid or not x or not y or not stack or not firstSeenAgoStr or not lastSeenAgoStr then
     return
@@ -340,9 +340,17 @@ function PWB.tents.decodeAndSaveAll(tentsStr)
     encodedTents[k] = nil
   end
 
-  encodedTents[1], encodedTents[2], encodedTents[3], encodedTents[4], encodedTents[5], encodedTents[6], encodedTents[7], encodedTents[8], encodedTents[9] = PWB.utils.strSplit(tentsStr, ';')
+  local _, delimCount = string.gsub(tentsStr, ';', ';')
+  local pattern = '(.*)'
+  for i = 1, delimCount - 1, 1 do
+    pattern = pattern .. '%;(.*)'
+  end
+  encodedTents[1], encodedTents[2], encodedTents[3], encodedTents[4], encodedTents[5], encodedTents[6], encodedTents[7], encodedTents[8], encodedTents[9] = string.find(tentsStr, pattern)
+
   for _, encodedTent in next, encodedTents do
-    PWB.tents.save(PWB.tents.decode(encodedTent))
+    if encodedTent then
+      PWB.tents.save(PWB.tents.decode(encodedTent))
+    end
   end
 end
 
