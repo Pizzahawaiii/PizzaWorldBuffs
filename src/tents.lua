@@ -39,10 +39,18 @@ local secondsToProbe = 10
 local probes = secondsToProbe * 10
 local lastRestedGains = {}
 local lastTentSavedAt = 0
+local wasMapOpen = false
 frame:SetScript('OnUpdate', function ()
   local now = GetTime()
 
   if (this.tick or .1) > now then return else this.tick = now + .1 end
+
+  if WorldMapFrame:IsVisible() and not wasMapOpen then
+    PWB.tents.updatePins()
+    wasMapOpen = true
+  elseif not WorldMapFrame:IsVisible() and wasMapOpen then
+    wasMapOpen = false
+  end
 
   local rested = GetXPExhaustion() or 0
 
@@ -108,14 +116,17 @@ function PWB.tents.save(zone, x, y, stack, firstSeen, lastSeen, imTheWitness)
 
   -- See if we already have a tent stored around that location and if
   -- we have to update it.
+  local tentsUpdated = false
   local existingTent, idx = PWB.tents.findTent(zone, x, y)
   if existingTent then
     if lastSeen > existingTent.lastSeen then
       _G.PWB_tents[zone][idx].stack = stack
       _G.PWB_tents[zone][idx].lastSeen = lastSeen
+      tentsUpdated = true
     end
   else
     table.insert(_G.PWB_tents[zone], newTent)
+    tentsUpdated = true
 
     -- -- Announce if new tent is in our zone, but only if the map is currently not
     -- -- open so we don't annoy/distract the player.
@@ -132,7 +143,9 @@ function PWB.tents.save(zone, x, y, stack, firstSeen, lastSeen, imTheWitness)
     PWB.tents.publish(newTent)
   end
 
-  PWB.tents.updatePins()
+  if tentsUpdated and WorldMapFrame:IsVisible() then
+    PWB.tents.updatePins()
+  end
 end
 
 function PWB.tents.findTent(zone, x, y)
@@ -227,7 +240,7 @@ function PWB.tents.clearExpiredTents()
     return
   end
 
-  local repaint = false
+  local tentsUpdated = false
   for zone, tents in pairs(PWB_tents) do
     for idx, tent in ipairs(tents) do
       if PWB.tents.isExpired(tent) then
@@ -235,12 +248,12 @@ function PWB.tents.clearExpiredTents()
         if length(PWB_tents[zone]) == 0 then
           _G.PWB_tents[zone] = nil
         end
-        repaint = true
+        tentsUpdated = true
       end
     end
   end
 
-  if repaint then
+  if tentsUpdated and WorldMapFrame:IsVisible() then
     PWB.tents.updatePins()
   end
 end
