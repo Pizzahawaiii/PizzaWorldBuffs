@@ -287,13 +287,23 @@ function PWB.tents.getZoneIds(zoneName)
   end
 end
 
-function PWB.tents.getZoneName(cid, zid)
-  local zones = { GetMapZones(cid) }
-  for zoneId, zoneName in pairs(zones) do
-    if zoneId == zid then
-      return zoneName
-    end
+local zonesCache = {
+  [1] = {},
+  [2] = {},
+}
+local function populateZonesCache(cid, ...)
+  for i = 1, arg.n, 1 do
+    zonesCache[cid][i] = arg[i]
   end
+end
+
+function PWB.tents.getZoneName(cid, zid)
+  if not zonesCache[cid] or not zonesCache[cid][zid] then
+    populateZonesCache(cid, GetMapZones(cid))
+  end
+
+  local res = zonesCache[cid][zid]
+  return res
 end
 
 function PWB.tents.encode(tent)
