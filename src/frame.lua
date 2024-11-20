@@ -218,8 +218,11 @@ function PWB.frame.updateFrames()
       local location = PWB.Colors.grey .. 'N/A'
 
       if PWB_dmf then
-        local color = PWB_dmf.location == 'E' and PWB.Colors.alliance or PWB.Colors.horde
-        location = color .. PWB.utils.strSplit(PWB.DmfLocations[PWB_dmf.location], ' ')
+        local shortLoc = PWB.utils.strSplit(PWB.DmfLocations[PWB_dmf.location], ' ')
+        if shortLoc then
+          local color = PWB_dmf.location == 'E' and PWB.Colors.alliance or PWB.Colors.horde
+          location = color .. shortLoc
+        end
       end
 
       frame.frame.text:SetText(PWB.Colors.primary .. 'DMF: ' .. location)
