@@ -85,7 +85,7 @@ local function initFrame(f, anchor)
       local location
       local lastSeen
 
-      if PWB_dmf then
+      if PWB_dmf and PWB.DmfLocations[PWB_dmf.location] then
         local locationColor = PWB_dmf.location == 'E' and PWB.Colors.alliance or PWB.Colors.horde
         location = locationColor .. PWB.DmfLocations[PWB_dmf.location]
 
