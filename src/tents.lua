@@ -95,15 +95,6 @@ function PWB.tents.save(zone, x, y, stack, firstSeen, lastSeen, imTheWitness)
     _G.PWB_tents[zone] = {}
   end
 
-  local newTent = {
-    x = x,
-    y = y,
-    zone = zone,
-    stack = stack,
-    firstSeen = firstSeen,
-    lastSeen = lastSeen,
-  }
-
   -- See if we already have a tent stored around that location and if
   -- we have to update it.
   local tentsUpdated = false
@@ -115,6 +106,14 @@ function PWB.tents.save(zone, x, y, stack, firstSeen, lastSeen, imTheWitness)
       tentsUpdated = true
     end
   else
+    local newTent = {
+      x = x,
+      y = y,
+      zone = zone,
+      stack = stack,
+      firstSeen = firstSeen,
+      lastSeen = lastSeen,
+    }
     table.insert(_G.PWB_tents[zone], newTent)
     tentsUpdated = true
 
