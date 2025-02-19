@@ -158,7 +158,8 @@ function PWB.tents.processScheduledAlerts()
     if time() >= alertAt then
       local tent = PWB.tents.findTentById(id)
       if tent then
-        local tentAlertMessage = 'Tent detected in ' .. PWB.Colors.primary .. tent.zone
+        local lastSeenAgoStr, lastSeenAgoColor = PWB.tents.getSeenAgoStr(time() - tent.lastSeen)
+        local tentAlertMessage = 'Tent detected in ' .. PWB.Colors.primary .. tent.zone .. PWB.Colors.grey .. ' (' .. lastSeenAgoColor .. lastSeenAgoStr .. PWB.Colors.grey .. ' ago)'
         PWB:Print(tentAlertMessage)
         scheduledTentAlerts[id] = nil
       else
