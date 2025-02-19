@@ -80,16 +80,6 @@ frame:SetScript('OnUpdate', function ()
   if (this.longTick or 5) > now then return else this.longTick = now + 5 end
 
   PWB.tents.clearExpiredTents()
-
-  -- local coordsStr = format('%.1f, %.1f', x * 100, y * 100)
-  -- local text = ''
-  -- -- text = text .. 'Diff: ' .. diff .. '\n'
-  -- text = text .. 'Tent: ' .. (tent and ('|cff00ff98Yes|r (' .. stack .. 'x)') or '|cffc41e3aNo') .. '\n'
-  -- text = text .. '\n|r' .. coordsStr .. '\n'
-  -- text = text .. zone .. '\n'
-  --
-  -- local dist = PWB.tents.distance(73, 90, x * 100, y * 100)
-  -- frame.text:SetText(format('%.1f, %.1f', x * 100, y * 100) .. '\n' .. dist)
 end)
 
 function PWB.tents.save(zone, x, y, stack, firstSeen, lastSeen, imTheWitness)
@@ -128,14 +118,6 @@ function PWB.tents.save(zone, x, y, stack, firstSeen, lastSeen, imTheWitness)
     table.insert(_G.PWB_tents[zone], newTent)
     tentsUpdated = true
 
-    -- -- Announce if new tent is in our zone, but only if the map is currently not
-    -- -- open so we don't annoy/distract the player.
-    -- if PWB_config.tents and not imTheWitness and not WorldMapFrame:IsShown() then
-    --   SetMapToCurrentZone()
-    --   if zone == PWB.tents.getCurrentMapZoneName() then
-    --     PWB:Print('Just found a tent in your zone, check the map!')
-    --   end
-    -- end
   end
 
   -- Always publish my own tent updates immediately.
