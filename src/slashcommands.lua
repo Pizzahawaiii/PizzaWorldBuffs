@@ -180,6 +180,11 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
     return
   end
 
+  if command == 'wheretents' or command == 'wheretent' or command == 'where' or command == 'wt' then
+    PWB.tents.printAll()
+    return
+  end
+
   if command == 'logout' then
     local number = tonumber(msg)
     if not number or (number ~= 0 and number ~= 1) then
@@ -264,6 +269,7 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r tents ' .. (PWB_config.tents and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show tent locations on the world map'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r tentStyle ' .. PWB_config.tentStyle .. PWB.Colors.grey .. ' - ' .. T['Choose between tent styles 1, 2, 3, 4, 5, 6, 7 and 1337'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r tentAlert ' .. PWB_config.tentAlert .. PWB.Colors.grey .. ' - ' .. T['Alert about new tents in your zone (1) or anywhere (2)'])
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r whereTents ' .. PWB.Colors.grey .. '- ' .. T['List all currently known tent locations'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r logout ' .. (PWB_config.autoLogout and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Log out automatically after receiving next buff'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r exit ' .. (PWB_config.autoExit and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Exit game automatically after receiving next buff'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r reset ' .. PWB.Colors.grey .. '- ' .. T['Reset PizzaWorldBuffs frames to their default positions'])

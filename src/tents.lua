@@ -337,6 +337,42 @@ function PWB.tents.getZoneName(cid, zid)
   return res
 end
 
+function PWB.tents.printAll()
+  local knownTents = {}
+
+  if not PWB_tents then
+    PWB:Print('No known tent locations')
+    return
+  end
+
+  for zone, tents in pairs(PWB_tents) do
+    local lastSeen = 0
+    local lastSeenAgoStr, lastSeenAgoColor
+    for _, tent in ipairs(tents) do
+      if tent.lastSeen > lastSeen then
+        lastSeen = tent.lastSeen
+      end
+    end
+
+    table.insert(knownTents, { zone = zone, lastSeen = lastSeen })
+  end
+
+  table.sort(knownTents, function (a, b)
+    return a.lastSeen > b.lastSeen
+  end)
+
+  if length(knownTents) == 0 then
+    PWB:Print('No known tent locations')
+    return
+  end
+
+  PWB:Print('Known tent locations:')
+  for _, knownTent in ipairs(knownTents) do
+    local lastSeenAgoStr, lastSeenAgoColor = PWB.tents.getSeenAgoStr(time() - knownTent.lastSeen)
+    PWB:PrintClean(PWB.Colors.secondary .. '  ' .. knownTent.zone .. PWB.Colors.grey .. ' (' .. lastSeenAgoColor .. lastSeenAgoStr .. PWB.Colors.grey .. ' ago)')
+  end
+end
+
 function PWB.tents.encode(tent)
   if not PWB.tents.valid(tent) then
     return
