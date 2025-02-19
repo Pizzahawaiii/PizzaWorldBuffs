@@ -160,6 +160,26 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
     return
   end
 
+  if command == 'tentalert' then
+    local number = tonumber(msg)
+    if not number or (number ~= 0 and number ~= 1 and number ~= 2) then
+      PWB:Print(T['Valid options are 0, 1 and 2'])
+      return
+    end
+
+    PWB_config.tentAlert = number
+    local message
+    if PWB_config.tentAlert == 0 then
+      message = T['Tent alert disabled']
+    elseif PWB_config.tentAlert == 1 then
+      message = T['Tent alert enabled (current zone)']
+    else
+      message = T['Tent alert enabled (global)']
+    end
+    PWB:Print(message)
+    return
+  end
+
   if command == 'logout' then
     local number = tonumber(msg)
     if not number or (number ~= 0 and number ~= 1) then
@@ -243,6 +263,7 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r all ' .. (PWB_config.allFactions and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show both factions\' world buff timers'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r tents ' .. (PWB_config.tents and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show tent locations on the world map'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r tentStyle ' .. PWB_config.tentStyle .. PWB.Colors.grey .. ' - ' .. T['Choose between tent styles 1, 2, 3, 4, 5, 6, 7 and 1337'])
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r tentAlert ' .. PWB_config.tentAlert .. PWB.Colors.grey .. ' - ' .. T['Alert about new tents in your zone (1) or anywhere (2)'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r logout ' .. (PWB_config.autoLogout and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Log out automatically after receiving next buff'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r exit ' .. (PWB_config.autoExit and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Exit game automatically after receiving next buff'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r reset ' .. PWB.Colors.grey .. '- ' .. T['Reset PizzaWorldBuffs frames to their default positions'])

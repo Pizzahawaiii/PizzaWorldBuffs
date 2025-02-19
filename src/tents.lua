@@ -8,6 +8,8 @@ setfenv(1, PWB:GetEnv())
 -- /LFT character limit: 255 (probably?)
 --
 
+local scheduledTentAlerts = {}
+
 local frame = CreateFrame('Frame', 'PizzaWorldBuffsTents', UIParent)
 frame:ClearAllPoints()
 frame:SetPoint('TOP', 0, -250)
@@ -77,6 +79,10 @@ frame:SetScript('OnUpdate', function ()
     end
   end
 
+  if (this.mediumTick or 1) > now then return else this.mediumTick = now + 1 end
+
+  PWB.tents.processScheduledAlerts()
+
   if (this.longTick or 5) > now then return else this.longTick = now + 5 end
 
   PWB.tents.clearExpiredTents()
@@ -114,9 +120,20 @@ function PWB.tents.save(zone, x, y, stack, firstSeen, lastSeen, imTheWitness)
       firstSeen = firstSeen,
       lastSeen = lastSeen,
     }
+    newTent.id = PWB.utils.getId(newTent)
     table.insert(_G.PWB_tents[zone], newTent)
     tentsUpdated = true
 
+    if PWB_config.tents and not imTheWitness then
+      if PWB_config.tentAlert == 2 then
+        PWB.tents.scheduleAlert(newTent)
+      elseif PWB_config.tentAlert == 1 and not WorldMapFrame:IsShown() then
+        SetMapToCurrentZone()
+        if zone == PWB.tents.getCurrentMapZoneName() then
+          PWB.tents.scheduleAlert(newTent)
+        end
+      end
+    end
   end
 
   -- Always publish my own tent updates immediately.
@@ -126,6 +143,38 @@ function PWB.tents.save(zone, x, y, stack, firstSeen, lastSeen, imTheWitness)
 
   if tentsUpdated and WorldMapFrame:IsVisible() then
     PWB.tents.updatePins()
+  end
+end
+
+function PWB.tents.scheduleAlert(tent)
+  if not tent.id then return end
+
+  local alertDelay = 10
+  scheduledTentAlerts[tent.id] = time() + alertDelay
+end
+
+function PWB.tents.processScheduledAlerts()
+  for id, alertAt in pairs(scheduledTentAlerts) do
+    if time() >= alertAt then
+      local tent = PWB.tents.findTentById(id)
+      if tent then
+        local tentAlertMessage = 'Tent detected in ' .. PWB.Colors.primary .. tent.zone
+        PWB:Print(tentAlertMessage)
+        scheduledTentAlerts[id] = nil
+      else
+        scheduledTentAlerts[id] = nil
+      end
+    end
+  end
+end
+
+function PWB.tents.findTentById(id)
+  for _, tents in pairs(PWB_tents) do
+    for _, tent in ipairs(tents) do
+      if tent.id then
+        if tent.id == id then return tent end
+      end
+    end
   end
 end
 

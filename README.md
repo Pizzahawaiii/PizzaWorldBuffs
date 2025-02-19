@@ -37,6 +37,7 @@ Check the [forum post](https://forum.turtle-wow.org/viewtopic.php?t=13704) or th
 /wb all <1 or 0>       1 to show timers for both factions, 0 to only show timers for your faction
 /wb tents <1 or 0>     1 to show tent locations on the world map, 0 to hide them
 /wb tentStyle <style>  Pick a style for the tent icons on the map (1, 2, 3, 4, 5, 6, 7 or 1337)
+/wb tentAlert <alert>  Show alerts for new tents (2 = anywhere, 1 = current zone, 0 = disabled)
 /wb logout <1 or 0>    1 to log out automatically after receiving the next buff, 0 to stay logged in
 /wb exit <1 or 0>      1 to exit game automatically after receiving the next buff, 0 to stay logged in
 /wb reset              Reset PizzaWorldBuffs frames to their default positions

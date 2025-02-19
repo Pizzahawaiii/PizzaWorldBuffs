@@ -129,6 +129,10 @@ function PWB.utils.strSplit(str, delimiter)
   return unpack(fields)
 end
 
+function PWB.utils.getId(t)
+  return string.gsub(tostring(t), 'table: ', '', 1)
+end
+
 -- Get the color that should be used for a timer, based on how confident we are in it.
 function PWB.utils.getTimerColor(witness, receivedFrom)
   if witness == PWB.me then return PWB.Colors.green end
