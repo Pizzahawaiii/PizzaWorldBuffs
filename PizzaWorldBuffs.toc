@@ -2,7 +2,7 @@
 ## Title: |cffa050ffPizza|cffffffffWorldBuffs
 ## Author: Pizzahawaii
 ## Notes: Shows tents on the world map, Ony/Nef head despawn timers and DMF location.
-## Version: 1.4.5
+## Version: 1.5.0
 ## SavedVariablesPerCharacter: PWB_config, PWB_timers, PWB_dmf, PWB_tents
 
 translations\enUS.lua
