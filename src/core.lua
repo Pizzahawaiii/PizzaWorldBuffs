@@ -198,7 +198,12 @@ function PWB.core.shouldAcceptNewTimer(faction, boss, h, m, witness, receivedFro
 end
 
 local sevenDays = 7 * 24 * 60 * 60
-function PWB.core.shouldAcceptDmfLocation(seenAt)
+function PWB.core.shouldAcceptDmfLocation(seenAt, remoteVersion)
+  -- Don't accept any DMF locations from pre-1.4.1 versions. Version 1.4.0 had a bug because it
+  -- also detected DMF when mouseover target was Darkmoon Faire Carnie. These are there even on
+  -- Wednesdays when DMF is paused.
+  if remoteVersion and remoteVersion < 10401 then return false end
+
   -- Don't accept any DMF locations older than 7 days.
   if seenAt < (time() - sevenDays) then return false end
 

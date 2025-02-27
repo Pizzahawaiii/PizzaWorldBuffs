@@ -181,7 +181,7 @@ PWB:SetScript('OnEvent', function ()
       elseif addonName == PWB.abbrevDmf then
         PWB.core.resetPublishDelay()
         local location, seenAt, witness = PWB.core.decodeDmf(msg)
-        if PWB.core.shouldAcceptDmfLocation(seenAt) then
+        if PWB.core.shouldAcceptDmfLocation(seenAt, tonumber(remoteVersion)) then
           PWB.core.setDmfLocation(location, seenAt, witness)
         end
       end
