@@ -66,8 +66,8 @@ frame:SetScript('OnUpdate', function ()
     local diff = lastRestedGains[probes] - lastRestedGains[1]
     local diffAvg = diff / secondsToProbe
     local rate = diffAvg / UnitXPMax('player') * 100
-    local tent = rate >= .2
-    local stack = math.floor(rate / .2)
+    local tent = rate >= .13
+    local stack = math.floor(rate / .13)
     local now = time()
 
     if tent and (now - lastTentSavedAt > 5) and not WorldMapFrame:IsShown() then
