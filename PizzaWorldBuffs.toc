@@ -13,6 +13,7 @@ src\config.lua
 src\utils.lua
 src\core.lua
 src\tents.lua
+src\share.lua
 src\frame.lua
 src\logoutframe.lua
 src\channel.lua
