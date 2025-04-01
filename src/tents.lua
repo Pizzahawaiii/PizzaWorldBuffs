@@ -540,7 +540,6 @@ function PWB.tents.updatePins()
     local pinSize = PWB_config.tentStyle == 1337 and 20 or 18
     f.tent = tent
     f:ClearAllPoints()
-    f:SetFrameStrata('TOOLTIP')
     f:SetWidth(pinSize)
     f:SetHeight(pinSize)
     local mapWidth = WorldMapButton:GetWidth()
