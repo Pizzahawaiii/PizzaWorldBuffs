@@ -112,6 +112,12 @@ function PWB.utils.hasTimers()
   return PWB.utils.someTimer(PWB.utils.identity)
 end
 
+-- Check if we currently have a timer for a specific faction & boss stored.
+function PWB.utils.hasTimer(faction, boss)
+  if not PWB_timers then return false end
+  return PWB_timers[faction][boss] and true or false
+end
+
 -- Check if we have any timers stored in a deprecated format (pre-v0.0.15)
 function PWB.utils.hasDeprecatedTimerFormat()
   return PWB.utils.someTimer(function (timer)
