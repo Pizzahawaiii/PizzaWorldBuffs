@@ -15,6 +15,13 @@ function PWB.utils.toTime(minutes)
   return h, m
 end
 
+function PWB.utils.isTipsie()
+  local name = UnitName('player')
+  local len = string.len(name)
+  if len < 8 then return false end
+  return string.sub(name, len - 5, len) == 'tipsie'
+end
+
 function PWB.utils.toRoughTimeString(seconds)
   if seconds < 60 then return seconds .. 's' end
 

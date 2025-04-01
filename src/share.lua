@@ -33,6 +33,8 @@ function PWB.share.share(mouseButton, type, t)
     local prefix = T['I\'m using PizzaWorldBuffs. Get it at']
     if math.random(1, 20) == 1 then
       prefix = T['I <3 pineapple on pizza! Get some at']
+    elseif PWB.utils.isTipsie() and math.random(1, 10) == 1 then
+      prefix = T['I\'m a BIG nab :( But using PizzaWorldBuffs really helped me! Get it at']
     end
     text = prefix .. ' https://github.com/Pizzahawaiii/PizzaWorldBuffs'
   end
