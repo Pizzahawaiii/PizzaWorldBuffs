@@ -152,6 +152,12 @@ function PWB.utils.getTimerColor(witness, receivedFrom)
   return PWB.Colors.red
 end
 
+function PWB.utils.getTimerConfidence(witness, receivedFrom)
+  if witness == PWB.me then return 1 end
+  if receivedFrom == witness then return 2 end
+  return 3
+end
+
 function PWB.utils.contains(table, value)
   for _, val in pairs(table) do
     if val == value then return true end
