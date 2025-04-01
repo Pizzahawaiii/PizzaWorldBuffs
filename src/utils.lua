@@ -163,3 +163,10 @@ function PWB.utils.getChannelId(channelName)
     end
   end
 end
+
+function PWB.utils.getCurrentMapZoneName()
+  local cid = GetCurrentMapContinent()
+  local mid = GetCurrentMapZone()
+  local list = { GetMapZones(cid) }
+  return list[mid]
+end

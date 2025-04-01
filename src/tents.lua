@@ -129,7 +129,7 @@ function PWB.tents.save(zone, x, y, stack, firstSeen, lastSeen, imTheWitness)
         PWB.tents.scheduleAlert(newTent)
       elseif PWB_config.tentAlert == 1 and not WorldMapFrame:IsShown() then
         SetMapToCurrentZone()
-        if zone == PWB.tents.getCurrentMapZoneName() then
+        if zone == PWB.utils.getCurrentMapZoneName() then
           PWB.tents.scheduleAlert(newTent)
         end
       end
@@ -240,13 +240,6 @@ frame:SetScript('OnEvent', function()
     end
   end
 end)
-
-function PWB.tents.getCurrentMapZoneName()
-  local cid = GetCurrentMapContinent()
-  local mid = GetCurrentMapZone()
-  local list = { GetMapZones(cid) }
-  return list[mid]
-end
 
 function PWB.tents.isExpired(tent)
   local tentDuration = 15 * 60
@@ -530,7 +523,7 @@ function PWB.tents.updatePins()
 
   PWB.tents.clearPins()
 
-  local zone = PWB.tents.getCurrentMapZoneName()
+  local zone = PWB.utils.getCurrentMapZoneName()
   if not zone or not PWB_tents or not PWB_tents[zone] or length(PWB_tents[zone]) == 0 then
     return
   end
