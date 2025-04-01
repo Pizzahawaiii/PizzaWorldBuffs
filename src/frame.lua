@@ -189,6 +189,8 @@ PWB.frame:SetScript('OnEvent', function ()
 
     if PWB_config.show then
       PWB.frame:Show()
+    else
+      PWB.frame:Hide()
     end
   end
 end)
