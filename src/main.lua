@@ -117,6 +117,7 @@ PWB:SetScript('OnEvent', function ()
     -- Store player's name & faction ('A' or 'H') for future use
     PWB.me = UnitName('player')
     PWB.myFaction = string.sub(UnitFactionGroup('player'), 1, 1)
+    PWB.isOnKalimdor = GetCurrentMapContinent() == 1
 
     -- If we don't have any timers or we still have timers in a deprecated format, clear/initialize them first.
     if not PWB.utils.hasTimers() or PWB.utils.hasDeprecatedTimerFormat() then

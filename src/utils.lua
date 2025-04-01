@@ -51,10 +51,9 @@ end
 -- Get current server time, normalized by accounting for TurtleWoW's in-game timezones.
 function PWB.utils.getServerTime()
   local h, m = GetGameTime()
-  local isOnKalimdor = GetCurrentMapContinent() == 1
 
   -- TurtleWoW has continent timezones, so we need to normalize the server time if player is on Kalimdor
-  if isOnKalimdor then
+  if PWB.isOnKalimdor then
     h = math.mod(h + 12, 24)
   end
 
