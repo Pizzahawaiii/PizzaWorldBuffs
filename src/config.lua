@@ -16,6 +16,7 @@ local defaultConfig = {
     center = 0,
   },
   dmf = true,
+  mapHeads = true,
   tents = true,
   tentStyle = 1,
   tentAlert = 1,

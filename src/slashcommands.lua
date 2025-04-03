@@ -124,6 +124,25 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
     return
   end
 
+  if command == 'mapheads' then
+    local number = tonumber(msg)
+    if not number or (number ~= 0 and number ~= 1) then
+      PWB:Print(T['Valid options are 0 and 1'])
+      return
+    end
+
+    PWB_config.mapHeads = number == 1
+    PWB.map.updatePins()
+    local message
+    if PWB_config.mapHeads then
+      message = T['Showing Ony/Nef head timers on the SW/OG map']
+    else
+      message = T['Hiding Ony/Nef head timers from the SW/OG map']
+    end
+    PWB:Print(message)
+    return
+  end
+
   if command == 'tents' then
     local number = tonumber(msg)
     if not number or (number ~= 0 and number ~= 1) then
@@ -266,6 +285,7 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r header ' .. (PWB_config.header and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show PizzaWorldBuffs header'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r dmf ' .. (PWB_config.dmf and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show Darkmoon Faire location'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r all ' .. (PWB_config.allFactions and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show both factions\' world buff timers'])
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r mapHeads ' .. (PWB_config.mapHeads and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show Ony/Nef head timers on the SW/OG map'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r tents ' .. (PWB_config.tents and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show tent locations on the world map'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r tentStyle ' .. PWB_config.tentStyle .. PWB.Colors.grey .. ' - ' .. T['Choose between tent styles 1, 2, 3, 4, 5, 6, 7 and 1337'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r tentAlert ' .. PWB_config.tentAlert .. PWB.Colors.grey .. ' - ' .. T['Alert about new tents in your zone (1) or anywhere (2)'])

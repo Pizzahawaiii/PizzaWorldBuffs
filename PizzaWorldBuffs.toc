@@ -12,6 +12,7 @@ src\main.lua
 src\config.lua
 src\utils.lua
 src\core.lua
+src\map.lua
 src\tents.lua
 src\share.lua
 src\frame.lua
