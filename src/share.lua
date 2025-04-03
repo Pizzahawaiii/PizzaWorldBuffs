@@ -19,7 +19,7 @@ function PWB.share.share(mouseButton, type, t)
       suffix = isNow and T['head will despawn NOW!'] or T['head will despawn in'] .. ' ' .. PWB.utils.toString(h, m)
     end
 
-    text = '(' .. city .. ') ' .. T[PWB.Bosses[timer.boss]] .. ' ' .. suffix
+    text = '(' .. city .. ') ' .. T[PWB.Bosses[t.boss]] .. ' ' .. suffix
   elseif type == 'dmf' then
     text = 'Darkmoon Faire location is currently unknown. Try "/w Tents dmf?"'
 
