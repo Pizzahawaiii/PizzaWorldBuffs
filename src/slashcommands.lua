@@ -11,12 +11,14 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   if command == 'show' then
     PWB_config.show = true
     PWB.frame:Show()
+    PWB:Print(T['Showing main frame'])
     return
   end
 
   if command == 'hide' then
     PWB_config.show = false
     PWB.frame:Hide()
+    PWB:Print(T['Hiding main frame'])
     return
   end
 
