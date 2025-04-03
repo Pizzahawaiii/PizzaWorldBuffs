@@ -127,6 +127,10 @@ Try relogging or running `/join LFT`. If that doesn't help, please [create an is
 
 The addon uses TurtleWoW's hidden `LFT` chat channel to receive data from and share data with other players. It should automatically join that channel whenever the addon is loaded. But if it doesn't, maybe one of your other addons is interfering. You can check if you're in that channel by right-clicking your chat tab and selecting "Channels". You can also try disabling all other addons.
 
+### Q: What's that font in the screenshots?
+
+It's [Sniglet](https://fonts.google.com/specimen/Sniglet) (included in [pfUI-fonts](https://github.com/shagu/pfUI-fonts))
+
 ### Q: What's the best pizza topping?
 
 🍍
