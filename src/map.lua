@@ -47,6 +47,8 @@ function PWB.map.updatePins()
         pin.frame:Hide()
       else
         pin.frame:ClearAllPoints()
+        pin.frame:SetFrameStrata('FULLSCREEN')
+        pin.frame:SetFrameLevel(4)
         pin.frame:SetWidth(pinSize)
         pin.frame:SetHeight(pinSize)
         pin.frame:EnableMouse(true)
