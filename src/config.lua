@@ -1,12 +1,12 @@
+-- config.lua
 local PWB = PizzaWorldBuffs
-
 PWB.config = {}
 
 local defaultConfig = {
   show = true,
   lock = false,
   fontSize = 14,
-  align = 'center',
+  align = 'left', -- This controls text justification within each frame
   header = true,
   allFactions = true,
   autoLogout = false,
@@ -20,6 +20,7 @@ local defaultConfig = {
   tents = true,
   tentStyle = 1,
   tentAlert = 1,
+  orientation = 'vertical', -- New option: 'vertical' or 'horizontal'
 }
 
 function PWB.config.init()

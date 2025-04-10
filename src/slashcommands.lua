@@ -1,3 +1,4 @@
+-- slashcommands.lua
 local PWB = PizzaWorldBuffs
 
 SLASH_PIZZAWORLDBUFFS1, SLASH_PIZZAWORLDBUFFS2, SLASH_PIZZAWORLDBUFFS3 = '/wb', '/pwb', '/pizzawb'
@@ -280,6 +281,22 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
     return
   end
 
+  -- Add new commands HERE, just before the help text
+  if command == 'horizontal' then
+    PWB_config.orientation = 'horizontal'
+    PWB.frame.updateFrames()
+    PWB:Print(T['Text orientation set to horizontal'])
+    return
+  end
+
+  if command == 'vertical' then
+    PWB_config.orientation = 'vertical'
+    PWB.frame.updateFrames()
+    PWB:Print(T['Text orientation set to vertical'])
+    return
+  end
+
+  -- Help text (default case when no command matches)
   PWB:PrintClean(PWB.Colors.primary .. 'Pizza' .. PWB.Colors.secondary .. 'WorldBuffs|r ' .. T['commands'] .. ':')
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r show ' .. PWB.Colors.grey .. '- ' .. T['Show the addon'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r hide ' .. PWB.Colors.grey .. '- ' .. T['Hide the addon'])
@@ -297,6 +314,8 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r reset ' .. PWB.Colors.grey .. '- ' .. T['Reset PizzaWorldBuffs frames to their default positions'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r fontSize ' .. PWB_config.fontSize .. PWB.Colors.grey .. ' - ' .. T['Set font size'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r align ' .. PWB_config.align .. PWB.Colors.grey .. ' - ' .. T['Align text left/center/right'])
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r horizontal ' .. PWB.Colors.grey .. '- ' .. T['Set text orientation to horizontal']) -- New
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r vertical ' .. PWB.Colors.grey .. '- ' .. T['Set text orientation to vertical']) -- New
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r dmfbuffs ' .. PWB.Colors.grey .. '- ' .. T['Show list of Darkmoon Faire buffs'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r version ' .. PWB.Colors.grey .. '- ' .. T['Show current version'])
 end
