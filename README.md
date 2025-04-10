@@ -46,7 +46,10 @@ Check the [forum post](https://forum.turtle-wow.org/viewtopic.php?t=13704) or th
 /wb fontSize <size>    Change the font size of the PizzaWorldBuff frame (Default: 14)
 /wb align <x>          Change text alignment. Valid options: left, center, right (Default: center)
 /wb dmfbuffs           Show a list of all available Darkmoon Faire buffs
+/wb horizontal         This command alligns the text to a horizontal position
+/wb vertical           This command alligns the text to a vertical position
 /wb version            Show current PizzaWorldBuffs version
+
 ```
 
 ## Reporting Timers
