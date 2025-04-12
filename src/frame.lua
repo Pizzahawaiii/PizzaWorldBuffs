@@ -154,9 +154,6 @@ function PWB.frame.updateFrames()
   local maxWidth = 0
   local totalHeight = 0
 
-  -- Debug: Confirm orientation is being read
-  -- PWB:Print("Current orientation: " .. PWB_config.orientation)
-
   for i, frame in ipairs(PWB.frames) do
     frame.frame.text:SetFont(STANDARD_TEXT_FONT, PWB_config.fontSize, 'OUTLINE')
 
@@ -199,7 +196,7 @@ function PWB.frame.updateFrames()
 
     -- Position frames based on orientation
     frame.frame:ClearAllPoints()
-    local point = PWB_config.align == 'left' and 'TOPLEFT' or PWB_config.align == 'right' and 'TOPRIGHT' or 'TOP'
+    local point = PWB_config.orientation == 'horizontal' and 'TOPLEFT' or (PWB_config.align == 'left' and 'TOPLEFT' or PWB_config.align == 'right' and 'TOPRIGHT' or 'TOP')
 
     if PWB_config.orientation == 'horizontal' then
       if frame.frame:IsShown() then
