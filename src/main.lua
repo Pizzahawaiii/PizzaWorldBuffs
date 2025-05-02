@@ -23,16 +23,6 @@ PWB.Colors = {
   red = '|cffc41e3a',
 }
 
-PWB.Bosses = {
-  O = 'Onyxia',
-  N = 'Nefarian',
-}
-
-PWB.DmfLocations = {
-  E = 'Elwynn Forest',
-  M = 'Mulgore',
-}
-
 local dmfNpcNames = {
   'Flik',
   'Sayge',
@@ -78,6 +68,16 @@ function PWB:GetEnv()
   return PWB.env
 end
 setfenv(1, PWB:GetEnv())
+
+PWB.Bosses = {
+  O = T['Onyxia'] or 'Onyxia',
+  N = T['Nefarian'] or 'Nefarian',
+}
+
+PWB.DmfLocations = {
+  E = T['Elwynn Forest'] or 'Elwynn Forest',
+  M = T['Mulgore'] or 'Mulgore',
+}
 
 function PWB:Print(msg, withPrefix)
   local prefix = withPrefix == false and '' or PWB.Colors.primary .. 'Pizza' .. PWB.Colors.secondary .. 'WorldBuffs:|r '
@@ -191,7 +191,7 @@ PWB:SetScript('OnEvent', function ()
 
   if event == 'UPDATE_MOUSEOVER_UNIT' and PWB.utils.contains(dmfNpcNames, UnitName('mouseover')) then
     local zone = GetZoneText()
-    if zone == 'Elwynn Forest' or zone == 'Mulgore' then
+    if zone == 'Elwynn Forest' or zone == T['Elwynn Forest'] or zone == 'Mulgore' or zone == T['Mulgore'] then
       PWB.core.setDmfLocation(string.sub(zone, 1, 1), time(), PWB.me)
     end
   end
