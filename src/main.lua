@@ -117,6 +117,18 @@ PWB:SetScript('OnEvent', function ()
     -- Store player's name & faction ('A' or 'H') for future use
     PWB.me = UnitName('player')
     PWB.myFaction = string.sub(UnitFactionGroup('player'), 1, 1)
+    -- Workaround for Turtle WoW's Spanish localization
+    if PWB.myFaction ~= "A" and PWB.myFaction ~= "H" then
+        local _, raceEn = UnitRace('player')
+        local hordeRaces = {
+            Orc = true,
+            Scourge = true,
+            Troll = true,
+            Tauren = true,
+            Goblin = true,
+        }
+        PWB.myFaction = hordeRaces[raceEn] and "H" or "A"
+    end
     PWB.isOnKalimdor = GetCurrentMapContinent() == 1
 
     -- If we don't have any timers or we still have timers in a deprecated format, clear/initialize them first.
