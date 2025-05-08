@@ -201,7 +201,7 @@ PWB:SetScript('OnEvent', function ()
     end
   end
 
-  if event == 'UPDATE_MOUSEOVER_UNIT' and PWB.utils.contains(dmfNpcNames, UnitName('mouseover')) then
+  if event == 'UPDATE_MOUSEOVER_UNIT' and not UnitIsPlayer('mouseover') and PWB.utils.contains(dmfNpcNames, UnitName('mouseover')) then
     local zone = GetZoneText()
     if zone == 'Elwynn Forest' or zone == T['Elwynn Forest'] or zone == 'Mulgore' or zone == T['Mulgore'] then
       PWB.core.setDmfLocation(string.sub(zone, 1, 1), time(), PWB.me)
