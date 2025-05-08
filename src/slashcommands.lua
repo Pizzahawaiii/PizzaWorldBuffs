@@ -23,6 +23,13 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
     return
   end
 
+  if command == 'toggle' then
+    PWB_config.show = not PWB_config.show
+    if PWB_config.show then PWB.frame:Show() else PWB.frame:Hide() end
+    PWB:Print(PWB_config.show and T['Showing main frame'] or T['Hiding main frame'])
+    return
+  end
+
   if command == 'reset' then
     PWB.frame:ClearAllPoints()
     PWB.frame:SetPoint('TOP', 0, -50)
@@ -300,6 +307,7 @@ SlashCmdList['PIZZAWORLDBUFFS'] = function (args, editbox)
   PWB:PrintClean(PWB.Colors.primary .. 'Pizza' .. PWB.Colors.secondary .. 'WorldBuffs|r ' .. T['commands'] .. ':')
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r show ' .. PWB.Colors.grey .. '- ' .. T['Show the addon'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r hide ' .. PWB.Colors.grey .. '- ' .. T['Hide the addon'])
+  PWB:PrintClean(PWB.Colors.primary .. '   /wb|r toggle ' .. PWB.Colors.grey .. '- ' .. T['Toggle show/hide the addon'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r lock ' .. (PWB_config.lock and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Lock PizzaWorldBuffs frame'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r header ' .. (PWB_config.header and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show PizzaWorldBuffs header'])
   PWB:PrintClean(PWB.Colors.primary .. '   /wb|r dmf ' .. (PWB_config.dmf and 1 or 0) .. PWB.Colors.grey .. ' - ' .. T['Show Darkmoon Faire location'])
