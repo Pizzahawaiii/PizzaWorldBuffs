@@ -3,12 +3,12 @@ PWB.share = {}
 
 setfenv(1, PWB:GetEnv())
 
-function PWB.share.share(mouseButton, type, t)
-  if type == 'timer' and not t then return end
-  if mouseButton ~= 'LeftButton' and mouseButton ~= 'RightButton' and mouseButton ~= 'MiddleButton' and mouseButton ~= 'Button4' then return end
-
+function PWB.share.getText(type, t)
   local text
+
   if type == 'timer' then
+    if not t then return end
+
     local city = t.faction == 'A' and T['SW'] or T['OG']
     local timer = PWB_timers[t.faction][t.boss]
     local suffix = T['head has no timer, it\'s probably despawned']
@@ -39,6 +39,14 @@ function PWB.share.share(mouseButton, type, t)
     text = prefix .. ' https://github.com/Pizzahawaiii/PizzaWorldBuffs'
   end
 
+  return text
+end
+
+function PWB.share.share(mouseButton, type, t)
+  if type == 'timer' and not t then return end
+  if mouseButton ~= 'LeftButton' and mouseButton ~= 'RightButton' and mouseButton ~= 'MiddleButton' and mouseButton ~= 'Button4' then return end
+
+  local text = PWB.share.getText(type, t)
   if text then
     local editBox = DEFAULT_CHAT_FRAME.editBox
     local targetEditBox = WIM_EditBoxInFocus or editBox:IsVisible() and editBox or nil

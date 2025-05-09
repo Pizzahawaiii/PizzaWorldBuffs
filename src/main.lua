@@ -94,6 +94,7 @@ PWB:RegisterEvent('PLAYER_ENTERING_WORLD')
 PWB:RegisterEvent('CHAT_MSG_ADDON')
 PWB:RegisterEvent('CHAT_MSG_CHANNEL')
 PWB:RegisterEvent('CHAT_MSG_MONSTER_YELL')
+PWB:RegisterEvent('CHAT_MSG_WHISPER')
 PWB:RegisterEvent('UPDATE_MOUSEOVER_UNIT')
 PWB:SetScript('OnEvent', function ()
   if event == 'ADDON_LOADED' and arg1 == 'PizzaWorldBuffs' then
@@ -198,6 +199,23 @@ PWB:SetScript('OnEvent', function ()
           PWB.core.setDmfLocation(location, seenAt, witness)
         end
       end
+    end
+  end
+
+  if event == 'CHAT_MSG_WHISPER' and string.find(UnitName('player'), 'Pizza') then
+    local msg, from = string.lower(string.gsub(arg1, '?', '')), arg2
+    if msg == 'ony when' or msg == 'nef when' or msg == 'buff when' or msg == 'buf when' or msg == 'head when' then
+      local aOnyText = PWB.share.getText('timer', { faction = 'A', boss = 'O' })
+      local aNefText = PWB.share.getText('timer', { faction = 'A', boss = 'N' })
+      local hOnyText = PWB.share.getText('timer', { faction = 'H', boss = 'O' })
+      local hNefText = PWB.share.getText('timer', { faction = 'H', boss = 'N' })
+      SendChatMessage(aOnyText, 'WHISPER', nil, from)
+      SendChatMessage(aNefText, 'WHISPER', nil, from)
+      SendChatMessage(hOnyText, 'WHISPER', nil, from)
+      SendChatMessage(hNefText, 'WHISPER', nil, from)
+    elseif msg == 'dmf where' or msg == 'dmf' or msg == 'dmf loc' or msg == 'dmf location' then
+      local dmfText = PWB.share.getText('dmf')
+      SendChatMessage(dmfText, 'WHISPER', nil, from)
     end
   end
 
