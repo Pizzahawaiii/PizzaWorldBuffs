@@ -39,8 +39,6 @@ function PWB.logoutFrame.update()
       local message = PWB.Colors.red .. msg .. '|r ' .. diff .. ' ' .. PWB.Colors.red .. T['seconds'] .. '...|r'
       PWB.logoutFrame.text:SetText(message .. '\n' .. suffix)
     else
-      -- local message = PWB_config.autoExit and T['Auto-exit enabled!'] or T['Auto-logout enabled!']
-
       local type = PWB_config.autoExit and T['Auto-exit'] or T['Auto-logout']
       local message = PWB.Colors.orange .. type .. '|r ' .. T['after next buff'] .. ': ' .. PWB.Colors.orange .. T['ENABLED']
 
