@@ -70,13 +70,13 @@ end
 setfenv(1, PWB:GetEnv())
 
 PWB.Bosses = {
-  O = T['Onyxia'] or 'Onyxia',
-  N = T['Nefarian'] or 'Nefarian',
+  O = T['Onyxia'],
+  N = T['Nefarian'],
 }
 
 PWB.DmfLocations = {
-  E = T['Elwynn Forest'] or 'Elwynn Forest',
-  M = T['Mulgore'] or 'Mulgore',
+  E = T['Elwynn Forest'],
+  M = T['Mulgore'],
 }
 
 function PWB:Print(msg, withPrefix)
@@ -221,7 +221,7 @@ PWB:SetScript('OnEvent', function ()
 
   if event == 'UPDATE_MOUSEOVER_UNIT' and not UnitIsPlayer('mouseover') and PWB.utils.contains(dmfNpcNames, UnitName('mouseover')) then
     local zone = GetZoneText()
-    if zone == 'Elwynn Forest' or zone == T['Elwynn Forest'] or zone == 'Mulgore' or zone == T['Mulgore'] then
+    if zone == T['Elwynn Forest'] or zone == T['Mulgore'] then
       PWB.core.setDmfLocation(string.sub(zone, 1, 1), time(), PWB.me)
     end
   end
