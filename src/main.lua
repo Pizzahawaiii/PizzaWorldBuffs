@@ -23,16 +23,6 @@ PWB.Colors = {
   red = '|cffc41e3a',
 }
 
-PWB.Bosses = {
-  O = 'Onyxia',
-  N = 'Nefarian',
-}
-
-PWB.DmfLocations = {
-  E = 'Elwynn Forest',
-  M = 'Mulgore',
-}
-
 local dmfNpcNames = {
   'Flik',
   'Sayge',
@@ -79,6 +69,16 @@ function PWB:GetEnv()
 end
 setfenv(1, PWB:GetEnv())
 
+PWB.Bosses = {
+  O = T['Onyxia'] or 'Onyxia',
+  N = T['Nefarian'] or 'Nefarian',
+}
+
+PWB.DmfLocations = {
+  E = T['Elwynn Forest'] or 'Elwynn Forest',
+  M = T['Mulgore'] or 'Mulgore',
+}
+
 function PWB:Print(msg, withPrefix)
   local prefix = withPrefix == false and '' or PWB.Colors.primary .. 'Pizza' .. PWB.Colors.secondary .. 'WorldBuffs:|r '
   DEFAULT_CHAT_FRAME:AddMessage(prefix .. msg)
@@ -117,6 +117,18 @@ PWB:SetScript('OnEvent', function ()
     -- Store player's name & faction ('A' or 'H') for future use
     PWB.me = UnitName('player')
     PWB.myFaction = string.sub(UnitFactionGroup('player'), 1, 1)
+    -- Workaround for Turtle WoW's Spanish localization
+    if PWB.myFaction ~= "A" and PWB.myFaction ~= "H" then
+        local _, raceEn = UnitRace('player')
+        local hordeRaces = {
+            Orc = true,
+            Scourge = true,
+            Troll = true,
+            Tauren = true,
+            Goblin = true,
+        }
+        PWB.myFaction = hordeRaces[raceEn] and "H" or "A"
+    end
     PWB.isOnKalimdor = GetCurrentMapContinent() == 1
 
     -- If we don't have any timers or we still have timers in a deprecated format, clear/initialize them first.
@@ -191,7 +203,7 @@ PWB:SetScript('OnEvent', function ()
 
   if event == 'UPDATE_MOUSEOVER_UNIT' and PWB.utils.contains(dmfNpcNames, UnitName('mouseover')) then
     local zone = GetZoneText()
-    if zone == 'Elwynn Forest' or zone == 'Mulgore' then
+    if zone == 'Elwynn Forest' or zone == T['Elwynn Forest'] or zone == 'Mulgore' or zone == T['Mulgore'] then
       PWB.core.setDmfLocation(string.sub(zone, 1, 1), time(), PWB.me)
     end
   end

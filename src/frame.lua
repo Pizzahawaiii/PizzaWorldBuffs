@@ -174,7 +174,7 @@ function PWB.frame.updateFrames()
         frame.frame:Show()
       end
     elseif frame.name == 'PizzaWorldBuffsDmf' then
-      local location = PWB.Colors.grey .. 'N/A'
+      local location = PWB.Colors.grey .. T['N/A']
       if PWB_dmf then
         local shortLoc = PWB.utils.strSplit(PWB.DmfLocations[PWB_dmf.location], ' ')
         if shortLoc then

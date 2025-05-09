@@ -99,9 +99,9 @@ end
 
 function PWB.map.showPins(zone)
   if not PWB_config.mapHeads then return end
-  if zone ~= 'Stormwind City' and zone ~= 'Orgrimmar' then return end
+  if zone ~= 'Stormwind City' and zone ~= T['SWC'] and zone ~= 'Orgrimmar' and zone ~= T['OG'] then return end
 
-  local faction = zone == 'Stormwind City' and 'A' or 'H'
+  local faction = (zone == 'Stormwind City' or zone == T['SWC']) and 'A' or 'H'
   for boss, pin in pairs(pins[string.sub(faction, 1, 1)]) do
     if PWB.utils.hasTimer(faction, boss) then
       pin.frame:Show()
