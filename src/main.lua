@@ -203,7 +203,7 @@ PWB:SetScript('OnEvent', function ()
   end
 
   if event == 'CHAT_MSG_WHISPER' and string.find(UnitName('player'), 'Pizza') then
-    local msg, from = string.lower(string.gsub(arg1, '?', '')), arg2
+    local msg, from = string.lower(string.gsub(string.gsub(arg1, '?', ''), '!', '')), arg2
     if msg == 'ony when' or msg == 'nef when' or msg == 'buff when' or msg == 'buf when' or msg == 'head when' then
       local aOnyText = PWB.share.getText('timer', { faction = 'A', boss = 'O' })
       local aNefText = PWB.share.getText('timer', { faction = 'A', boss = 'N' })
