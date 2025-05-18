@@ -124,6 +124,11 @@ function PWB.tents.save(zone, x, y, stack, firstSeen, lastSeen, imTheWitness)
     table.insert(_G.PWB_tents[zone], newTent)
     tentsUpdated = true
 
+    -- Always immediately publish new tents when I discover them.
+    if imTheWitness then
+      PWB.tents.publish(newTent)
+    end
+
     if PWB_config.tents and not imTheWitness then
       if PWB_config.tentAlert == 2 then
         PWB.tents.scheduleAlert(newTent)
@@ -134,11 +139,6 @@ function PWB.tents.save(zone, x, y, stack, firstSeen, lastSeen, imTheWitness)
         end
       end
     end
-  end
-
-  -- Always publish my own tent updates immediately.
-  if imTheWitness then
-    PWB.tents.publish(newTent)
   end
 
   if tentsUpdated and WorldMapFrame:IsVisible() then
