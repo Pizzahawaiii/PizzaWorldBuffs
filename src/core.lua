@@ -227,15 +227,7 @@ end
 
 -- Check if we should publish our local data.
 function PWB.core.shouldPublish()
-  local now = time()
-
-  -- If we've reached the publish interval limit (i.e. we haven't published our timers in X minutes),
-  -- we just force publish our timers.
-  if PWB.lastPublishedAt and now > PWB.lastPublishedAt + PWB.maxPublishIntervalMinutes * 60 then
-    return true
-  end
-
-  return PWB.nextPublishAt and now > PWB.nextPublishAt
+  return PWB.nextPublishAt and time() > PWB.nextPublishAt
 end
 
 function PWB.core.publishAll()

@@ -4,12 +4,6 @@ PWB.abbrev = 'PWB'
 PWB.abbrevDmf = 'PWB_DMF'
 PWB.abbrevTents = 'PWB_T'
 
--- If many players are using the addon and we're unlucky, we mayb never be able to publish our timers, because
--- someone else will publish theirs before us every time. To combat this and allow everyone to publish their
--- timers eventually, we use a publish interval upper limit. If this runs out, we just blindly publish our 
--- timers regardless, even if someone else publishes theirs before us again.
-PWB.maxPublishIntervalMinutes = 3
-
 PWB.Colors = {
   primary = '|cffa050ff',
   secondary = '|cffffffff',
