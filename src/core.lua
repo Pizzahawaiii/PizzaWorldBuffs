@@ -235,7 +235,6 @@ function PWB.core.publishAll()
     PWB.tents.publish()
   end
 
-  PWB.lastPublishedAt = time()
   PWB.core.resetPublishDelay()
 end
 
