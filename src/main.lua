@@ -131,9 +131,6 @@ PWB:SetScript('OnEvent', function ()
       PWB.core.clearAllTimers()
     end
 
-    -- Publish everything once whenever we log in
-    PWB.core.publishAll()
-
     -- Trigger delayed joining of the PWB chat channel
     PWB.channelJoinDelay:Show()
   end
