@@ -217,11 +217,9 @@ end
 -- Reset the publish delay that we will count down from before we publish our local timers.
 function PWB.core.resetPublishDelay()
   local min, max = 5, 30
-  local witnessPriority = .3
 
-  -- (Re)set our own publish delay to a random number of seconds. If we have witnessed one of our
-  -- timers ourselves, we get publish priority, i.e. we're more likely to publish our timers.
-  local delay = PWB.utils.isWitness() and math.random((1 - witnessPriority) * min, (1 - witnessPriority) * max) or math.random(min, max)
+  -- (Re)set our own publish delay to a random number of seconds.
+  local delay = math.random(min, max)
   PWB.nextPublishAt = time() + delay
 end
 
