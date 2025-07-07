@@ -226,7 +226,6 @@ PWB:SetScript('OnUpdate', function ()
 
   if (PWB_config.autoLogout or PWB_config.autoExit) and PWB.logoutAt and time() >= PWB.logoutAt then
     PWB.logoutAt = nil
-    PWB.core.publishAll()
     if PWB_config.autoLogout then
       PWB:Print(T['Logging out...'])
       Logout()
