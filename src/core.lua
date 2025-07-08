@@ -216,7 +216,7 @@ end
 
 -- Reset the publish delay that we will count down from before we publish our local timers.
 function PWB.core.resetPublishDelay()
-  local min, max = 5, 30
+  local min, max = 30, 300
 
   -- (Re)set our own publish delay to a random number of seconds.
   local delay = math.random(min, max)
