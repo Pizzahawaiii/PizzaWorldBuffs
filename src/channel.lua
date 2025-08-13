@@ -15,7 +15,7 @@ PWB.channelJoinDelay:SetScript('OnHide', function ()
   local channels = { GetChannelList() }
 
   for _, channel in next, channels do
-    if channel == PWB.channelName then
+    if string.lower(channel) == string.lower(PWB.channelName) then
       isInChannel = true
       break
     end

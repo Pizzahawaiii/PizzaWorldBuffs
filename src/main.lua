@@ -157,7 +157,7 @@ PWB:SetScript('OnEvent', function ()
       _, channelName = GetChannelName(source)
     end
 
-    if channelName == PWB.channelName then
+    if string.lower(channelName) == string.lower(PWB.channelName) then
       local _, _, addonName, remoteVersion, msg = string.find(arg1, '(.*)%:(.*)%:(.*)')
       if addonName == PWB.abbrev then
         -- Ignore timers from players with pre-1.1.4 versions that contain a bug where it sometimes

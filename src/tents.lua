@@ -211,7 +211,7 @@ frame:SetScript('OnEvent', function()
         _, channelName = GetChannelName(source)
       end
 
-      if channelName == PWB.channelName then
+      if string.lower(channelName) == string.lower(PWB.channelName) then
         local _, _, addonName, remoteVersion, encodedTents = string.find(arg1, '(.*)%:(.*)%:(.*)')
         if addonName == PWB.abbrevTents then
           PWB.tents.decodeAndSaveAll(encodedTents)
